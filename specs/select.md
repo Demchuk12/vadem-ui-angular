@@ -11,52 +11,62 @@ platform), anchored under the field with CSS anchor positioning (flips up when n
 
 ```html
 <div class="vd-select" data-size="md" [data-open] [data-invalid] [data-disabled]>
-  <button class="vd-select__trigger" role="combobox" aria-haspopup="listbox"
-          aria-expanded="true" aria-controls="lb" aria-activedescendant="opt-2">
+  <button
+    class="vd-select__trigger"
+    role="combobox"
+    aria-haspopup="listbox"
+    aria-expanded="true"
+    aria-controls="lb"
+    aria-activedescendant="opt-2"
+  >
     <span class="vd-select__value" [data-placeholder]>Київ</span>
-    <svg class="vd-select__chevron"/>
+    <svg class="vd-select__chevron" />
   </button>
   <div class="vd-listbox" id="lb" role="listbox" popover="auto">
     <div class="vd-option" role="option" id="opt-2" aria-selected="true" data-active>
-      <span class="vd-option__label">Київ</span><svg class="vd-option__check"/>
+      <span class="vd-option__label">Київ</span><svg class="vd-option__check" />
     </div>
-    <p class="vd-listbox__empty">Нічого не знайдено</p>   <!-- when nothing is visible -->
+    <p class="vd-listbox__empty">Нічого не знайдено</p>
+    <!-- when nothing is visible -->
   </div>
 </div>
 
 <!-- combobox: the field is an input group -->
 <div class="vd-combobox">
-  <div class="vd-combobox__field"><svg/><input class="vd-combobox__input" role="combobox"
-       aria-autocomplete="list" .../><svg class="vd-select__chevron"/></div>
+  <div class="vd-combobox__field">
+    <svg /><input class="vd-combobox__input" role="combobox" aria-autocomplete="list" ... /><svg
+      class="vd-select__chevron"
+    />
+  </div>
   <div class="vd-listbox" ...>...</div>
 </div>
 ```
 
 ## Props (both)
 
-| Name          | Type                   | Default      | Notes |
-| ------------- | ---------------------- | ------------ | ----- |
-| `value`       | `string \| null`       | `null`       | Two-way; also ControlValueAccessor and Signal Forms (`value` model). |
-| `placeholder` | `string`               | `''`         | |
-| `size`        | `'sm' \| 'md' \| 'lg'` | `md`         | Matches input/button heights. |
-| `disabled`    | `boolean`              | `false`      | Also from forms. |
-| `invalid` / `touched` / `required` | | | Same contract as input (shown after touch). |
-| `emptyText`   | `string`               | `No options` | Localize. |
+| Name                               | Type                   | Default                    | Notes                                                                |
+| ---------------------------------- | ---------------------- | -------------------------- | -------------------------------------------------------------------- |
+| `value`                            | `string \| null`       | `null`                     | Two-way; also ControlValueAccessor and Signal Forms (`value` model). |
+| `placeholder`                      | `string`               | `''`                       |                                                                      |
+| `size`                             | `'sm' \| 'md' \| 'lg'` | `md`                       | Matches input/button heights.                                        |
+| `disabled`                         | `boolean`              | `false`                    | Also from forms.                                                     |
+| `invalid` / `touched` / `required` |                        |                            | Same contract as input (shown after touch).                          |
+| `emptyText`                        | `string`               | locale: `select.emptyText` | Override only when application-specific wording is needed.           |
 
 Option: `value` (required), `disabled`, `label` (text for trigger/typeahead/filter; defaults to
 text content). Content may include icons.
 
 ## Keyboard - select
 
-| Key | Closed | Open |
-| --- | ------ | ---- |
-| `ArrowDown` / `ArrowUp` / `Enter` / `Space` | open on the selected (or first) option | move / choose |
-| `Home` / `End` | open on first / last | first / last |
-| `PageUp` / `PageDown` | - | +-10 |
-| printable | open on the typeahead match | typeahead |
-| `Enter` / `Space` / `Alt+ArrowUp` | - | choose active, close |
-| `Tab` | - | choose active, close, focus moves on |
-| `Escape` | - | close, value unchanged |
+| Key                                         | Closed                                 | Open                                 |
+| ------------------------------------------- | -------------------------------------- | ------------------------------------ |
+| `ArrowDown` / `ArrowUp` / `Enter` / `Space` | open on the selected (or first) option | move / choose                        |
+| `Home` / `End`                              | open on first / last                   | first / last                         |
+| `PageUp` / `PageDown`                       | -                                      | +-10                                 |
+| printable                                   | open on the typeahead match            | typeahead                            |
+| `Enter` / `Space` / `Alt+ArrowUp`           | -                                      | choose active, close                 |
+| `Tab`                                       | -                                      | choose active, close, focus moves on |
+| `Escape`                                    | -                                      | close, value unchanged               |
 
 ## Keyboard - combobox
 
@@ -64,18 +74,21 @@ Typing filters (every word must match, case/diacritic-insensitive: "кам'ян 
 "Кам'янець-Подільський") and makes the first match active. `ArrowDown`/`ArrowUp` open or move,
 `Enter` chooses, `Escape` closes and restores the selected label, `Home`/`End` move the caret.
 Free text never becomes the value: on blur the input shows the selected option again.
+`Tab` closes without choosing the active match and preserves normal focus movement;
+`Alt+ArrowUp` chooses the active match and closes. This differs from Select, where `Tab`
+commits the active option.
 
 ## States
 
-| State | Reflected as |
-| ----- | ------------ |
-| open | `data-open`, `aria-expanded`, chevron rotated, field ring |
-| active option | `data-active` + `aria-activedescendant`; scrolled into view |
-| selected | `aria-selected="true"`, check icon, semibold |
-| disabled option | `aria-disabled`, skipped by keys and typeahead |
-| filtered out | option `hidden` |
-| empty | `.vd-listbox__empty` |
-| invalid / disabled | `data-invalid` + `aria-invalid` / `data-disabled` |
+| State              | Reflected as                                                |
+| ------------------ | ----------------------------------------------------------- |
+| open               | `data-open`, `aria-expanded`, chevron rotated, field ring   |
+| active option      | `data-active` + `aria-activedescendant`; scrolled into view |
+| selected           | `aria-selected="true"`, check icon, semibold                |
+| disabled option    | `aria-disabled`, skipped by keys and typeahead              |
+| filtered out       | option `hidden`                                             |
+| empty              | `.vd-listbox__empty`                                        |
+| invalid / disabled | `data-invalid` + `aria-invalid` / `data-disabled`           |
 
 ## ARIA contract
 
@@ -83,6 +96,10 @@ Free text never becomes the value: on blur the input shows the selected option a
 - `role=combobox`, `aria-expanded`, `aria-controls`, `aria-activedescendant`, `aria-haspopup`
   (select), `aria-autocomplete="list"` (combobox) - component.
 - Options are `role=option` with `aria-selected`; clicking keeps focus on the combobox.
+- Required state is exposed as `aria-required` on the inner combobox element.
+- Field hint/error and additional description IDs describe the inner combobox element.
+- Consumer `aria-label` and `aria-labelledby` naming inputs are forwarded to the inner
+  button/input, rather than left on the non-interactive wrapper.
 
 ## Component tokens
 
@@ -97,6 +114,9 @@ List: `--vd-listbox-padding`, `--vd-listbox-radius` (options are concentric),
 `vdMatchesQuery`/`vdNormalize`. Shared Angular base `VdListboxBase` (not public API).
 
 ## Adapter notes
+
+Angular imports `VdSelect`, `VdCombobox`, and `VdOption` from `@vadem/ui/select`;
+there is no separate `@vadem/ui/combobox` entry point. Both controls expose `focus()`.
 
 `showPopover({ source })` ties the list to its field so clicks on the field don't light-dismiss
 it (ignored where unsupported; select falls back to a pressed-while-open flag). Not yet: multiple

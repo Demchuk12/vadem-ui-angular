@@ -58,6 +58,35 @@ test.describe('select', () => {
     await expect(select).toContainText('Учасник');
   });
 
+  test('Tab commits the active select option and moves focus onward', async ({ page }) => {
+    await openGallery(page, 'select');
+    const select = page.getByRole('combobox', { name: 'Роль' });
+    await select.focus();
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('Home');
+    await expect(page.locator('[role=option][data-active]')).toHaveText('Власник');
+    await page.keyboard.press('Tab');
+    await expect(select).toContainText('Власник');
+    await expect(select).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.getByRole('button', { name: 'Перевірити', exact: true })).toBeFocused();
+    await expect(page.getByText(/role: owner/)).toBeVisible();
+  });
+
+  test('Tab discards a combobox query without selecting its active match', async ({ page }) => {
+    await openGallery(page, 'select');
+    const input = page.getByRole('combobox', { name: 'Населений пункт' });
+    await input.fill('кам под');
+    await page.keyboard.press('Enter');
+    await expect(input).toHaveValue('Кам’янець-Подільський');
+    await input.fill('рів');
+    await expect(page.locator('[role=option][data-active]')).toHaveText('Рівне');
+    await page.keyboard.press('Tab');
+    await expect(input).toHaveAttribute('aria-expanded', 'false');
+    await expect(input).toHaveValue('Кам’янець-Подільський');
+    await expect(input).not.toBeFocused();
+    await expect(page.getByText('town: Кам’янець-Подільський')).toBeVisible();
+  });
+
   test('required error appears after leaving the field', async ({ page }) => {
     await openGallery(page, 'select');
     await page.getByRole('combobox', { name: 'Місто' }).focus();

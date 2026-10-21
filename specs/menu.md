@@ -32,15 +32,15 @@ Item slots: leading `vd-icon`, trailing `[slot="end"]` (shortcut/meta, mono).
 
 ## Keyboard
 
-| Key                             | Trigger                | Menu                                |
-| ------------------------------- | ---------------------- | ----------------------------------- |
-| `Enter` / `Space` / `ArrowDown` | open, focus first item | activate item, close, focus trigger |
-| `ArrowUp`                       | open, focus last item  | previous (loops)                    |
-| `ArrowDown`                     |                        | next (loops), disabled skipped      |
-| `Home` / `End`                  |                        | first / last                        |
-| printable                       |                        | typeahead                           |
-| `Escape`                        |                        | close, focus trigger                |
-| `Tab`                           |                        | close, focus moves on               |
+| Key               | Trigger                | Menu                                |
+| ----------------- | ---------------------- | ----------------------------------- |
+| `Enter` / `Space` | open, focus first item | activate item, close, focus trigger |
+| `ArrowUp`         | open, focus last item  | previous (loops)                    |
+| `ArrowDown`       | open, focus first item | next (loops), disabled skipped      |
+| `Home` / `End`    |                        | first / last                        |
+| printable         |                        | typeahead                           |
+| `Escape`          |                        | close, focus trigger                |
+| `Tab`             |                        | close, focus moves on               |
 
 Pointer: hovering an item focuses it (one shared "current" item); click activates.
 

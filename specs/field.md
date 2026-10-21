@@ -2,8 +2,8 @@
 
 Status: draft · Pattern: labelled form control with description and error message
 
-Wraps exactly one form control (input, textarea; later select, checkbox group) and connects its
-label, hint and error to it.
+Wraps exactly one registered form control, including Input/Textarea and Select/Combobox,
+and connects its label, hint and error to it. Use Fieldset for a group of choices.
 
 ## Anatomy
 
@@ -30,11 +30,11 @@ label, hint and error to it.
 
 ## States
 
-| State    | Reflected as                                                                       |
-| -------- | ---------------------------------------------------------------------------------- |
-| invalid  | `data-invalid` on the field (error visible)                                        |
-| disabled | `data-disabled` - muted label                                                      |
-| required | `*` marker after the label (hidden from AT; the control's `required` is announced) |
+| State    | Reflected as                                                                                      |
+| -------- | ------------------------------------------------------------------------------------------------- |
+| invalid  | `data-invalid` when the registered control is displayed invalid and a non-empty error is supplied |
+| disabled | `data-disabled` - muted label                                                                     |
+| required | `*` marker after the label (hidden from AT; the control's `required` is announced)                |
 
 ## ARIA contract
 
@@ -47,7 +47,8 @@ label, hint and error to it.
 ## Control contract (for authors of new controls)
 
 A control inside a field provides `{ id, invalid, required, disabled }` (signals) and reads
-`describedBy`. In Angular: inject `VD_FIELD` (optional) and `register()` itself.
+`describedBy`. Registration and unregistration must follow the control lifetime. In Angular, inject
+`VD_FIELD` (optional), register the control, and unregister it on destruction.
 
 ## Fieldset (groups of choices)
 
@@ -75,6 +76,8 @@ controls get no `aria-describedby`, so the text isn't repeated on every option (
 
 ## Adapter notes
 
-- Angular: `<vd-field>` with a DI context (`VD_FIELD`).
+- Angular: `<vd-field>` with a DI context (`VD_FIELD`). Exactly one registered control is
+  supported; registration does not aggregate multiple controls. Use `fieldset[vdFieldset]`
+  for choice groups.
 - React/Vue: a context/provide-inject with the same four fields.
 - Error entrance uses `@starting-style` (no animation under reduced motion).

@@ -4,10 +4,15 @@
 
 ### Fixed
 
+- Clarify Field/Input, Select/Combobox, Dialog, and Menu contracts, including locale defaults
+  and the distinct Tab selection behavior.
+
 - Match the exported `VD_VERSION` to the library manifest (`0.0.2` in this checkout).
 - Correct the Data table import in the usage guide to `@vadem/ui/table`.
 
 ### Added
+
+- Select and Combobox Tab regression scenarios and a bounded contract-review checklist.
 
 - Owner-approved MIT licensing for Vadem's own code, included in the built package.
 

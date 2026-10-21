@@ -21,20 +21,21 @@ attributes stay native; the library adds styling, sizes, and displayed validity.
 
 ## Props (input / textarea)
 
-| Name       | Type                   | Default        | Notes |
-| ---------- | ---------------------- | -------------- | ----- |
-| `size`     | `'sm' \| 'md' \| 'lg'` | `md`           | Heights follow `--vd-control-height-*` (density-aware). `md`/`lg` use 16px text (no iOS zoom). |
-| `invalid`  | `boolean`              | `false`        | Invalid state (e.g. server errors). Reactive/Template form validity is detected automatically. |
-| `touched`  | `boolean \| undefined` | `undefined`    | Gate for `invalid`: when `false`, the error isn't shown yet. |
-| `required` | `boolean`              | `false`        | Reflected to the native attribute; shows the field's required marker. |
-| `id`       | `string`               | generated      | Used by the field label (`for`). |
+| Name       | Type                   | Default     | Notes                                                                                          |
+| ---------- | ---------------------- | ----------- | ---------------------------------------------------------------------------------------------- |
+| `size`     | `'sm' \| 'md' \| 'lg'` | `md`        | Heights follow `--vd-control-height-*` (density-aware). `md`/`lg` use 16px text (no iOS zoom). |
+| `invalid`  | `boolean`              | `false`     | Invalid state (e.g. server errors). Reactive/Template form validity is detected automatically. |
+| `touched`  | `boolean \| undefined` | `undefined` | Gate for `invalid`: when `false`, the error isn't shown yet.                                   |
+| `required` | `boolean`              | `false`     | Reflected to the native attribute; shows the field's required marker.                          |
+| `id`       | `string`               | generated   | Used by the field label (`for`).                                                               |
 
 Native attributes (`type`, `placeholder`, `disabled`, `readonly`, `autocomplete`, `inputmode`,
 `maxlength`...) are used as-is.
 
 ## Displayed validity
 
-Shown invalid when `invalid` is set, or when the bound form control is invalid **and touched**
+Shown invalid when `invalid` is set and `touched` is not explicitly `false`, or when the
+bound Reactive/Template form control is invalid **and touched**
 (no errors while the user is still typing for the first time).
 Sources: Reactive/Template forms (`NgControl`) and Signal Forms (`[formField]`).
 
@@ -49,11 +50,11 @@ Native (`input`, `change`, `focus`, `blur`).
 
 ## Slots (input group)
 
-| Slot             | Accepts                                                        |
-| ---------------- | -------------------------------------------------------------- |
-| `[slot="start"]` | decorative icon, or a button (e.g. a prefix selector)          |
-| default          | exactly one `vdInput`                                          |
-| `[slot="end"]`   | icon, or a ghost `vdButton` (clear, reveal password, copy)     |
+| Slot             | Accepts                                                    |
+| ---------------- | ---------------------------------------------------------- |
+| `[slot="start"]` | decorative icon, or a button (e.g. a prefix selector)      |
+| default          | exactly one `vdInput`                                      |
+| `[slot="end"]`   | icon, or a ghost `vdButton` (clear, reveal password, copy) |
 
 Clicking non-interactive parts of the group focuses the input.
 
@@ -78,7 +79,8 @@ Native. Buttons inside a group are separate tab stops after the input.
 
 - Name: a `<label>` (via `vd-field` or consumer). Placeholder is never the label.
 - `aria-invalid="true"` while displayed invalid (component).
-- `aria-describedby` points to the field's hint, or its error while invalid (component).
+- `aria-describedby` contains the field's active hint/error and any additional
+  `descriptionIds`, deduplicated (component).
 - Icon buttons inside a group need `aria-label` (consumer); a reveal toggle uses `aria-pressed`.
 
 ## Component tokens

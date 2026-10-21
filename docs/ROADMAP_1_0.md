@@ -172,3 +172,9 @@ consumer with strict compilation and browser checks. Compatibility/API policy an
 are now documented. The owner selected MIT for Vadem's own code; LICENSE is included in the next packed artifact.
 This batch does not by itself complete every `0.1` exit condition or change the published
 `0.0.2` artifact.
+
+## Forms and overlays contract review
+
+The first bounded contract review is recorded in [Form and overlay contracts](FORM_OVERLAY_CONTRACTS.md).
+It corrects stale descriptions and makes selection-versus-query Tab behavior explicit;
+remaining stability evidence is tracked there. No draft component is promoted automatically.
