@@ -38,6 +38,9 @@ test('one Tab stop, wrapped arrows, Home/End and native action/toggle activation
   await protect.press('Home');
   await expect(edit).toBeFocused();
   await edit.press('ArrowRight');
+  await expect(copy).toBeFocused();
+  await expect(copy).toHaveAttribute('tabindex', '0');
+  await expect(toolbar.locator('[tabindex="0"]')).toHaveCount(1);
   await copy.press('Tab');
   const outside = page.getByRole('button', {
     name: 'Перемкнути доступність копіювання',

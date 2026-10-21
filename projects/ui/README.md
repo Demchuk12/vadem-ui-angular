@@ -87,3 +87,5 @@ Vadem UI is in early development. APIs may change between releases before versio
 
 Manrope and JetBrains Mono are distributed under SIL OFL 1.1; their notices are included
 in `fonts/`. Lucide icon geometry is distributed under ISC; see `LICENSE-lucide.txt`.
+
+Getting started and copyable application examples: [usage guide](https://github.com/Demchuk12/vadem-ui-angular/blob/main/docs/GETTING_STARTED.md).

@@ -101,5 +101,5 @@ test('forced colors retains usable editor and actions', async ({ page }) => {
   await expect(editor.getByRole('textbox')).toBeVisible();
   await expect(editor.getByRole('button', { name: 'Зберегти', exact: true })).toBeVisible();
   await editor.getByRole('textbox').press('Escape');
-  await expect(editor.getByRole('button')).toBeFocused();
+  await expect(editor.locator('.vd-editable-text__trigger')).toBeFocused();
 });

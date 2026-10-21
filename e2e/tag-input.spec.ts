@@ -86,11 +86,16 @@ test('Backspace focuses removal; Escape returns to text and explicit Space remov
 test('required validates committed values only after whole-control touch', async ({ page }) => {
   const input = page.getByRole('textbox', { name: 'Теги проєкту', exact: true });
   await page.getByRole('button', { name: 'Очистити', exact: true }).click();
+  await expect(input.locator('../..').getByRole('list')).toHaveCount(0);
+  await expect(input).toHaveValue('');
   await input.fill('Ще не додано');
+  const add = input.locator('../..').getByRole('button', { name: 'Додати', exact: true });
+  await expect(add).toBeEnabled();
   await expect(input).not.toHaveAttribute('aria-invalid', 'true');
   await input.press('Tab');
   await expect(input).not.toHaveAttribute('aria-invalid', 'true');
-  await input.locator('../..').getByRole('button', { name: 'Додати', exact: true }).press('Tab');
+  await expect(add).toBeFocused();
+  await add.press('Tab');
   await expect(input).toHaveAttribute('aria-invalid', 'true');
   await expect(page.getByText('Додайте хоча б один тег', { exact: true })).toBeVisible();
   await input.press('Enter');

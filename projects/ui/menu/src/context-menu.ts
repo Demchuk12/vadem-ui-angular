@@ -77,11 +77,13 @@ export class VdContextMenu {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
   private readonly doc = inject(DOCUMENT);
   private entry: Shared | null = null;
+  private pendingPointerOpen: ((event: PointerEvent) => void) | null = null;
   private pressTimer: ReturnType<typeof setTimeout> | undefined;
 
   constructor() {
     inject(DestroyRef).onDestroy(() => {
       clearTimeout(this.pressTimer);
+      this.cancelPointerOpen();
       if (this.entry) release(this.vdContextMenu());
     });
   }
@@ -90,8 +92,31 @@ export class VdContextMenu {
     // Shift+right-click keeps the browser's own menu (copy, inspect) available.
     if (event.shiftKey && event.button === 2) return;
     event.preventDefault();
-    this.openAt(event.clientX, event.clientY, event.target as HTMLElement);
+    this.cancelPointerOpen();
+    const { clientX: x, clientY: y } = event;
+    const origin = event.target as HTMLElement;
+    // Some engines dispatch contextmenu before right-button release. Opening an
+    // auto popover then lets that same pointerup immediately light-dismiss it.
+    if (event.buttons & 2) {
+      this.pendingPointerOpen = (release) => {
+        if (release.button !== 2) return;
+        this.cancelPointerOpen();
+        if (origin.isConnected) this.openAt(x, y, origin);
+      };
+      this.doc.addEventListener('pointerup', this.pendingPointerOpen);
+      this.doc.addEventListener('pointercancel', this.cancelPointerOpen);
+    } else {
+      this.openAt(x, y, origin);
+    }
   }
+
+  private readonly cancelPointerOpen = (): void => {
+    if (this.pendingPointerOpen) {
+      this.doc.removeEventListener('pointerup', this.pendingPointerOpen);
+      this.pendingPointerOpen = null;
+    }
+    this.doc.removeEventListener('pointercancel', this.cancelPointerOpen);
+  };
 
   protected onKeydown(event: KeyboardEvent): void {
     const keyboardMenu = event.key === 'ContextMenu' || (event.shiftKey && event.key === 'F10');

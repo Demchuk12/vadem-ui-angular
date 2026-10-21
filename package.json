@@ -15,7 +15,8 @@
     "brand:export": "node tools/brand-export.mjs",
     "start:site": "ng serve site",
     "build:site": "ng build site",
-    "visual": "sh tools/visual.sh"
+    "visual": "sh tools/visual.sh",
+    "check:examples": "ngc -p docs/examples/tsconfig.json"
   },
   "private": true,
   "packageManager": "npm@11.13.0",

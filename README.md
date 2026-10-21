@@ -75,3 +75,5 @@ under ISC; see [its license](projects/ui/icon/LICENSE-lucide.txt).
 Vendored design skills retain their own licenses and notices.
 
 Publishing releases: [npm publishing workflow](docs/PUBLISHING.md).
+
+Getting started and copyable application examples: [usage guide](docs/GETTING_STARTED.md).

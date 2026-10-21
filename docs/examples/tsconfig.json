@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/docs-examples",
+    "rootDir": ".",
+    "paths": {
+      "@vadem/ui": ["../../dist/ui"],
+      "@vadem/ui/*": ["../../dist/ui/*"]
+    }
+  },
+  "files": ["quick-start.ts", "profile-form.ts"],
+  "angularCompilerOptions": {
+    "strictTemplates": true,
+    "compilationMode": "full"
+  }
+}

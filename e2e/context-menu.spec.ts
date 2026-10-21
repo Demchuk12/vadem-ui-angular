@@ -51,6 +51,26 @@ test('Shift+F10 and the ContextMenu key open it from the keyboard; activation ru
   await expect(fileMenu(page, /logo-vadem/)).toBeVisible();
 });
 
+test('right-button release outside the opener retains its original position and focus target', async ({
+  page,
+}) => {
+  const target = row(page, 1);
+  await target.scrollIntoViewIfNeeded();
+  const box = (await target.boundingBox())!;
+  const x = box.x + 40;
+  const y = box.y + box.height / 2;
+  await page.mouse.move(x, y);
+  await page.mouse.down({ button: 'right' });
+  await page.mouse.move(box.x + box.width + 10, y);
+  await page.mouse.up({ button: 'right' });
+  const menu = fileMenu(page, /Договір/);
+  await expect(menu).toBeVisible();
+  const menuBox = (await menu.boundingBox())!;
+  expect(Math.abs(menuBox.x - x)).toBeLessThan(2);
+  await page.keyboard.press('Escape');
+  await expect(target).toBeFocused();
+});
+
 test('a touch long-press opens it; a short tap does not', async ({ page }) => {
   const target = row(page, 2);
   await target.scrollIntoViewIfNeeded();

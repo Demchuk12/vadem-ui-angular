@@ -1639,3 +1639,13 @@ Direct publication requires a successful push-triggered CI run for the exact com
 Build and publish only `dist/ui`; authenticate with npm Trusted Publishing rather than
 a stored npm token. Keep the library version consumer-controlled in its package manifest.
 One-time npm trust configuration is documented in `docs/PUBLISHING.md`.
+
+### D121 — Context menu release timing and deterministic focus checks (2026-10-21)
+
+In Chromium used by CI, right-click dispatches contextmenu before pointerup; opening an
+auto popover inside that event lets the same gesture immediately light-dismiss it. Wait
+for right-button release when buttons reports it held, preserving the original point and
+opener. Cancel the pending listener on pointer cancellation/destruction. Keyboard and
+after-release contextmenu events remain immediate. Keep native popover light dismiss.
+Focus tests wait for the specific rendered trigger or enabled/roving action before the
+next key, rather than relying on scheduling between Angular renders and Playwright input.
