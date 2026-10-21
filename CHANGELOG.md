@@ -4,6 +4,10 @@
 
 ### Fixed
 
+- Close Select/Combobox lists when disabled and repair active option IDs after dynamic
+  removal/disable without mutating the selected value; retain shared Multi-select behavior.
+- Clear a pending Combobox query when Reactive/Template Forms writes a new value or resets.
+
 - Clarify Field/Input, Select/Combobox, Dialog, and Menu contracts, including locale defaults
   and the distinct Tab selection behavior.
 

@@ -1686,3 +1686,13 @@ real 200 responses. Avoid hash routing because the landing page already uses sec
 This is not SSR/prerendering. Resolve production catalog links against the document base;
 retain the separate localhost gallery in development. Verify the production artifact before
 Pages deployment. The separate npm publishing workflow and registry remain unchanged.
+
+### D126 — Repair dynamic option navigation without changing selection (2026-10-21)
+
+Tests reproduced stale active IDs and open disabled popovers in Select/Combobox. Move the
+existing Multi-select lifecycle guard into the existing shared listbox base: close on disable,
+and fall back to the first visible enabled option when the active target becomes unavailable.
+Clear the active ID when none remains. This is navigation repair, not an implicit user choice;
+keep consumer-owned values even when option data temporarily disappears. Do not mark controls
+touched while disabled. Combobox CVA writes also discard the pending query, so reset/writeValue
+reflects the form model rather than stale search text. No dependencies or public inputs added.

@@ -60,3 +60,25 @@ Before changing these contracts to stable, extend evidence for:
 These are review gaps, not confirmed runtime defects. Reproduce an issue before changing
 shared behavior, and add focused regression coverage with any fix. The package readiness
 policy remains [Compatibility](COMPATIBILITY.md); the wider scope is the [1.0 roadmap](ROADMAP_1_0.md).
+
+## Dynamic selection follow-up
+
+The follow-up reproduces and fixes open Select/Combobox lists remaining visible after
+disabling, stale active IDs after option removal/disable, and Combobox search text surviving
+Reactive form reset/writeValue. Active repair selects the first eligible navigation target
+without changing consumer-owned values. Empty option lists clear the active ID; restoring
+options restores navigation. Shared lifecycle handling already present in Multi-select now
+lives in the existing listbox base, retaining its behavior.
+
+Regression coverage: `projects/ui/select/src/select-lifecycle.spec.ts` and the independent
+packed consumer in `tools/consumer/src/select-lifecycle.ts`, exercised by
+`tools/check-select-lifecycle.mjs`. The consumer uses real browser popovers in both themes,
+including Ukrainian/RTL content, narrow layout, forced-colors focus and open-list axe.
+Unit regressions cover Reactive Forms, direct disabled input changes, and Signal Forms
+required/touch/reset/disabled behavior, including reset with an unchanged null model. The
+packed browser consumer exercises Reactive Forms. This is bounded evidence, not complete
+Signal Forms parity, other-engine, SSR/hydration, or assistive-technology coverage.
+
+Validation for this follow-up: 417 unit tests (416 library + 1 demo), 48 targeted Chromium
+scenarios, 26 existing visual comparisons, lint, package checks, strict documentation examples,
+and the independent packed consumer passed. Visual baselines were not changed.

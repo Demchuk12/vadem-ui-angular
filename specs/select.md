@@ -78,6 +78,23 @@ Free text never becomes the value: on blur the input shows the selected option a
 `Alt+ArrowUp` chooses the active match and closes. This differs from Select, where `Tab`
 commits the active option.
 
+## Dynamic options and form updates
+
+- Disabling an open control closes its list without choosing an option or marking an
+  untouched control touched. Re-enabling it leaves the list closed until the next user action.
+- If the active option is removed, hidden by filtering, or disabled, activation moves to
+  the first visible enabled option. If none remains, clear `aria-activedescendant`.
+  This repairs navigation only; it does not change the selected value or emit a value change.
+- The consumer owns option data and the selected value. Removing the selected option does
+  not silently clear that value. Its label becomes unavailable until a matching option returns;
+  applications should explicitly clear or validate unavailable values when their domain requires it.
+- Form writes through the Angular value accessor discard an uncommitted Combobox query and show
+  the written selection's label (or an empty field for null). The write does not itself select
+  a match, emit a user value change, or force the popup closed. The same reset behavior is
+  verified with `[formField]`, including when its model value remains null.
+- Reactive form reset clears displayed errors through the form's untouched state. Required
+  validator changes are reflected after the consumer calls `updateValueAndValidity()`.
+
 ## States
 
 | State              | Reflected as                                                |

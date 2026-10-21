@@ -3,7 +3,6 @@ import {
   Component,
   ElementRef,
   ViewEncapsulation,
-  afterRenderEffect,
   computed,
   forwardRef,
   input,
@@ -127,18 +126,6 @@ export class VdMultiSelect extends VdListboxBase<string[]> {
       return { value, label: option?.textLabel() || value, disabled: option?.disabled() ?? false };
     }),
   );
-
-  constructor() {
-    super();
-    afterRenderEffect(() => {
-      if (this.isDisabled()) this.closeList();
-      else if (this.open()) {
-        // A query, dynamic option removal, or disabled change must never leave a dangling id.
-        const active = this.activeOption();
-        if (!active || active.disabled()) this.activate('first');
-      }
-    });
-  }
 
   protected listEl(): HTMLElement | undefined {
     return this.list()?.nativeElement;

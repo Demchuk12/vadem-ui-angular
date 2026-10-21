@@ -141,3 +141,9 @@ For required array selection in Signal Forms, use `required(path)` for required 
 does not treat `[]` as empty. Reactive Forms `Validators.required` does reject empty arrays.
 DOM setup is browser-only through render hooks. React/Vue can reuse the plain CSS and pure
 selection helpers, rendering the same markup with idiomatic controlled-value APIs.
+
+## Shared list lifecycle
+
+Multi-select shares the disabled/open-list and active-option repair behavior described in
+[Select & Combobox](select.md#dynamic-options-and-form-updates). Its existing multiple-value
+and query/reset contracts remain specific to Multi-select.

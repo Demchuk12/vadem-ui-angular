@@ -18,7 +18,7 @@ import type { VdOption } from './option';
 
 /**
  * Editable combobox with list autocomplete (APG): type to filter, pick with arrows + Enter or
- * click. The value is always one of the options; free text reverts on blur. Spec: specs/select.md
+ * click. User choices come from the options; free text reverts on blur. Spec: specs/select.md
  */
 @Component({
   selector: 'vd-combobox',
@@ -90,6 +90,7 @@ export class VdCombobox extends VdListboxBase {
 
   writeValue(value: string | null): void {
     this.value.set(value ?? null);
+    this.query.set(null);
   }
 
   choose(option: VdOption): void {

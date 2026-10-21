@@ -16,6 +16,7 @@ import { extname, join, resolve, sep } from 'node:path';
 import { chromium, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { checkPackage, root } from './check-package.mjs';
+import { checkSelectLifecycle } from './check-select-lifecycle.mjs';
 
 const workspace = mkdtempSync(join(tmpdir(), 'vadem-consumer-'));
 const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
@@ -173,6 +174,7 @@ try {
       await page.evaluate(() => document.fonts.check('16px Manrope', 'Олена')),
       'Bundled font did not load.',
     );
+    await checkSelectLifecycle(page, screenshots, theme);
     const axe = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
       .analyze();
@@ -190,7 +192,7 @@ try {
   );
   assert.deepEqual(errors, [], 'Consumer browser errors.');
   console.log(
-    `Independent consumer passed: ${imports.length} typed entry points, production build, forms, CSS/fonts, dark/light and axe.`,
+    `Independent consumer passed: ${imports.length} typed entry points, production build, forms/select lifecycle, CSS/fonts, dark/light, RTL and axe.`,
   );
   succeeded = true;
 } finally {

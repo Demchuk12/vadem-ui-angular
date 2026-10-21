@@ -134,6 +134,15 @@ export abstract class VdListboxBase<T = string | null>
       this.destroyRef.onDestroy(() => list.removeEventListener('toggle', onToggle));
     });
 
+    // Dynamic options and disabled state must not leave an inaccessible open list.
+    afterRenderEffect(() => {
+      if (this.isDisabled()) this.closeList();
+      else if (this.open()) {
+        const active = this.activeOption();
+        if (!active || active.disabled()) this.activate('first');
+      }
+    });
+
     // Keep the active option visible while navigating.
     afterRenderEffect(() => {
       const id = this.activeId();
@@ -208,7 +217,7 @@ export abstract class VdListboxBase<T = string | null>
   }
 
   protected markTouched(): void {
-    this.onTouched();
+    if (!this.isDisabled()) this.onTouched();
   }
 
   protected openList(start: 'selected' | 'first' | 'last' = 'selected'): void {
