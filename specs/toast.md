@@ -1,6 +1,6 @@
 # Toast
 
-Status: draft · Pattern: status messages in a live region (WCAG 4.1.3)
+Status: stable · Pattern: status messages in a live region (WCAG 4.1.3)
 
 Brief, non-blocking feedback. Not for information the user must act on (use a dialog).
 

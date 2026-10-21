@@ -1,6 +1,6 @@
 # Segmented control
 
-Status: draft · Pattern: radio group (native `<input type="radio">`)
+Status: stable · Pattern: radio group (native `<input type="radio">`)
 
 Single choice among 2-5 short options that change a view or filter (period, layout, units).
 Not tabs: tabs switch panels of content (`vd-tabs`); a segmented control sets a value.

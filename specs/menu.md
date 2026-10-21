@@ -1,6 +1,6 @@
 # Menu
 
-Status: draft · Pattern: [APG Menu Button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)
+Status: stable · Pattern: [APG Menu Button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)
 
 Actions, not values (use select for values). `popover="auto"` panel anchored to its trigger.
 

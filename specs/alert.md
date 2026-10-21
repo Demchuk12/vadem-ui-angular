@@ -1,6 +1,6 @@
 # Alert
 
-Status: draft · Pattern: static callout; `role="alert"` / `role="status"` when dynamic
+Status: stable · Pattern: static callout; `role="alert"` / `role="status"` when dynamic
 
 Inline message in the page flow: form-level errors, warnings about the current page, success
 after a flow. Non-blocking and in place (toasts are transient; dialogs block).

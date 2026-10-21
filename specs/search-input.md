@@ -1,6 +1,6 @@
 # Search input
 
-Status: draft · Pattern: native `input[type=search]` in an input group
+Status: stable · Pattern: native `input[type=search]` in an input group
 
 A search field with a decorative search icon, a clear action, Escape-to-clear and an optional
 loading indicator. Value, forms accessor, autofill and the native `search` event stay native.

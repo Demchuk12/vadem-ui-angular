@@ -1,6 +1,6 @@
 # Table
 
-Status: draft · Pattern: native `<table>`; APG sortable table
+Status: stable · Pattern: native `<table>`; APG sortable table
 
 Tabular data with column headers, optional sorting and row selection. The consumer renders
 rows; the library styles the table, owns the sort state and ships a pure sort helper.

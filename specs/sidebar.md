@@ -1,6 +1,6 @@
 # Sidebar
 
-Status: draft · Pattern: app layout; drawer uses the [APG modal dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) through Dialog
+Status: stable · Pattern: app layout; drawer uses the [APG modal dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) through Dialog
 
 Application shell with a side panel. Wide containers dock the panel beside the content and can
 collapse it to an icon rail. Narrow viewports move the same content into a start-edge Dialog

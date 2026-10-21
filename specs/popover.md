@@ -1,6 +1,6 @@
 # Popover
 
-Status: draft · Pattern: non-modal dialog on the Popover API, anchored with CSS
+Status: stable · Pattern: non-modal dialog on the Popover API, anchored with CSS
 
 A floating panel with arbitrary content tied to a button: quick filters, share options, a small
 form, details. Not a menu (actions list: `vdMenu`), not a tooltip (text only: `vdTooltip`), not

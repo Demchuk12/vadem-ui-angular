@@ -1,6 +1,6 @@
 # Tooltip
 
-Status: draft · Pattern: [APG Tooltip](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/) on Popover API + CSS anchor positioning
+Status: stable · Pattern: [APG Tooltip](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/) on Popover API + CSS anchor positioning
 
 Short, plain-text hint for a control. Not for rich or interactive content (use a popover/menu).
 

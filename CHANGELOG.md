@@ -8,11 +8,20 @@
   `requiredTrue` now set `aria-required="true"` on inputs, checkboxes and switches, and the
   native `required` attribute on radios. Previously only the `aria-hidden` `*` marker showed it.
 
+- Slider: restore a visible keyboard focus indicator in forced-colors mode (the native control's
+  own indicator was removed by `outline: none`).
+
 ### Changed
 
 - Field, Input, Checkbox, Radio and Switch specs are now `stable`, backed by unit tests (Reactive
   and Signal Forms), browser checks at 320px, with long Ukrainian labels, forced colors, reduced
   motion and disabled states.
+- Specs with dedicated browser tests and axe coverage are now `stable`: Alert, Calendar, Card,
+  Accordion, Breadcrumbs, Button, Dialog, Kbd, Progress, Menu, Popover, Multi-select, Dropzone,
+  Sidebar, Pagination, Segmented, Slider, Select, Stat, Toast, Table, Tabs, Search input, Upload
+  list and Tooltip. Avatar, Badge, Empty state, Chart and Locale stay `draft`.
+- Every gallery page is checked for 320px overflow (LTR/RTL), reduced motion and a visible
+  forced-colors focus indicator on each tab stop; Select inside a modal dialog is covered.
 
 ## 0.0.3 - 2026-10-21
 

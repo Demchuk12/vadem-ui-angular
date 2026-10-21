@@ -1,6 +1,6 @@
 # Multi-select
 
-Status: draft · Pattern: editable combobox with a multi-select listbox
+Status: stable · Pattern: editable combobox with a multi-select listbox
 
 Choose several existing values; type to filter and remove selected values individually.
 Selection is explicit: moving the active option never changes the value.

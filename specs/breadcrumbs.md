@@ -1,6 +1,6 @@
 # Breadcrumbs
 
-Status: draft · Pattern: APG breadcrumb (navigation landmark, ordered list, `aria-current="page"`)
+Status: stable · Pattern: APG breadcrumb (navigation landmark, ordered list, `aria-current="page"`)
 
 Shows where the page sits in a hierarchy and links to its ancestors. Not a history trail.
 

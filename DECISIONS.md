@@ -1708,3 +1708,12 @@ is not supported on `role=radio`. Explicit `required` input and Signal Forms kee
 attribute. Field, Input, Checkbox, Radio and Switch specs move to `stable`; evidence is Chromium,
 unit tests and axe. Firefox/WebKit and screen-reader passes remain deferred for 1.0 per the
 lightweight personal-use plan.
+
+### D128 — Stability labels follow evidence; page-wide robustness checks (2026-10-21)
+
+For personal dashboard use, a spec becomes `stable` when it has dedicated browser tests with
+axe plus the page-wide checks in `e2e/robustness.spec.ts` (320px overflow in LTR/RTL, reduced
+motion, forced-colors focus on every tab stop). The latter found one real defect (Slider lost
+its focus indicator in forced colors); other failures were test gaps (tree/chart draw the ring
+on a child or SVG stroke). Avatar, Badge, Empty state, Chart and Locale remain `draft` for lack
+of such tests. Still Chromium-only; Firefox/WebKit and screen-reader passes stay deferred.

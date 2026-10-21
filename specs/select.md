@@ -1,6 +1,6 @@
 # Select & Combobox
 
-Status: draft · Patterns: [APG Select-Only Combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/),
+Status: stable · Patterns: [APG Select-Only Combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/),
 [APG Combobox with List Autocomplete](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-list/)
 
 Focus stays on the combobox element (button / input); the active option is exposed with

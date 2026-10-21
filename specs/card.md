@@ -1,6 +1,6 @@
 # Card
 
-Status: draft · Pattern: container; interactive variant = one link/button target
+Status: stable · Pattern: container; interactive variant = one link/button target
 
 ## Anatomy
 

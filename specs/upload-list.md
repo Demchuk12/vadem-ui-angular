@@ -1,6 +1,6 @@
 # File upload list
 
-Status: draft · Pattern: native named list, buttons and progress elements
+Status: stable · Pattern: native named list, buttons and progress elements
 
 Displays consumer-owned transfers. Composes with Dropzone; never sends requests, retains File
 objects, validates files, schedules work or infers success from 100% progress.

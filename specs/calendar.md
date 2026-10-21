@@ -1,6 +1,6 @@
 # Calendar and date picker
 
-Status: draft · Pattern: APG date picker dialog (grid of dates) + editable text field
+Status: stable · Pattern: APG date picker dialog (grid of dates) + editable text field
 
 Pick one calendar date. `vd-calendar` is the inline month grid; `vd-date-picker` is a text
 field where the date can be typed, with a button that opens the calendar in a popover.

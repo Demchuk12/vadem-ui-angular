@@ -182,3 +182,36 @@ test.describe('menu', () => {
     ).toEqual([]);
   });
 });
+
+test.describe('select inside a modal dialog', () => {
+  test('Escape closes only the list; choosing keeps the dialog open; focus returns to the trigger', async ({
+    page,
+  }) => {
+    await openGallery(page, 'dialog');
+    await page.getByRole('button', { name: 'Редагувати профіль' }).click();
+    const dialog = page.getByRole('dialog', { name: 'Редагувати профіль' });
+    const select = dialog.getByRole('combobox', { name: 'Роль у просторі' });
+    await select.focus();
+    await page.keyboard.press('ArrowDown');
+    const list = page.getByRole('listbox');
+    await expect(list).toBeVisible();
+    // The list must render above the modal and inside the viewport.
+    const box = (await list.boundingBox())!;
+    const view = page.viewportSize()!;
+    expect(box.y + box.height).toBeLessThanOrEqual(view.height);
+    expect(await list.evaluate((el) => !!el.checkVisibility())).toBe(true);
+
+    await page.keyboard.press('Escape');
+    await expect(list).toBeHidden();
+    await expect(dialog).toBeVisible();
+    await expect(select).toBeFocused();
+
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('Enter');
+    await expect(select).toContainText('Спостерігач');
+    await expect(dialog).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(dialog).toBeHidden();
+  });
+});

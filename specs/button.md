@@ -1,6 +1,6 @@
 # Button
 
-Status: draft · Pattern: native `<button>` / `<a>` ([APG Button](https://www.w3.org/WAI/ARIA/apg/patterns/button/))
+Status: stable · Pattern: native `<button>` / `<a>` ([APG Button](https://www.w3.org/WAI/ARIA/apg/patterns/button/))
 
 Enhances a native `<button>` or `<a>` element. Native semantics, focus and keyboard behavior are
 preserved; the library adds styling, loading, and consistent disabled behavior.

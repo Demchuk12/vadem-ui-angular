@@ -1,6 +1,6 @@
 # Dropzone (file upload)
 
-Status: draft · Pattern: native `<input type="file">` inside its `<label>`
+Status: stable · Pattern: native `<input type="file">` inside its `<label>`
 
 Choose files with the system picker or by dropping them. The library handles picking,
 dropping and checking; the consumer owns requests and file state. Use the optional

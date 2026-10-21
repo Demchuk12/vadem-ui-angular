@@ -1,6 +1,6 @@
 # Accordion
 
-Status: draft · Pattern: disclosure on native `<details>`/`<summary>`
+Status: stable · Pattern: disclosure on native `<details>`/`<summary>`
 
 Stacked sections whose bodies show and hide: FAQs, settings groups, long forms. Not tabs: all
 headings stay visible and several sections may be open (unless `exclusive`).

@@ -1,6 +1,6 @@
 # Progress, progress ring and meter
 
-Status: draft · Pattern: native `<progress>` and `<meter>`
+Status: stable · Pattern: native `<progress>` and `<meter>`
 
 - **Progress**: completion of a task (upload, import, onboarding steps). Indeterminate when the
   amount is unknown.

@@ -128,5 +128,11 @@
     .vd-slider {
       appearance: auto;
     }
+
+    /* The native control's own indicator is removed by `outline: none` above. */
+    .vd-slider:focus-visible {
+      outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+      outline-offset: var(--vd-focus-ring-offset);
+    }
   }
 }

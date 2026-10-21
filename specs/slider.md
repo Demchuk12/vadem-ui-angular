@@ -1,6 +1,6 @@
 # Slider
 
-Status: draft · Pattern: native `<input type="range">`
+Status: stable · Pattern: native `<input type="range">`
 
 Pick a number in a range where the exact value matters less than its position (volume,
 opacity, a price filter). Show the value next to it; offer a number input when precision matters.

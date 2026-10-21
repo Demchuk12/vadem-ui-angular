@@ -1,6 +1,6 @@
 # Tabs
 
-Status: draft · Pattern: [APG Tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)
+Status: stable · Pattern: [APG Tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)
 
 ## Anatomy
 

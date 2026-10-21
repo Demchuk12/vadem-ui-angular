@@ -1,6 +1,6 @@
 # Dialog
 
-Status: draft · Pattern: [APG Dialog (Modal)](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) on native `<dialog>`
+Status: stable · Pattern: [APG Dialog (Modal)](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) on native `<dialog>`
 
 The platform provides top layer, focus trap (inert page), initial focus (first focusable or
 `autofocus`), Escape, and focus restoration to the opener. The component adds open state,

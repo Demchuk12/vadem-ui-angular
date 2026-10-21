@@ -4,10 +4,11 @@ import { VD_DIALOG } from '@vadem/ui/dialog';
 import { VdField } from '@vadem/ui/field';
 import { VdIcon } from '@vadem/ui/icon';
 import { VdInput } from '@vadem/ui/input';
+import { VdOption, VdSelect } from '@vadem/ui/select';
 
 @Component({
   selector: 'demo-dialog',
-  imports: [VD_DIALOG, VdButton, VdField, VdIcon, VdInput],
+  imports: [VD_DIALOG, VdButton, VdField, VdIcon, VdInput, VdOption, VdSelect],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <header class="demo-page-head">
@@ -134,6 +135,13 @@ import { VdInput } from '@vadem/ui/input';
         </vd-field>
         <vd-field label="Посада" hint="Необовʼязково">
           <input vdInput value="Дизайнерка інтерфейсів" />
+        </vd-field>
+        <vd-field label="Роль у просторі">
+          <vd-select value="member">
+            <vd-option value="admin">Адміністратор</vd-option>
+            <vd-option value="member">Учасник</vd-option>
+            <vd-option value="viewer">Спостерігач</vd-option>
+          </vd-select>
         </vd-field>
       </div>
       <footer vdDialogFooter>

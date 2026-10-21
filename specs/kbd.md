@@ -1,6 +1,6 @@
 # Kbd
 
-Status: draft · Pattern: native `<kbd>` ([HTML: nested kbd for key combinations](https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-kbd-element))
+Status: stable · Pattern: native `<kbd>` ([HTML: nested kbd for key combinations](https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-kbd-element))
 
 Displays a keyboard shortcut. A single `<kbd>` styled by base CSS remains the way to show one
 literal key in prose. This component adds platform-aware combinations and accessible key names.

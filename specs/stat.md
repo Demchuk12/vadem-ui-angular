@@ -1,6 +1,6 @@
 # Stat
 
-Status: draft · Pattern: description list (`dl` / `dt` / `dd`)
+Status: stable · Pattern: description list (`dl` / `dt` / `dd`)
 
 One key figure: label, value, optional change and caption. Values and changes arrive formatted
 by the application (`Intl.NumberFormat`, units, currency); the component never parses numbers.

@@ -1,6 +1,6 @@
 # Pagination
 
-Status: draft · Pattern: navigation landmark with buttons, `aria-current="page"`
+Status: stable · Pattern: navigation landmark with buttons, `aria-current="page"`
 
 Moves between pages of a list or table. Buttons, not links: the consumer loads the page (for
 URL-addressable pages, sync `page` with a query param).
