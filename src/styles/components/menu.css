@@ -1,0 +1,168 @@
+/* Menu - spec: specs/menu.md */
+@layer vd.components {
+  .vd-menu {
+    --vd-menu-padding: var(--vd-space-1);
+    --vd-menu-radius: var(--vd-radius-lg);
+    --vd-menu-min-width: 12rem;
+
+    /* Geometry on the base rule (D45). */
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    margin-block-start: var(--vd-space-1);
+    position-area: block-end span-inline-end;
+    position-try-fallbacks:
+      flip-block,
+      flip-inline,
+      flip-block flip-inline;
+    /* Grow to the longest item, within limits; longer items wrap. */
+    inline-size: max-content;
+    min-inline-size: max(var(--vd-menu-min-width), anchor-size(inline));
+    max-inline-size: min(22rem, 100vw - var(--vd-space-4) * 2);
+    max-block-size: min(24rem, 70dvh);
+    padding: var(--vd-menu-padding);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: var(--vd-border-width) solid var(--vd-color-border-strong);
+    border-radius: var(--vd-menu-radius);
+    background-color: var(--vd-color-surface-overlay);
+    box-shadow: var(--vd-highlight-top), var(--vd-shadow-lg);
+    color: var(--vd-color-text);
+
+    opacity: 0;
+    scale: 0.97;
+    transform-origin: top;
+    transition:
+      opacity var(--vd-duration-fast) var(--vd-ease-out),
+      scale var(--vd-duration-base) var(--vd-ease-spring),
+      display var(--vd-duration-fast) allow-discrete,
+      overlay var(--vd-duration-fast) allow-discrete;
+  }
+
+  .vd-menu:popover-open {
+    opacity: 1;
+    scale: 1;
+  }
+
+  @starting-style {
+    .vd-menu:popover-open {
+      opacity: 0;
+      scale: 0.97;
+    }
+  }
+
+  .vd-menu:focus {
+    outline: none;
+  }
+
+  .vd-menu__item {
+    display: flex;
+    align-items: center;
+    gap: var(--vd-space-2);
+    inline-size: 100%;
+    min-block-size: var(--vd-control-height-sm);
+    padding-block: var(--vd-space-1-5);
+    padding-inline: var(--vd-space-3) var(--vd-space-2);
+    border: 0;
+    border-radius: max(var(--vd-radius-xs), calc(var(--vd-menu-radius) - var(--vd-menu-padding)));
+    background: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: var(--vd-text-sm);
+    line-height: var(--vd-leading-snug);
+    text-align: start;
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .vd-menu__item > .vd-icon {
+    --vd-icon-size: var(--vd-space-4);
+
+    color: var(--vd-color-text-muted);
+  }
+
+  /* Shortcut / meta text at the end, in the mono label style. */
+  .vd-menu__item > [slot='end'] {
+    margin-inline-start: auto;
+    padding-inline-start: var(--vd-space-4);
+    color: var(--vd-color-text-subtle);
+    font-family: var(--vd-font-mono);
+    font-size: var(--vd-text-xs);
+    letter-spacing: var(--vd-tracking-caps);
+  }
+
+  .vd-menu__item:focus {
+    outline: none;
+  }
+
+  .vd-menu__item:focus-visible,
+  .vd-menu__item:focus {
+    background-color: var(--vd-color-fill-hover);
+  }
+
+  .vd-menu__item[data-variant='danger'] {
+    color: var(--vd-color-danger-text);
+  }
+
+  .vd-menu__item[data-variant='danger'] > .vd-icon {
+    color: currentColor;
+  }
+
+  .vd-menu__item[data-variant='danger']:focus {
+    background-color: var(--vd-color-danger-subtle);
+  }
+
+  .vd-menu__item[aria-disabled='true'] {
+    color: var(--vd-color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  .vd-menu__separator {
+    block-size: var(--vd-border-width);
+    margin-block: var(--vd-space-1);
+    margin-inline: calc(var(--vd-menu-padding) * -1);
+    border: 0;
+    background-color: var(--vd-color-border);
+  }
+
+  /* Signature: mono eyebrow as group heading. */
+  .vd-menu__label {
+    padding: var(--vd-space-2) var(--vd-space-3) var(--vd-space-1);
+    /* Muted, not subtle: small text on the overlay surface needs the stronger tone for AA. */
+    color: var(--vd-color-text-muted);
+    font-family: var(--vd-font-mono);
+    font-size: var(--vd-text-xs);
+    font-weight: var(--vd-weight-medium);
+    letter-spacing: var(--vd-tracking-caps);
+    text-transform: uppercase;
+  }
+
+  @media (forced-colors: active) {
+    .vd-menu {
+      border-color: CanvasText;
+    }
+
+    .vd-menu__item:focus {
+      outline: var(--vd-border-width) solid Highlight;
+    }
+  }
+
+  /* --------------------------------------------------------- context menu */
+
+  /* Zero-size point at the pointer (or focused element) that the menu anchors to, so the
+     regular position-try flipping keeps the menu on screen. Coordinates are set inline. */
+  .vd-context-menu__anchor {
+    position: fixed;
+    inset-block-start: var(--vd-context-y, 0);
+    inset-inline-start: var(--vd-context-x, 0);
+    inline-size: 0;
+    block-size: 0;
+    pointer-events: none;
+  }
+
+  /* Long-press opens the menu on touch; suppress the platform callout in that region. */
+  .vd-context-menu-target {
+    -webkit-touch-callout: none;
+  }
+}

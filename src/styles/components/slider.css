@@ -1,0 +1,132 @@
+/* Slider (native range) - spec: specs/slider.md */
+/* Engine pseudo-elements live in separate rules: an unknown one drops the whole rule. */
+@layer vd.components {
+  .vd-slider {
+    --vd-slider-track-size: var(--vd-space-1-5);
+    --vd-slider-thumb-size: 1.125rem;
+    --vd-slider-track: var(--vd-color-fill-hover);
+    --vd-slider-range: var(--vd-color-action);
+    --vd-slider-thumb-bg: var(--vd-color-on-action);
+    --vd-slider-thumb-border: var(--vd-color-action);
+    --vd-slider-ring: var(--vd-color-focus);
+    /* Track gradient direction; mirrored in RTL (the native range flips too). */
+    --vd-slider-direction: to right;
+
+    appearance: none;
+    display: block;
+    inline-size: 100%;
+    block-size: var(--vd-slider-thumb-size);
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .vd-slider:dir(rtl) {
+    --vd-slider-direction: to left;
+  }
+
+  .vd-slider[data-invalid] {
+    --vd-slider-range: var(--vd-color-danger);
+    --vd-slider-thumb-border: var(--vd-color-danger);
+    --vd-slider-ring: var(--vd-color-danger);
+  }
+
+  .vd-slider:disabled {
+    opacity: var(--vd-opacity-disabled);
+    cursor: not-allowed;
+  }
+
+  .vd-slider:focus-visible {
+    outline: none;
+  }
+
+  /* --------------------------------------------------------- WebKit/Blink */
+
+  .vd-slider::-webkit-slider-runnable-track {
+    block-size: var(--vd-slider-track-size);
+    border-radius: var(--vd-radius-full);
+    background: linear-gradient(
+      var(--vd-slider-direction),
+      var(--vd-slider-range) var(--vd-slider-fill, 0%),
+      var(--vd-slider-track) var(--vd-slider-fill, 0%)
+    );
+  }
+
+  .vd-slider::-webkit-slider-thumb {
+    appearance: none;
+    inline-size: var(--vd-slider-thumb-size);
+    block-size: var(--vd-slider-thumb-size);
+    margin-block-start: calc((var(--vd-slider-track-size) - var(--vd-slider-thumb-size)) / 2);
+    border: calc(var(--vd-border-width) * 2) solid var(--vd-slider-thumb-border);
+    border-radius: var(--vd-radius-full);
+    background: var(--vd-slider-thumb-bg);
+    box-shadow: var(--vd-shadow-sm);
+    transition:
+      scale var(--vd-duration-fast) var(--vd-ease-out),
+      box-shadow var(--vd-duration-fast) var(--vd-ease-out);
+  }
+
+  .vd-slider:focus-visible::-webkit-slider-thumb {
+    box-shadow:
+      0 0 0 var(--vd-focus-ring-offset) var(--vd-color-bg),
+      0 0 0 calc(var(--vd-focus-ring-offset) + var(--vd-focus-ring-width)) var(--vd-slider-ring);
+  }
+
+  .vd-slider:not(:disabled):active::-webkit-slider-thumb {
+    scale: 1.1;
+  }
+
+  /* -------------------------------------------------------------- Firefox */
+
+  .vd-slider::-moz-range-track {
+    block-size: var(--vd-slider-track-size);
+    border-radius: var(--vd-radius-full);
+    background: var(--vd-slider-track);
+  }
+
+  .vd-slider::-moz-range-progress {
+    block-size: var(--vd-slider-track-size);
+    border-radius: var(--vd-radius-full);
+    background: var(--vd-slider-range);
+  }
+
+  .vd-slider::-moz-range-thumb {
+    box-sizing: border-box;
+    inline-size: var(--vd-slider-thumb-size);
+    block-size: var(--vd-slider-thumb-size);
+    border: calc(var(--vd-border-width) * 2) solid var(--vd-slider-thumb-border);
+    border-radius: var(--vd-radius-full);
+    background: var(--vd-slider-thumb-bg);
+    box-shadow: var(--vd-shadow-sm);
+    transition: scale var(--vd-duration-fast) var(--vd-ease-out);
+  }
+
+  .vd-slider:focus-visible::-moz-range-thumb {
+    box-shadow:
+      0 0 0 var(--vd-focus-ring-offset) var(--vd-color-bg),
+      0 0 0 calc(var(--vd-focus-ring-offset) + var(--vd-focus-ring-width)) var(--vd-slider-ring);
+  }
+
+  .vd-slider:not(:disabled):active::-moz-range-thumb {
+    scale: 1.1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vd-slider:active::-webkit-slider-thumb {
+      scale: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vd-slider:active::-moz-range-thumb {
+      scale: none;
+    }
+  }
+
+  /* System colors: fall back to the native control (custom tracks may lose their colors). */
+  @media (forced-colors: active) {
+    .vd-slider {
+      appearance: auto;
+    }
+  }
+}

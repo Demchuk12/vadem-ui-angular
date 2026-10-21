@@ -1,0 +1,83 @@
+@layer vd.components {
+  .vd-skeleton {
+    --vd-skeleton-bg: var(--vd-color-fill-hover);
+    --vd-skeleton-radius: var(--vd-radius-sm);
+    --vd-skeleton-inline-size: auto;
+    --vd-skeleton-block-size: auto;
+    --vd-skeleton-duration: var(--vd-duration-shimmer);
+
+    position: relative;
+    overflow: hidden;
+    min-block-size: 1lh;
+    display: block;
+    flex-shrink: 0;
+    inline-size: var(--vd-skeleton-inline-size);
+    max-inline-size: 100%;
+    block-size: var(--vd-skeleton-block-size);
+    border-radius: var(--vd-skeleton-radius);
+    background: var(--vd-skeleton-bg);
+    pointer-events: none;
+  }
+  .vd-skeleton[data-shape] {
+    --vd-skeleton-inline-size: 100%;
+    --vd-skeleton-bg: var(--vd-color-fill-active);
+    min-block-size: 0;
+  }
+  .vd-skeleton[data-shape='text'] {
+    --vd-skeleton-block-size: var(--vd-text-sm);
+    --vd-skeleton-radius: var(--vd-radius-xs);
+  }
+  .vd-skeleton[data-shape='text'][data-size='sm'] {
+    --vd-skeleton-block-size: var(--vd-text-xs);
+  }
+  .vd-skeleton[data-shape='text'][data-size='lg'] {
+    --vd-skeleton-block-size: var(--vd-text-lg);
+  }
+  .vd-skeleton[data-shape='circle'] {
+    --vd-skeleton-inline-size: var(--vd-space-10);
+    --vd-skeleton-block-size: var(--vd-space-10);
+    --vd-skeleton-radius: var(--vd-radius-full);
+    aspect-ratio: 1;
+    block-size: auto;
+  }
+  .vd-skeleton[data-shape='circle'][data-size='sm'] {
+    --vd-skeleton-inline-size: var(--vd-space-8);
+    --vd-skeleton-block-size: var(--vd-space-8);
+  }
+  .vd-skeleton[data-shape='circle'][data-size='lg'] {
+    --vd-skeleton-inline-size: var(--vd-space-12);
+    --vd-skeleton-block-size: var(--vd-space-12);
+  }
+  .vd-skeleton[data-shape='rectangle'] {
+    --vd-skeleton-block-size: var(--vd-space-24);
+    --vd-skeleton-radius: var(--vd-radius-md);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .vd-skeleton[data-animated]::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, var(--vd-color-shimmer), transparent);
+      translate: -100% 0;
+      animation: vd-skeleton-shimmer var(--vd-skeleton-duration) var(--vd-ease-in-out) infinite;
+    }
+    .vd-skeleton[data-animated]:dir(rtl)::after {
+      animation-direction: reverse;
+    }
+  }
+  @keyframes vd-skeleton-shimmer {
+    to {
+      translate: 100% 0;
+    }
+  }
+  @media (forced-colors: active) {
+    .vd-skeleton {
+      background: Canvas;
+      border: var(--vd-border-width) solid GrayText;
+    }
+    .vd-skeleton[data-animated]::after {
+      content: none;
+      animation: none;
+    }
+  }
+}

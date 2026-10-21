@@ -1,0 +1,71 @@
+@layer vd.components {
+  .vd-form-error-summary {
+    --vd-form-error-summary-bg: var(--vd-color-danger-subtle);
+    --vd-form-error-summary-border: var(--vd-color-danger-border);
+    --vd-form-error-summary-fg: var(--vd-color-text);
+    --vd-form-error-summary-accent: var(--vd-color-danger-text);
+    --vd-form-error-summary-padding: var(--vd-space-4);
+    --vd-form-error-summary-gap: var(--vd-space-3);
+    --vd-form-error-summary-radius: var(--vd-radius-lg);
+    --vd-form-error-summary-title-size: var(--vd-text-base);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--vd-form-error-summary-gap);
+    min-inline-size: 0;
+    padding: var(--vd-form-error-summary-padding);
+    padding-inline: min(var(--vd-form-error-summary-padding), 5%);
+    border: var(--vd-border-width) solid var(--vd-form-error-summary-border);
+    border-radius: var(--vd-form-error-summary-radius);
+    background: var(--vd-form-error-summary-bg);
+    color: var(--vd-form-error-summary-fg);
+    font-size: var(--vd-text-sm);
+    overflow-wrap: anywhere;
+  }
+  .vd-form-error-summary[hidden] {
+    display: none;
+  }
+  .vd-form-error-summary > * {
+    margin: 0;
+  }
+  .vd-form-error-summary__title {
+    display: flex;
+    align-items: start;
+    flex-wrap: wrap;
+    gap: var(--vd-space-2);
+    color: var(--vd-form-error-summary-accent);
+    font-size: var(--vd-form-error-summary-title-size);
+    font-weight: var(--vd-weight-semibold);
+    line-height: var(--vd-leading-snug);
+  }
+  .vd-form-error-summary__title > span {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+  }
+  .vd-form-error-summary__title > .vd-icon {
+    flex: none;
+    block-size: 1lh;
+  }
+  .vd-form-error-summary__list {
+    padding: 0;
+    list-style: none;
+  }
+  .vd-form-error-summary__list a {
+    display: block;
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    min-block-size: var(--vd-space-6);
+    padding-block: var(--vd-space-1);
+    color: var(--vd-form-error-summary-accent);
+    text-decoration: underline;
+    text-underline-offset: var(--vd-space-0-5);
+  }
+  .vd-form-error-summary__list a:hover {
+    text-decoration-thickness: var(--vd-focus-ring-width);
+  }
+  .vd-form-error-summary:focus,
+  .vd-form-error-summary__list a:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+}

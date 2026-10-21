@@ -1,0 +1,206 @@
+/* Card - spec: specs/card.md. Signatures: top highlight, concentric radii, cursor glow. */
+@layer vd.components {
+  .vd-card {
+    --vd-card-padding: var(--vd-space-6);
+    --vd-card-gap: var(--vd-space-4);
+    --vd-card-radius: var(--vd-radius-surface);
+    /* Concentric radius for anything nested edge-to-edge-minus-padding. */
+    --vd-card-inner-radius: max(
+      var(--vd-radius-xs),
+      calc(var(--vd-card-radius) - var(--vd-card-padding))
+    );
+    --vd-card-bg: var(--vd-color-surface);
+    --vd-card-border: var(--vd-color-border);
+    --vd-card-shadow: var(--vd-highlight-top);
+
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    gap: var(--vd-card-gap);
+    min-inline-size: 0;
+    padding: var(--vd-card-padding);
+    border: var(--vd-border-width) solid var(--vd-card-border);
+    border-radius: var(--vd-card-radius);
+    background-color: var(--vd-card-bg);
+    box-shadow: var(--vd-card-shadow);
+    color: var(--vd-color-text);
+    text-align: start;
+    text-decoration: none;
+  }
+
+  .vd-card[data-variant='raised'] {
+    --vd-card-bg: var(--vd-color-surface-raised);
+    --vd-card-shadow: var(--vd-highlight-top), var(--vd-shadow-md);
+  }
+
+  @container (width < 24rem) {
+    .vd-card {
+      --vd-card-padding: var(--vd-space-4);
+    }
+  }
+
+  /* ---------------------------------------------------------------- parts */
+
+  /* Title + extras (badge, actions) share the first row while the title has room (12rem);
+     otherwise extras wrap under it. The description always takes its own row. */
+  .vd-card__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--vd-space-1) var(--vd-space-3);
+  }
+
+  .vd-card__header > :not(.vd-card__title, .vd-card__description) {
+    order: 1;
+    flex: none;
+  }
+
+  .vd-card__header > .vd-card__title {
+    flex: 1 1 12rem;
+    min-inline-size: 0;
+  }
+
+  .vd-card__header > .vd-card__description {
+    order: 2;
+    flex: 1 0 100%;
+  }
+
+  .vd-card__title {
+    margin: 0;
+    font-size: var(--vd-text-lg);
+    font-weight: var(--vd-weight-bold);
+    line-height: var(--vd-leading-snug);
+    letter-spacing: var(--vd-tracking-tight);
+    text-wrap: balance;
+  }
+
+  .vd-card__description {
+    margin: 0;
+    color: var(--vd-color-text-muted);
+    font-size: var(--vd-text-sm);
+    text-wrap: pretty;
+  }
+
+  .vd-card__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--vd-space-2);
+    margin-block-start: auto;
+  }
+
+  /* Stretched primary link: one tab stop, whole card clickable. */
+  .vd-card__link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .vd-card__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+  }
+
+  .vd-card__link:focus-visible {
+    outline: none;
+  }
+
+  /* Other interactive content stays above the stretched link. */
+  .vd-card:has(.vd-card__link) :is(a, button, input, select, textarea):not(.vd-card__link) {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ---------------------------------------------------------- interactive */
+
+  .vd-card[data-interactive] {
+    cursor: pointer;
+    transition:
+      border-color var(--vd-duration-base) var(--vd-ease-out),
+      box-shadow var(--vd-duration-base) var(--vd-ease-out),
+      translate var(--vd-duration-base) var(--vd-ease-out),
+      scale var(--vd-duration-fast) var(--vd-ease-out);
+  }
+
+  /* Signature: cursor glow - a soft fill plus a brighter rim, both following --vd-x/--vd-y. */
+  .vd-card[data-interactive]::before,
+  .vd-card[data-interactive]::after {
+    content: '';
+    position: absolute;
+    inset: calc(var(--vd-border-width) * -1);
+    z-index: -1;
+    border-radius: inherit;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--vd-duration-slow) var(--vd-ease-out);
+  }
+
+  .vd-card[data-interactive]::before {
+    background: radial-gradient(
+      var(--vd-glow-size) circle at var(--vd-x, 50%) var(--vd-y, 0%),
+      var(--vd-glow-color),
+      transparent 70%
+    );
+  }
+
+  .vd-card[data-interactive]::after {
+    z-index: 0;
+    padding: var(--vd-border-width);
+    background: radial-gradient(
+      calc(var(--vd-glow-size) * 0.6) circle at var(--vd-x, 50%) var(--vd-y, 0%),
+      var(--vd-glow-border),
+      transparent 70%
+    );
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+  }
+
+  @media (hover: hover) {
+    .vd-card[data-interactive]:hover {
+      --vd-card-border: var(--vd-color-border-strong);
+      --vd-card-shadow: var(--vd-highlight-top), var(--vd-shadow-md);
+    }
+
+    .vd-card[data-variant='raised'][data-interactive]:hover {
+      --vd-card-shadow: var(--vd-highlight-top), var(--vd-shadow-lg);
+    }
+
+    .vd-card[data-interactive]:hover::before,
+    .vd-card[data-interactive]:hover::after {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @media (hover: hover) {
+      .vd-card[data-interactive]:hover {
+        translate: 0 calc(var(--vd-space-0-5) * -1);
+      }
+    }
+  }
+
+  .vd-card[data-interactive]:active {
+    scale: var(--vd-press-scale);
+  }
+
+  .vd-card:is(a, button):focus-visible,
+  .vd-card:has(.vd-card__link:focus-visible) {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+
+  @media (forced-colors: active) {
+    .vd-card {
+      border-color: CanvasText;
+    }
+
+    .vd-card[data-interactive]::before,
+    .vd-card[data-interactive]::after {
+      display: none;
+    }
+  }
+}

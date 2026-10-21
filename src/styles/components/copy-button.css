@@ -1,0 +1,58 @@
+@layer vd.components {
+  .vd-copy-button {
+    --vd-copy-button-success-ink: var(--vd-color-success-text);
+    --vd-copy-button-error-ink: var(--vd-color-danger-text);
+    position: relative;
+    display: inline-flex;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    vertical-align: middle;
+  }
+  .vd-copy-button__button {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+  .vd-copy-button__labels {
+    display: grid;
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+  .vd-copy-button__labels > span {
+    grid-area: 1 / 1;
+    visibility: hidden;
+  }
+  .vd-copy-button__labels > span[data-visible] {
+    visibility: visible;
+  }
+  .vd-copy-button[data-state='copied'] .vd-copy-button__icon {
+    color: var(--vd-copy-button-success-ink);
+  }
+  .vd-copy-button[data-state='error'] .vd-copy-button__icon {
+    color: var(--vd-copy-button-error-ink);
+  }
+  .vd-copy-button__button[data-variant='primary'] .vd-copy-button__icon,
+  .vd-copy-button__button[data-variant='danger'] .vd-copy-button__icon {
+    color: inherit;
+  }
+  @media (width < 30rem) {
+    .vd-copy-button__button:not([data-icon-only]) {
+      --vd-button-padding-inline: var(--vd-space-1);
+      --vd-button-font-size: var(--vd-text-xs);
+      flex-wrap: wrap;
+    }
+    .vd-copy-button__button:not([data-icon-only]) > .vd-button__label {
+      flex: 1 1 12ch;
+      max-inline-size: 100%;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vd-copy-button .vd-button__spinner .vd-icon__svg {
+      animation: none;
+    }
+  }
+  @media (forced-colors: active) {
+    .vd-copy-button[data-state] .vd-copy-button__icon {
+      color: ButtonText;
+    }
+  }
+}

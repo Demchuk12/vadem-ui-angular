@@ -1,0 +1,72 @@
+/* Empty state - spec: specs/empty-state.md */
+@layer vd.components {
+  .vd-empty-state {
+    --vd-empty-state-padding: var(--vd-space-12) var(--vd-space-6);
+    --vd-empty-state-icon-size: var(--vd-space-12);
+    --vd-empty-state-icon-bg: var(--vd-color-action-subtle);
+    --vd-empty-state-icon-fg: var(--vd-color-text-accent);
+    --vd-empty-state-title-size: var(--vd-text-lg);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--vd-space-2);
+    padding: var(--vd-empty-state-padding);
+    text-align: center;
+  }
+
+  .vd-empty-state[data-size='sm'] {
+    --vd-empty-state-padding: var(--vd-space-8) var(--vd-space-4);
+    --vd-empty-state-icon-size: var(--vd-space-10);
+    --vd-empty-state-title-size: var(--vd-text-md);
+  }
+
+  .vd-empty-state__icon {
+    display: grid;
+    place-items: center;
+    inline-size: var(--vd-empty-state-icon-size);
+    block-size: var(--vd-empty-state-icon-size);
+    margin-block-end: var(--vd-space-2);
+    border-radius: var(--vd-radius-full);
+    background-color: var(--vd-empty-state-icon-bg);
+    color: var(--vd-empty-state-icon-fg);
+  }
+
+  .vd-empty-state__icon .vd-icon {
+    --vd-icon-size: calc(var(--vd-empty-state-icon-size) / 2);
+  }
+
+  .vd-empty-state__title {
+    margin: 0;
+    color: var(--vd-color-text);
+    font-size: var(--vd-empty-state-title-size);
+    font-weight: var(--vd-weight-bold);
+    letter-spacing: var(--vd-tracking-tight);
+    text-wrap: balance;
+  }
+
+  .vd-empty-state__description {
+    max-inline-size: 40ch;
+    margin: 0;
+    color: var(--vd-color-text-muted);
+    font-size: var(--vd-text-sm);
+    text-wrap: pretty;
+  }
+
+  .vd-empty-state > [slot='actions'] {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--vd-space-2);
+    margin-block-start: var(--vd-space-3);
+  }
+
+  /* Inside an empty table cell the cell's own padding is enough. */
+  .vd-table__empty > .vd-empty-state {
+    padding: 0;
+  }
+
+  .vd-table__empty:has(> .vd-empty-state) {
+    padding-block: var(--vd-space-10);
+  }
+}

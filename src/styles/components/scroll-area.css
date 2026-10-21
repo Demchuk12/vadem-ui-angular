@@ -1,0 +1,39 @@
+/* Native scroll viewport: specs/scroll-area.md. */
+@layer vd.components {
+  .vd-scroll-area {
+    --vd-scroll-area-bg: var(--vd-color-surface);
+    --vd-scroll-area-border: var(--vd-color-border-control);
+    --vd-scroll-area-radius: var(--vd-radius-md);
+    --vd-scroll-area-thumb: var(--vd-color-border-control);
+    --vd-scroll-area-track: var(--vd-scroll-area-bg);
+    --vd-scroll-area-ring: var(--vd-color-focus);
+    --vd-scroll-area-max-block-size: none;
+
+    min-inline-size: 0;
+    min-block-size: 0;
+    max-inline-size: 100%;
+    max-block-size: var(--vd-scroll-area-max-block-size);
+    overflow: auto;
+    border: var(--vd-border-width) solid var(--vd-scroll-area-border);
+    border-radius: var(--vd-scroll-area-radius);
+    background-color: var(--vd-scroll-area-bg);
+    scrollbar-color: var(--vd-scroll-area-thumb) var(--vd-scroll-area-track);
+    scrollbar-width: auto;
+    scrollbar-gutter: stable;
+  }
+
+  .vd-scroll-area:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-scroll-area-ring);
+    outline-offset: calc(var(--vd-focus-ring-width) * -1);
+  }
+
+  @media (forced-colors: active) {
+    .vd-scroll-area {
+      border-color: CanvasText;
+      scrollbar-color: auto;
+    }
+    .vd-scroll-area:focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}

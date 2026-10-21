@@ -1,0 +1,90 @@
+/* Avatar - spec: specs/avatar.md */
+@layer vd.components {
+  .vd-avatar {
+    --vd-avatar-size: var(--vd-space-8);
+    --vd-avatar-font-size: var(--vd-text-xs);
+    --vd-avatar-bg: var(--vd-color-action-subtle);
+    --vd-avatar-fg: var(--vd-color-action-text);
+    --vd-avatar-radius: var(--vd-radius-full);
+
+    position: relative;
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    inline-size: var(--vd-avatar-size);
+    block-size: var(--vd-avatar-size);
+    overflow: hidden;
+    border-radius: var(--vd-avatar-radius);
+    background-color: var(--vd-avatar-bg);
+    color: var(--vd-avatar-fg);
+    font-size: var(--vd-avatar-font-size);
+    font-weight: var(--vd-weight-bold);
+    line-height: 1;
+    letter-spacing: var(--vd-tracking-tight);
+    vertical-align: middle;
+    user-select: none;
+  }
+
+  .vd-avatar[data-size='sm'] {
+    --vd-avatar-size: var(--vd-space-6);
+    --vd-avatar-font-size: calc(var(--vd-text-xs) * 0.85);
+  }
+
+  .vd-avatar[data-size='lg'] {
+    --vd-avatar-size: var(--vd-space-10);
+    --vd-avatar-font-size: var(--vd-text-sm);
+  }
+
+  .vd-avatar[data-size='xl'] {
+    --vd-avatar-size: var(--vd-space-16);
+    --vd-avatar-font-size: var(--vd-text-xl);
+  }
+
+  /* The image covers the initials once it loads; a broken one is removed. */
+  .vd-avatar__img {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  /* Hairline inside the edge so photos don't bleed into same-colored backgrounds. */
+  .vd-avatar:has(.vd-avatar__img)::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 var(--vd-border-width) var(--vd-color-border);
+  }
+
+  /* --------------------------------------------------------------- group */
+
+  .vd-avatar-group {
+    --vd-avatar-group-ring: var(--vd-color-bg);
+    /* Fraction of each avatar hidden under the next one (scales with size). */
+    --vd-avatar-group-overlap: 0.15;
+
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .vd-avatar-group > .vd-avatar {
+    box-shadow: 0 0 0 calc(var(--vd-border-width) * 2) var(--vd-avatar-group-ring);
+  }
+
+  .vd-avatar-group > .vd-avatar + .vd-avatar {
+    margin-inline-start: calc(var(--vd-avatar-size) * var(--vd-avatar-group-overlap) * -1);
+  }
+
+  /* Inside surfaces the ring matches the surface, so the cut-outs stay invisible. */
+  .vd-card .vd-avatar-group {
+    --vd-avatar-group-ring: var(--vd-card-bg, var(--vd-color-surface));
+  }
+
+  @media (forced-colors: active) {
+    .vd-avatar {
+      border: var(--vd-border-width) solid CanvasText;
+    }
+  }
+}

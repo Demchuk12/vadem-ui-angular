@@ -1,0 +1,233 @@
+/*
+ * Vadem semantic tokens.
+ * Meaning, not values. Themes only change this layer. Colors are light-dark() pairs that
+ * resolve against the element's color-scheme, so nested themes work.
+ */
+@layer vd.tokens {
+  /* ------------------------------------------------------------- themes */
+  /* Dark-first: dark unless asked otherwise. */
+  :root,
+  [data-theme='dark'] {
+    color-scheme: dark;
+  }
+
+  [data-theme='light'] {
+    color-scheme: light;
+  }
+
+  [data-theme='auto'] {
+    color-scheme: light dark;
+  }
+
+  :where(:root, [data-theme], [data-density]) {
+    /* ---------------------------------------------------------- surfaces */
+    /* Dark elevation is expressed by lightness: sunken < bg < surface < raised < overlay. */
+    --vd-color-bg: light-dark(var(--vd-neutral-50), var(--vd-neutral-975));
+    --vd-color-surface-sunken: light-dark(var(--vd-neutral-100), var(--vd-neutral-1000));
+    --vd-color-surface: light-dark(var(--vd-neutral-0), var(--vd-neutral-950));
+    --vd-color-surface-raised: light-dark(var(--vd-neutral-0), var(--vd-neutral-925));
+    --vd-color-surface-overlay: light-dark(var(--vd-neutral-0), var(--vd-neutral-900));
+    /* Neutral fill for secondary controls, hovered rows, tracks. */
+    --vd-color-fill: light-dark(
+      oklch(0.3 0.03 var(--vd-hue-neutral) / 0.06),
+      oklch(0.92 0.03 var(--vd-hue-neutral) / 0.07)
+    );
+    --vd-color-fill-hover: light-dark(
+      oklch(0.3 0.03 var(--vd-hue-neutral) / 0.1),
+      oklch(0.92 0.03 var(--vd-hue-neutral) / 0.11)
+    );
+    --vd-color-fill-active: light-dark(
+      oklch(0.3 0.03 var(--vd-hue-neutral) / 0.14),
+      oklch(0.92 0.03 var(--vd-hue-neutral) / 0.15)
+    );
+
+    /* -------------------------------------------------------------- text */
+    --vd-color-text: light-dark(var(--vd-neutral-900), var(--vd-neutral-50));
+    --vd-color-text-muted: light-dark(var(--vd-neutral-600), var(--vd-neutral-400));
+    /* Placeholders, hints. Still AA on bg and surface. */
+    --vd-color-text-subtle: light-dark(var(--vd-neutral-550), var(--vd-neutral-500));
+    --vd-color-text-disabled: light-dark(var(--vd-neutral-400), var(--vd-neutral-700));
+    --vd-color-text-accent: light-dark(var(--vd-accent-600), var(--vd-accent-300));
+
+    /* ----------------------------------------------------------- borders */
+    --vd-color-border: light-dark(
+      oklch(0.3 0.03 var(--vd-hue-neutral) / 0.12),
+      oklch(0.92 0.03 var(--vd-hue-neutral) / 0.1)
+    );
+    --vd-color-border-strong: light-dark(
+      oklch(0.3 0.03 var(--vd-hue-neutral) / 0.22),
+      oklch(0.92 0.03 var(--vd-hue-neutral) / 0.18)
+    );
+    /* Form control boundaries need 3:1 against the surface (WCAG 1.4.11). */
+    --vd-color-border-control: light-dark(var(--vd-neutral-500), var(--vd-neutral-600));
+    --vd-color-border-control-hover: light-dark(var(--vd-neutral-600), var(--vd-neutral-500));
+
+    /* Text-entry wells: a touch lighter than bg in light, recessed in dark. */
+    --vd-color-field: light-dark(
+      var(--vd-neutral-0),
+      color-mix(in oklch, var(--vd-neutral-1000) 45%, transparent)
+    );
+    --vd-color-field-readonly: var(--vd-color-fill);
+
+    /* ------------------------------------------------------------ action */
+    --vd-color-action: var(--vd-accent-600);
+    --vd-color-action-hover: light-dark(var(--vd-accent-700), var(--vd-accent-500));
+    --vd-color-action-active: light-dark(var(--vd-accent-800), var(--vd-accent-600));
+    --vd-color-on-action: var(--vd-neutral-0);
+    /* Strong (always dark) surface for tooltips and toasts: reads the same in both themes. */
+    --vd-color-surface-strong: light-dark(var(--vd-neutral-900), var(--vd-neutral-800));
+    --vd-color-text-on-strong: var(--vd-neutral-50);
+
+    /* Accent text on subtle accent fills (badges, tags): one step darker than link text. */
+    --vd-color-action-text: light-dark(var(--vd-accent-700), var(--vd-accent-300));
+    --vd-color-action-subtle: light-dark(
+      color-mix(in oklch, var(--vd-accent-500) 12%, transparent),
+      color-mix(in oklch, var(--vd-accent-400) 16%, transparent)
+    );
+
+    /* ---------------------------------------------------------- statuses */
+    --vd-color-success: var(--vd-success-600);
+    --vd-color-success-text: light-dark(var(--vd-success-700), var(--vd-success-300));
+    --vd-color-success-subtle: light-dark(
+      color-mix(in oklch, var(--vd-success-500) 12%, transparent),
+      color-mix(in oklch, var(--vd-success-400) 15%, transparent)
+    );
+    --vd-color-success-border: color-mix(in oklch, var(--vd-success-500) 40%, transparent);
+
+    /* Warning solids sit lighter on the curve (amber at 600 reads brown), with dark ink. */
+    --vd-color-warning: var(--vd-warning-400);
+    --vd-color-on-warning: var(--vd-warning-950);
+    --vd-color-warning-text: light-dark(var(--vd-warning-700), var(--vd-warning-300));
+    --vd-color-warning-subtle: light-dark(
+      color-mix(in oklch, var(--vd-warning-500) 14%, transparent),
+      color-mix(in oklch, var(--vd-warning-400) 15%, transparent)
+    );
+    --vd-color-warning-border: color-mix(in oklch, var(--vd-warning-500) 45%, transparent);
+
+    --vd-color-danger: var(--vd-danger-600);
+    --vd-color-danger-hover: light-dark(var(--vd-danger-700), var(--vd-danger-500));
+    --vd-color-danger-text: light-dark(var(--vd-danger-700), var(--vd-danger-300));
+    --vd-color-danger-subtle: light-dark(
+      color-mix(in oklch, var(--vd-danger-500) 11%, transparent),
+      color-mix(in oklch, var(--vd-danger-400) 15%, transparent)
+    );
+    --vd-color-danger-border: color-mix(in oklch, var(--vd-danger-500) 45%, transparent);
+
+    --vd-color-info: var(--vd-info-600);
+    --vd-color-info-text: light-dark(var(--vd-info-700), var(--vd-info-300));
+    --vd-color-info-subtle: light-dark(
+      color-mix(in oklch, var(--vd-info-500) 12%, transparent),
+      color-mix(in oklch, var(--vd-info-400) 15%, transparent)
+    );
+    --vd-color-info-border: color-mix(in oklch, var(--vd-info-500) 40%, transparent);
+
+    --vd-color-on-status: var(--vd-neutral-0);
+
+    /* ------------------------------------------------- focus & selection */
+    --vd-color-focus: light-dark(var(--vd-accent-600), var(--vd-accent-400));
+    --vd-focus-ring-width: 2px;
+    --vd-focus-ring-offset: 2px;
+    --vd-color-selection: light-dark(
+      color-mix(in oklch, var(--vd-accent-400) 30%, transparent),
+      color-mix(in oklch, var(--vd-accent-500) 40%, transparent)
+    );
+
+    /* ------------------------------------------------------------- depth */
+    /* Shadow ink: alpha is baked in because light-dark() only accepts colors. */
+    --vd-shadow-ink-1: light-dark(
+      oklch(0.25 0.03 var(--vd-hue-neutral) / 0.05),
+      oklch(0.05 0.01 var(--vd-hue-neutral) / 0.3)
+    );
+    --vd-shadow-ink-2: light-dark(
+      oklch(0.25 0.03 var(--vd-hue-neutral) / 0.08),
+      oklch(0.05 0.01 var(--vd-hue-neutral) / 0.4)
+    );
+    --vd-shadow-ink-3: light-dark(
+      oklch(0.25 0.03 var(--vd-hue-neutral) / 0.12),
+      oklch(0.05 0.01 var(--vd-hue-neutral) / 0.55)
+    );
+    --vd-shadow-sm: 0 1px 1px var(--vd-shadow-ink-1), 0 1px 3px var(--vd-shadow-ink-1);
+    --vd-shadow-md:
+      0 1px 2px var(--vd-shadow-ink-1), 0 4px 8px -2px var(--vd-shadow-ink-2),
+      0 12px 24px -8px var(--vd-shadow-ink-2);
+    --vd-shadow-lg:
+      0 2px 4px var(--vd-shadow-ink-1), 0 12px 24px -6px var(--vd-shadow-ink-2),
+      0 32px 64px -16px var(--vd-shadow-ink-3);
+
+    /* Signature: 1px inner top highlight on raised dark surfaces (invisible in light). */
+    --vd-color-highlight: light-dark(transparent, oklch(1 0 0 / 0.07));
+    --vd-highlight-top: inset 0 1px 0 var(--vd-color-highlight);
+
+    /* Signature: cursor-following glow on interactive cards. */
+    --vd-glow-color: light-dark(
+      color-mix(in oklch, var(--vd-accent-400) 14%, transparent),
+      color-mix(in oklch, var(--vd-accent-500) 18%, transparent)
+    );
+    --vd-glow-size: 22rem;
+    /* Brighter variant that lights up the card border near the cursor. */
+    --vd-glow-border: light-dark(
+      color-mix(in oklch, var(--vd-accent-500) 45%, transparent),
+      color-mix(in oklch, var(--vd-accent-400) 55%, transparent)
+    );
+    --vd-color-shimmer: light-dark(oklch(1 0 0 / 0.6), oklch(1 0 0 / 0.06));
+
+    /* Soft accent glow under solid actions on hover. */
+    --vd-shadow-glow-action: 0 6px 20px -6px
+      color-mix(in oklch, var(--vd-color-action) 55%, transparent);
+    /* Top-lit sheen on solid fills (primary, danger). */
+    --vd-color-sheen: oklch(1 0 0 / 0.12);
+
+    /* Translucent overlay surfaces (popover, sticky header) and the modal backdrop. */
+    --vd-color-surface-glass: light-dark(
+      color-mix(in oklch, var(--vd-neutral-0) 78%, transparent),
+      color-mix(in oklch, var(--vd-neutral-950) 72%, transparent)
+    );
+    --vd-backdrop-glass: blur(16px) saturate(1.4);
+    --vd-color-backdrop: light-dark(
+      oklch(0.25 0.03 var(--vd-hue-neutral) / 0.35),
+      oklch(0.08 0.01 var(--vd-hue-neutral) / 0.6)
+    );
+
+    /* ------------------------------------------------------------- chart */
+    /* Categorical series, assigned in this fixed order and never cycled. Exact values, not
+       ramp-derived: the set and its order were validated together (dataviz six checks, both
+       themes; worst adjacent CVD dE 12.1 light / 11.9 dark, normal-vision 23.2 / 19.7).
+       Independent of --vd-hue-accent so retheming never breaks separation. Slot 4 is 2.3:1 on
+       the light surface: charts always ship a legend and a table view (relief). See D106. */
+    --vd-color-chart-1: light-dark(oklch(0.55 0.17 290), oklch(0.65 0.15 290)); /* violet */
+    --vd-color-chart-2: light-dark(oklch(0.65 0.17 50), oklch(0.62 0.16 50)); /* orange */
+    --vd-color-chart-3: light-dark(oklch(0.61 0.105 190), oklch(0.64 0.11 190)); /* teal */
+    --vd-color-chart-4: light-dark(oklch(0.74 0.15 80), oklch(0.66 0.13 80)); /* amber */
+    --vd-color-chart-5: light-dark(oklch(0.6 0.18 345), oklch(0.64 0.16 345)); /* magenta */
+    --vd-color-chart-6: light-dark(oklch(0.6 0.15 140), oklch(0.62 0.15 140)); /* green */
+    --vd-color-chart-7: light-dark(oklch(0.58 0.14 245), oklch(0.64 0.13 245)); /* blue */
+    --vd-color-chart-8: light-dark(oklch(0.56 0.19 20), oklch(0.62 0.17 20)); /* red */
+
+    /* ------------------------------------------------------------- shape */
+    --vd-radius-control: var(--vd-radius-md);
+    --vd-radius-surface: var(--vd-radius-lg);
+    --vd-radius-overlay: var(--vd-radius-xl);
+    --vd-radius-pill: var(--vd-radius-full);
+
+    /* ------------------------------------------------------------ motion */
+    --vd-transition-colors:
+      color var(--vd-duration-fast) var(--vd-ease-out),
+      background-color var(--vd-duration-fast) var(--vd-ease-out),
+      border-color var(--vd-duration-fast) var(--vd-ease-out),
+      box-shadow var(--vd-duration-fast) var(--vd-ease-out);
+  }
+
+  :root {
+    --vd-press-scale: 0.98;
+    --vd-opacity-disabled: 0.45;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --vd-duration-fast: 0ms;
+      --vd-duration-base: 0ms;
+      --vd-duration-slow: 0ms;
+      --vd-press-scale: 1;
+    }
+  }
+}

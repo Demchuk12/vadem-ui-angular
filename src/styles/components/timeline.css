@@ -1,0 +1,182 @@
+/* Informational history. Native actions retain their own control behavior. */
+@layer vd.components {
+  .vd-timeline {
+    --vd-timeline-gap: var(--vd-space-4);
+    --vd-timeline-item-gap: var(--vd-space-6);
+    --vd-timeline-marker-size: var(--vd-space-8);
+    --vd-timeline-marker-radius: var(--vd-radius-full);
+    --vd-timeline-connector: var(--vd-color-border-control);
+    --vd-timeline-title-size: var(--vd-text-sm);
+    --vd-timeline-description-size: var(--vd-text-sm);
+    --vd-timeline-meta-size: var(--vd-text-xs);
+    --vd-timeline-marker-bg: var(--vd-color-surface-raised);
+    --vd-timeline-marker-fg: var(--vd-color-text-muted);
+    --vd-timeline-marker-border: var(--vd-color-border-control);
+    --vd-timeline-success-bg: var(--vd-color-success-subtle);
+    --vd-timeline-success-fg: var(--vd-color-success-text);
+    --vd-timeline-warning-bg: var(--vd-color-warning-subtle);
+    --vd-timeline-warning-fg: var(--vd-color-warning-text);
+    --vd-timeline-danger-bg: var(--vd-color-danger-subtle);
+    --vd-timeline-danger-fg: var(--vd-color-danger-text);
+    --vd-timeline-info-bg: var(--vd-color-info-subtle);
+    --vd-timeline-info-fg: var(--vd-color-info-text);
+
+    display: block;
+    container: vd-timeline / inline-size;
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .vd-timeline-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--vd-timeline-marker-size) minmax(0, 1fr);
+    column-gap: var(--vd-timeline-gap);
+    min-inline-size: 0;
+    padding-block-end: var(--vd-timeline-item-gap);
+    color: var(--vd-color-text);
+  }
+
+  .vd-timeline-item:last-child {
+    padding-block-end: 0;
+  }
+
+  .vd-timeline-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    inset-inline-start: calc(var(--vd-timeline-marker-size) / 2);
+    inset-block-start: calc(var(--vd-timeline-marker-size) + var(--vd-space-1));
+    inset-block-end: var(--vd-space-1);
+    inline-size: var(--vd-border-width);
+    background: var(--vd-timeline-connector);
+    pointer-events: none;
+  }
+
+  .vd-timeline-item__marker {
+    display: grid;
+    place-items: center;
+    inline-size: var(--vd-timeline-marker-size);
+    block-size: var(--vd-timeline-marker-size);
+    border: var(--vd-border-width) solid var(--vd-timeline-marker-border);
+    border-radius: var(--vd-timeline-marker-radius);
+    background: var(--vd-timeline-marker-bg);
+    color: var(--vd-timeline-marker-fg);
+  }
+
+  .vd-timeline-item__marker .vd-icon {
+    --vd-icon-size: var(--vd-space-4);
+  }
+
+  .vd-timeline-item__dot {
+    inline-size: var(--vd-space-1-5);
+    block-size: var(--vd-space-1-5);
+    border-radius: var(--vd-radius-full);
+    background: currentColor;
+  }
+
+  .vd-timeline-item__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    min-inline-size: 0;
+    gap: var(--vd-space-2);
+    padding-block-start: var(--vd-space-1);
+    overflow-wrap: anywhere;
+  }
+
+  .vd-timeline-item__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--vd-space-1) var(--vd-space-3);
+    font-size: var(--vd-timeline-meta-size);
+    line-height: var(--vd-leading-normal);
+  }
+
+  .vd-timeline-item__time {
+    color: var(--vd-color-text-muted);
+    font-family: var(--vd-font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .vd-timeline-item__status {
+    color: var(--vd-timeline-marker-fg);
+    font-weight: var(--vd-weight-medium);
+  }
+
+  .vd-timeline-item__title {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+    margin: 0;
+    font-size: var(--vd-timeline-title-size);
+    font-weight: var(--vd-weight-semibold);
+    line-height: var(--vd-leading-snug);
+  }
+
+  .vd-timeline-item__description {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+    margin: 0;
+    color: var(--vd-color-text-muted);
+    font-size: var(--vd-timeline-description-size);
+    line-height: var(--vd-leading-normal);
+  }
+
+  .vd-timeline-item[data-status='success'] {
+    --vd-timeline-marker-bg: var(--vd-timeline-success-bg);
+    --vd-timeline-marker-fg: var(--vd-timeline-success-fg);
+    --vd-timeline-marker-border: var(--vd-timeline-success-fg);
+  }
+
+  .vd-timeline-item[data-status='warning'] {
+    --vd-timeline-marker-bg: var(--vd-timeline-warning-bg);
+    --vd-timeline-marker-fg: var(--vd-timeline-warning-fg);
+    --vd-timeline-marker-border: var(--vd-timeline-warning-fg);
+  }
+
+  .vd-timeline-item[data-status='danger'] {
+    --vd-timeline-marker-bg: var(--vd-timeline-danger-bg);
+    --vd-timeline-marker-fg: var(--vd-timeline-danger-fg);
+    --vd-timeline-marker-border: var(--vd-timeline-danger-fg);
+  }
+
+  .vd-timeline-item[data-status='info'] {
+    --vd-timeline-marker-bg: var(--vd-timeline-info-bg);
+    --vd-timeline-marker-fg: var(--vd-timeline-info-fg);
+    --vd-timeline-marker-border: var(--vd-timeline-info-fg);
+  }
+
+  /* Structural breakpoint: retain reading width when a narrow container enlarges text. */
+  @container vd-timeline (width < 12rem) {
+    .vd-timeline-item {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--vd-space-2);
+    }
+
+    .vd-timeline-item::after {
+      display: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .vd-timeline-item__dot {
+      forced-color-adjust: none;
+      background: CanvasText;
+    }
+
+    .vd-timeline-item__marker {
+      border-color: CanvasText;
+      color: CanvasText;
+    }
+
+    .vd-timeline-item__status {
+      color: CanvasText;
+    }
+
+    .vd-timeline-item::after {
+      background: CanvasText;
+    }
+  }
+}

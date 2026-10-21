@@ -1,0 +1,186 @@
+/* Calendar and date picker - spec: specs/calendar.md */
+@layer vd.components {
+  .vd-calendar {
+    --vd-calendar-cell: var(--vd-control-height-sm);
+    --vd-calendar-radius: var(--vd-radius-md);
+    --vd-calendar-selected-bg: var(--vd-color-action);
+    --vd-calendar-selected-fg: var(--vd-color-on-action);
+    --vd-calendar-hover: var(--vd-color-fill-hover);
+    --vd-calendar-today: var(--vd-color-text-accent);
+
+    display: inline-grid;
+    max-inline-size: 100%;
+    min-inline-size: 0;
+    overflow: auto;
+    padding: calc(var(--vd-focus-ring-width) + var(--vd-focus-ring-offset));
+    scroll-padding: calc(var(--vd-focus-ring-width) + var(--vd-focus-ring-offset));
+    gap: var(--vd-space-2);
+    font-size: var(--vd-text-sm);
+    font-variant-numeric: tabular-nums;
+    user-select: none;
+  }
+
+  .vd-calendar__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--vd-space-2);
+  }
+
+  .vd-calendar__title {
+    display: inline-block;
+    font-weight: var(--vd-weight-semibold);
+  }
+
+  /* "жовтень 2026 р." -> "Жовтень 2026 р.": only the first letter (capitalize would hit "р."). */
+  .vd-calendar__title::first-letter {
+    text-transform: uppercase;
+  }
+
+  .vd-calendar__nav {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--vd-calendar-cell);
+    block-size: var(--vd-calendar-cell);
+    border: 0;
+    border-radius: var(--vd-calendar-radius);
+    background: transparent;
+    color: var(--vd-color-text-muted);
+    cursor: pointer;
+    transition: var(--vd-transition-colors);
+  }
+
+  @media (hover: hover) {
+    .vd-calendar__nav:not(:disabled):hover {
+      background-color: var(--vd-calendar-hover);
+      color: var(--vd-color-text);
+    }
+  }
+
+  .vd-calendar__nav:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+
+  .vd-calendar__nav:disabled {
+    opacity: var(--vd-opacity-disabled);
+    cursor: not-allowed;
+  }
+
+  .vd-calendar__grid {
+    /* Equal columns whatever the weekday names or digits. */
+    table-layout: fixed;
+    inline-size: calc(var(--vd-calendar-cell) * 7 + var(--vd-space-0-5) * 8);
+    border-collapse: separate;
+    border-spacing: var(--vd-space-0-5);
+    margin: calc(var(--vd-space-0-5) * -1);
+  }
+
+  .vd-calendar__grid th {
+    block-size: var(--vd-space-6);
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--vd-color-text-muted);
+    font-family: var(--vd-font-mono);
+    font-size: var(--vd-text-xs);
+    font-weight: var(--vd-weight-medium);
+    letter-spacing: var(--vd-tracking-caps);
+    text-transform: uppercase;
+  }
+
+  .vd-calendar__day {
+    position: relative;
+    inline-size: var(--vd-calendar-cell);
+    block-size: var(--vd-calendar-cell);
+    padding: 0;
+    border-radius: var(--vd-calendar-radius);
+    color: var(--vd-color-text);
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    transition:
+      var(--vd-transition-colors),
+      scale var(--vd-duration-fast) var(--vd-ease-out);
+  }
+
+  .vd-calendar__day[data-outside] {
+    color: var(--vd-color-text-muted);
+  }
+
+  @media (hover: hover) {
+    .vd-calendar__day:not([aria-selected='true'], [aria-disabled='true']):hover {
+      background-color: var(--vd-calendar-hover);
+    }
+  }
+
+  .vd-calendar__day:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: calc(var(--vd-focus-ring-width) * -1);
+  }
+
+  .vd-calendar__day:not([aria-disabled='true']):active {
+    scale: var(--vd-press-scale);
+  }
+
+  /* Today: a dot under the number (not color alone: also aria-current). */
+  .vd-calendar__day[aria-current='date'] {
+    color: var(--vd-calendar-today);
+    font-weight: var(--vd-weight-bold);
+  }
+
+  .vd-calendar__day[aria-current='date']::after {
+    content: '';
+    position: absolute;
+    inset-block-end: var(--vd-space-1);
+    inset-inline: 0;
+    inline-size: var(--vd-space-1);
+    block-size: var(--vd-space-1);
+    margin-inline: auto;
+    border-radius: var(--vd-radius-full);
+    background-color: currentColor;
+  }
+
+  .vd-calendar__day[aria-selected='true'] {
+    background-color: var(--vd-calendar-selected-bg);
+    box-shadow: var(--vd-highlight-top);
+    color: var(--vd-calendar-selected-fg);
+    font-weight: var(--vd-weight-semibold);
+  }
+
+  .vd-calendar__day[aria-disabled='true'] {
+    color: var(--vd-color-text-disabled);
+    text-decoration: line-through;
+    cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vd-calendar__day:active {
+      scale: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .vd-calendar__day[aria-selected='true'] {
+      forced-color-adjust: none;
+      background-color: Highlight;
+      color: HighlightText;
+    }
+  }
+
+  /* ---------------------------------------------------------- date picker */
+
+  .vd-date-picker {
+    display: block;
+    inline-size: 100%;
+    max-inline-size: 16rem;
+  }
+
+  /* The panel reuses the popover surface; it sizes to the calendar. */
+  .vd-date-picker__panel {
+    --vd-popover-padding: var(--vd-space-3);
+
+    inline-size: max-content;
+    position-area: block-end span-inline-end;
+  }
+}

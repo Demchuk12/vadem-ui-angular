@@ -1,0 +1,96 @@
+/* Native time editor: specs/time-input.md. */
+@layer vd.components {
+  .vd-time-input {
+    --vd-time-input-font: var(--vd-font-mono);
+
+    min-inline-size: 0;
+    font-family: var(--vd-time-input-font);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer vd.components {
+  vd-time-picker {
+    display: contents;
+  }
+  .vd-time-picker {
+    --vd-time-picker-width: 14rem;
+    --vd-time-picker-height: 16rem;
+    --vd-popover-width: var(--vd-time-picker-width);
+    --vd-popover-padding: var(--vd-space-2);
+    font-family: var(--vd-font-sans);
+    direction: inherit;
+  }
+  .vd-time-picker__heading {
+    padding: var(--vd-space-2) var(--vd-space-3);
+    font-weight: var(--vd-weight-semibold);
+    overflow-wrap: anywhere;
+  }
+  .vd-time-picker__columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--vd-space-2);
+  }
+  .vd-time-picker__column {
+    min-inline-size: 0;
+  }
+  .vd-time-picker__column-label {
+    padding: var(--vd-space-2) var(--vd-space-3);
+    color: var(--vd-color-text-muted);
+    font-size: var(--vd-text-sm);
+  }
+  .vd-time-picker__list {
+    max-block-size: min(var(--vd-time-picker-height), 50dvh);
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-color: var(--vd-color-border-control) var(--vd-color-surface-overlay);
+    padding: var(--vd-space-1);
+  }
+  .vd-time-picker__option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--vd-space-1);
+    min-block-size: var(--vd-control-height-md);
+    padding-inline: var(--vd-space-1);
+    border-radius: var(--vd-radius-control);
+    font-family: var(--vd-time-input-font, var(--vd-font-mono));
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+  }
+  .vd-time-picker__option > span {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .vd-time-picker__option:hover {
+    background: var(--vd-color-fill-hover);
+  }
+  .vd-time-picker__option[aria-selected='true'] {
+    background: var(--vd-color-action-subtle);
+    color: var(--vd-color-action-text);
+  }
+  .vd-time-picker__option:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: calc(-1 * var(--vd-focus-ring-width));
+  }
+  .vd-time-picker__mark {
+    --vd-icon-size: var(--vd-space-3);
+    visibility: hidden;
+  }
+  .vd-time-picker__option[aria-selected='true'] .vd-time-picker__mark {
+    visibility: visible;
+  }
+  .vd-time-picker__empty {
+    padding: var(--vd-space-3);
+  }
+  @media (forced-colors: active) {
+    .vd-time-picker__option[aria-selected='true'] {
+      color: HighlightText;
+      background: Highlight;
+      forced-color-adjust: none;
+    }
+    .vd-time-picker__option:focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}

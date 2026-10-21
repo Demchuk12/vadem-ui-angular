@@ -1,0 +1,89 @@
+/* Dropzone (native file input) - spec: specs/dropzone.md */
+@layer vd.components {
+  .vd-dropzone {
+    --vd-dropzone-padding: var(--vd-space-8) var(--vd-space-6);
+    --vd-dropzone-radius: var(--vd-radius-surface);
+    --vd-dropzone-border: var(--vd-color-border-control);
+    --vd-dropzone-bg: var(--vd-color-field);
+    --vd-dropzone-border-active: var(--vd-color-action);
+    --vd-dropzone-bg-active: var(--vd-color-action-subtle);
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--vd-space-2);
+    padding: var(--vd-dropzone-padding);
+    border: var(--vd-border-width) dashed var(--vd-dropzone-border);
+    border-radius: var(--vd-dropzone-radius);
+    background-color: var(--vd-dropzone-bg);
+    color: var(--vd-color-text-muted);
+    font-size: var(--vd-text-sm);
+    text-align: center;
+    cursor: pointer;
+    transition:
+      var(--vd-transition-colors),
+      scale var(--vd-duration-fast) var(--vd-ease-out);
+  }
+
+  /* The input stays in the tab order and the accessibility tree; only its box is hidden. */
+  .vd-dropzone > input[type='file'] {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    opacity: 0;
+  }
+
+  .vd-dropzone > .vd-icon {
+    --vd-icon-size: var(--vd-space-6);
+
+    margin-block-end: var(--vd-space-1);
+    color: var(--vd-color-text-accent);
+  }
+
+  .vd-dropzone strong {
+    color: var(--vd-color-text);
+    font-weight: var(--vd-weight-semibold);
+  }
+
+  @media (hover: hover) {
+    .vd-dropzone:not(:has(> input:disabled)):hover {
+      border-color: var(--vd-color-border-control-hover);
+    }
+  }
+
+  .vd-dropzone:has(> input:focus-visible) {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+
+  .vd-dropzone[data-dragover] {
+    border-style: solid;
+    border-color: var(--vd-dropzone-border-active);
+    background-color: var(--vd-dropzone-bg-active);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .vd-dropzone[data-dragover] {
+      scale: 1.01;
+    }
+  }
+
+  .vd-dropzone:has(> input:disabled) {
+    opacity: var(--vd-opacity-disabled);
+    cursor: not-allowed;
+  }
+
+  .vd-dropzone:has(> input[data-invalid]) {
+    --vd-dropzone-border: var(--vd-color-danger);
+  }
+
+  @media (forced-colors: active) {
+    .vd-dropzone[data-dragover] {
+      border-color: Highlight;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+/* Search input - spec: specs/search-input.md */
+@layer vd.components {
+  .vd-search-input {
+    --vd-search-input-button-size: calc(var(--vd-input-height) - var(--vd-space-2));
+    --vd-search-input-gap: var(--vd-space-2);
+    gap: var(--vd-search-input-gap);
+  }
+  .vd-search-input > .vd-search-input__clear {
+    inline-size: min(var(--vd-search-input-button-size), 25%);
+    padding-inline: 0;
+  }
+  .vd-search-input > .vd-progress-ring {
+    color: var(--vd-color-text-muted);
+  }
+  /* The group draws its own clear action; hide the engine's. */
+  .vd-search-input__input::-webkit-search-cancel-button,
+  .vd-search-input__input::-webkit-search-decoration {
+    appearance: none;
+  }
+  @media (forced-colors: active) {
+    .vd-search-input {
+      border-color: CanvasText;
+    }
+  }
+}

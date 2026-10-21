@@ -1,0 +1,127 @@
+/* Pagination - spec: specs/pagination.md */
+@layer vd.components {
+  .vd-pagination {
+    --vd-pagination-size: var(--vd-control-height-sm);
+    --vd-pagination-radius: var(--vd-radius-control);
+    --vd-pagination-gap: var(--vd-space-1);
+    --vd-pagination-fg: var(--vd-color-text-muted);
+    --vd-pagination-fg-hover: var(--vd-color-text);
+    --vd-pagination-bg-hover: var(--vd-color-fill);
+    --vd-pagination-bg-current: var(--vd-color-surface-raised);
+    --vd-pagination-border-current: var(--vd-color-border-strong);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--vd-pagination-gap);
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    /* Keep numbered pages intact and Tab-reachable in a bounded, named navigation area. */
+    overflow: auto;
+    scroll-padding: calc(var(--vd-focus-ring-width) + var(--vd-focus-ring-offset));
+    padding: calc(var(--vd-focus-ring-width) + var(--vd-focus-ring-offset));
+    font-size: var(--vd-text-sm);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .vd-pagination[data-size='sm'] {
+    --vd-pagination-size: calc(var(--vd-control-height-sm) - var(--vd-space-2));
+    --vd-pagination-radius: var(--vd-radius-sm);
+
+    font-size: var(--vd-text-xs);
+  }
+
+  .vd-pagination__pages {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--vd-pagination-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .vd-pagination__page,
+  .vd-pagination__step {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    min-inline-size: var(--vd-pagination-size);
+    block-size: var(--vd-pagination-size);
+    padding-inline: var(--vd-space-2);
+    border: var(--vd-border-width) solid transparent;
+    border-radius: var(--vd-pagination-radius);
+    background: transparent;
+    color: var(--vd-pagination-fg);
+    font: inherit;
+    font-weight: var(--vd-weight-semibold);
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      var(--vd-transition-colors),
+      scale var(--vd-duration-fast) var(--vd-ease-out);
+  }
+
+  .vd-pagination__step {
+    padding-inline: 0;
+  }
+
+  @media (hover: hover) {
+    :is(.vd-pagination__page, .vd-pagination__step):not(
+        [aria-current='page'],
+        [aria-disabled='true']
+      ):hover {
+      background-color: var(--vd-pagination-bg-hover);
+      color: var(--vd-pagination-fg-hover);
+    }
+  }
+
+  :is(.vd-pagination__page, .vd-pagination__step):focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+
+  :is(.vd-pagination__page, .vd-pagination__step):not([aria-disabled='true']):active {
+    scale: var(--vd-press-scale);
+  }
+
+  .vd-pagination__page[aria-current='page'] {
+    border-color: var(--vd-pagination-border-current);
+    background-color: var(--vd-pagination-bg-current);
+    box-shadow: var(--vd-highlight-top), var(--vd-shadow-sm);
+    color: var(--vd-color-text);
+    cursor: default;
+  }
+
+  .vd-pagination__step[aria-disabled='true'] {
+    opacity: var(--vd-opacity-disabled);
+    cursor: not-allowed;
+  }
+
+  .vd-pagination__ellipsis {
+    display: inline-grid;
+    place-items: center;
+    min-inline-size: var(--vd-pagination-size);
+    color: var(--vd-color-text-muted);
+  }
+
+  .vd-pagination__status {
+    flex: none;
+    min-inline-size: 5ch;
+    padding-inline: var(--vd-space-2);
+    color: var(--vd-color-text-muted);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :is(.vd-pagination__page, .vd-pagination__step):active {
+      scale: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .vd-pagination__page[aria-current='page'] {
+      border-color: Highlight;
+    }
+  }
+}

@@ -1,0 +1,43 @@
+import { TestBed } from '@angular/core/testing';
+import { VdRelativeTime, VdRelativeTimePipe } from './relative-time';
+import { vdLocaleProvider, vdLocaleUk } from '@vadem/ui/locale';
+const now = 1792324800000;
+beforeEach(() => TestBed.configureTestingModule({ providers: [vdLocaleProvider(vdLocaleUk)] }));
+it('owns native datetime and passive isolated text; controlled clock updates', async () => {
+  const fixture = TestBed.createComponent(VdRelativeTime);
+  fixture.componentRef.setInput('vdRelativeTime', now - 300000);
+  fixture.componentRef.setInput('now', now);
+  await fixture.whenStable();
+  const root = fixture.nativeElement as HTMLTimeElement;
+  expect(root.getAttribute('datetime')).toBe(new Date(now - 300000).toISOString());
+  expect(root.textContent).toBe('5 хвилин тому');
+  expect(root.querySelector('bdi')).not.toBeNull();
+  expect(root.getAttribute('role')).toBeNull();
+  expect(root.getAttribute('tabindex')).toBeNull();
+  expect(root.getAttribute('aria-live')).toBeNull();
+  fixture.componentRef.setInput('now', now + 60000);
+  await fixture.whenStable();
+  expect(root.textContent).toBe('6 хвилин тому');
+});
+it('removes invalid datetime and distinguishes invalid reference from invalid source', async () => {
+  const fixture = TestBed.createComponent(VdRelativeTime);
+  fixture.componentRef.setInput('vdRelativeTime', 0);
+  fixture.componentRef.setInput('now', NaN);
+  await fixture.whenStable();
+  const root = fixture.nativeElement as HTMLTimeElement;
+  expect(root.getAttribute('data-state')).toBe('unknown');
+  expect(root.getAttribute('datetime')).toBe('1970-01-01T00:00:00.000Z');
+  fixture.componentRef.setInput('vdRelativeTime', null);
+  fixture.componentRef.setInput('unknownText', '<b>Unknown</b>');
+  await fixture.whenStable();
+  expect(root.hasAttribute('datetime')).toBe(false);
+  expect(root.textContent).toBe('<b>Unknown</b>');
+  expect(root.querySelector('b')).toBeNull();
+});
+it('pipe resolves locale defaults and overrides without reading the current clock', () => {
+  const pipe = TestBed.runInInjectionContext(() => new VdRelativeTimePipe());
+  expect(pipe.transform(now - 300000, now)).toBe('5 хвилин тому');
+  expect(pipe.transform(now - 300000, now, 'en')).toBe('5 minutes ago');
+  expect(pipe.transform(now, now)).toBe('Щойно');
+  expect(pipe.transform(null, now)).toBe('Час невідомий');
+});

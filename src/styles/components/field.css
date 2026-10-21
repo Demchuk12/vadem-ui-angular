@@ -1,0 +1,148 @@
+/* Field (label, hint, error) - spec: specs/field.md */
+@layer vd.components {
+  .vd-field {
+    --vd-field-gap: var(--vd-space-1-5);
+
+    display: grid;
+    /* One column that never grows past the container: a nowrap control (select value) or a
+       long label must not widen the field through its min-content size. */
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--vd-field-gap);
+    min-inline-size: 0;
+  }
+
+  .vd-field__label {
+    display: flex;
+    gap: var(--vd-space-1);
+    inline-size: fit-content;
+    color: var(--vd-color-text);
+    font-size: var(--vd-text-sm);
+    font-weight: var(--vd-weight-semibold);
+    line-height: var(--vd-leading-snug);
+  }
+
+  .vd-field__required {
+    color: var(--vd-color-danger-text);
+  }
+
+  .vd-field__hint,
+  .vd-field__error {
+    font-size: var(--vd-text-sm);
+    line-height: var(--vd-leading-snug);
+    text-wrap: pretty;
+  }
+
+  .vd-field__hint {
+    color: var(--vd-color-text-muted);
+  }
+
+  .vd-field__error {
+    display: flex;
+    align-items: start;
+    gap: var(--vd-space-1-5);
+    color: var(--vd-color-danger-text);
+  }
+
+  .vd-field__error .vd-icon {
+    --vd-icon-size: 1.1em;
+
+    margin-block-start: 0.1em;
+  }
+
+  .vd-field[data-disabled] .vd-field__label {
+    color: var(--vd-color-text-muted);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .vd-field__error {
+      transition:
+        opacity var(--vd-duration-base) var(--vd-ease-out),
+        translate var(--vd-duration-base) var(--vd-ease-out);
+
+      @starting-style {
+        opacity: 0;
+        translate: 0 calc(var(--vd-space-1) * -1);
+      }
+    }
+  }
+}
+
+/* Choice: a label wrapping a checkbox/switch/radio and its text. */
+@layer vd.components {
+  .vd-choice {
+    --vd-choice-gap: var(--vd-space-2);
+
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--vd-choice-gap);
+    max-inline-size: 100%;
+    color: var(--vd-color-text);
+    font-size: var(--vd-text-sm);
+    line-height: var(--vd-leading-normal);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  /* Center the control on the first line of text. */
+  .vd-choice > .vd-checkbox {
+    margin-block-start: calc((1lh - var(--vd-checkbox-size)) / 2);
+  }
+
+  .vd-choice > .vd-switch {
+    margin-block-start: calc((1lh - var(--vd-switch-height)) / 2);
+  }
+
+  .vd-choice:has(> :disabled) {
+    color: var(--vd-color-text-muted);
+    cursor: not-allowed;
+  }
+}
+
+/* Fieldset: a group of choices with one legend, hint and error. */
+@layer vd.components {
+  .vd-fieldset {
+    --vd-fieldset-gap: var(--vd-space-3);
+
+    display: grid;
+    gap: var(--vd-space-1-5);
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  /* Legends don't take part in grid layout until floated out of the fieldset border. */
+  .vd-fieldset__legend {
+    float: inline-start;
+    display: flex;
+    gap: var(--vd-space-1);
+    inline-size: 100%;
+    padding: 0;
+    color: var(--vd-color-text);
+    font-size: var(--vd-text-sm);
+    font-weight: var(--vd-weight-semibold);
+    line-height: var(--vd-leading-snug);
+  }
+
+  .vd-fieldset__legend + * {
+    clear: both;
+  }
+
+  .vd-fieldset__options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--vd-fieldset-gap);
+    margin-block-start: var(--vd-space-1-5);
+  }
+
+  .vd-fieldset[data-orientation='horizontal'] .vd-fieldset__options {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--vd-fieldset-gap) var(--vd-space-6);
+  }
+
+  .vd-fieldset:disabled .vd-fieldset__legend {
+    color: var(--vd-color-text-muted);
+  }
+}

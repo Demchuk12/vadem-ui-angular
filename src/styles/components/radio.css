@@ -1,0 +1,117 @@
+/* Radio - spec: specs/radio.md */
+@layer vd.components {
+  .vd-radio {
+    --vd-radio-size: 1.125rem;
+    --vd-radio-bg: var(--vd-color-field);
+    --vd-radio-border: var(--vd-color-border-control);
+    --vd-radio-border-hover: var(--vd-color-border-control-hover);
+    --vd-radio-checked: var(--vd-color-action);
+    --vd-radio-checked-hover: var(--vd-color-action-hover);
+    --vd-radio-dot: var(--vd-color-on-action);
+
+    appearance: none;
+    display: inline-grid;
+    place-content: center;
+    flex: none;
+    inline-size: var(--vd-radio-size);
+    block-size: var(--vd-radio-size);
+    margin: 0;
+    border: var(--vd-border-width) solid var(--vd-radio-border);
+    border-radius: var(--vd-radius-full);
+    background-color: var(--vd-radio-bg);
+    vertical-align: middle;
+    cursor: pointer;
+    transition:
+      var(--vd-transition-colors),
+      scale var(--vd-duration-fast) var(--vd-ease-out);
+  }
+
+  .vd-radio::before {
+    content: '';
+    inline-size: calc(var(--vd-radio-size) * 0.4);
+    block-size: calc(var(--vd-radio-size) * 0.4);
+    border-radius: var(--vd-radius-full);
+    background-color: var(--vd-radio-dot);
+    opacity: 0;
+    scale: 0.3;
+    transition:
+      opacity var(--vd-duration-fast) var(--vd-ease-out),
+      scale var(--vd-duration-base) var(--vd-ease-spring);
+  }
+
+  .vd-radio:checked {
+    --vd-radio-bg: var(--vd-radio-checked);
+    --vd-radio-border: var(--vd-radio-checked);
+    --vd-radio-border-hover: var(--vd-radio-checked-hover);
+
+    box-shadow: var(--vd-highlight-top);
+  }
+
+  .vd-radio:checked::before {
+    opacity: 1;
+    scale: 1;
+  }
+
+  @media (hover: hover) {
+    .vd-radio:not(:disabled):hover,
+    .vd-choice:has(> .vd-radio:not(:disabled)):hover > .vd-radio {
+      border-color: var(--vd-radio-border-hover);
+    }
+
+    .vd-radio:checked:not(:disabled):hover,
+    .vd-choice:hover > .vd-radio:checked:not(:disabled) {
+      background-color: var(--vd-radio-checked-hover);
+    }
+  }
+
+  .vd-radio:not(:disabled):active {
+    scale: var(--vd-press-scale);
+  }
+
+  .vd-radio:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+
+  .vd-radio[data-invalid] {
+    --vd-radio-border: var(--vd-color-danger);
+    --vd-radio-border-hover: var(--vd-color-danger);
+  }
+
+  .vd-radio:disabled {
+    opacity: var(--vd-opacity-disabled);
+    cursor: not-allowed;
+  }
+
+  /* Center the control on the first line of text. */
+  .vd-choice > .vd-radio {
+    margin-block-start: calc((1lh - var(--vd-radio-size)) / 2);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vd-radio:active {
+      scale: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .vd-radio {
+      forced-color-adjust: none;
+      border-color: ButtonText;
+      background-color: Canvas;
+    }
+
+    .vd-radio:checked {
+      border-color: Highlight;
+      background-color: Canvas;
+    }
+
+    .vd-radio::before {
+      background-color: Highlight;
+    }
+
+    .vd-radio:disabled {
+      border-color: GrayText;
+    }
+  }
+}

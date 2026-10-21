@@ -1,0 +1,93 @@
+/* Popover (non-modal, anchored) - spec: specs/popover.md */
+@layer vd.components {
+  .vd-popover {
+    --vd-popover-width: 20rem;
+    --vd-popover-padding: var(--vd-space-4);
+    --vd-popover-radius: var(--vd-radius-lg);
+    --vd-popover-offset: var(--vd-space-2);
+
+    /* Geometry on the base rule (D45). */
+    position: fixed;
+    inset: auto;
+    margin: var(--vd-popover-offset);
+    position-area: block-end span-inline-end;
+    position-try-fallbacks:
+      flip-block,
+      flip-inline,
+      flip-block flip-inline;
+    inline-size: min(var(--vd-popover-width), 100vw - var(--vd-space-4) * 2);
+    max-block-size: min(32rem, 80dvh);
+    padding: var(--vd-popover-padding);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: var(--vd-border-width) solid var(--vd-color-border-strong);
+    border-radius: var(--vd-popover-radius);
+    background-color: var(--vd-color-surface-overlay);
+    box-shadow: var(--vd-highlight-top), var(--vd-shadow-lg);
+    color: var(--vd-color-text);
+    font-size: var(--vd-text-sm);
+
+    opacity: 0;
+    scale: 0.97;
+    transform-origin: top;
+    transition:
+      opacity var(--vd-duration-fast) var(--vd-ease-out),
+      scale var(--vd-duration-base) var(--vd-ease-spring),
+      display var(--vd-duration-fast) allow-discrete,
+      overlay var(--vd-duration-fast) allow-discrete;
+  }
+
+  .vd-popover[data-placement='top'] {
+    position-area: block-start span-inline-end;
+    transform-origin: bottom;
+  }
+
+  .vd-popover[data-placement='start'] {
+    position-area: inline-start span-block-end;
+    position-try-fallbacks:
+      flip-inline,
+      flip-block,
+      flip-block flip-inline;
+  }
+
+  .vd-popover[data-placement='end'] {
+    position-area: inline-end span-block-end;
+    position-try-fallbacks:
+      flip-inline,
+      flip-block,
+      flip-block flip-inline;
+  }
+
+  .vd-popover:popover-open {
+    opacity: 1;
+    scale: 1;
+  }
+
+  @starting-style {
+    .vd-popover:popover-open {
+      opacity: 0;
+      scale: 0.97;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vd-popover {
+      scale: 1;
+      transition:
+        opacity var(--vd-duration-fast) linear,
+        display var(--vd-duration-fast) allow-discrete,
+        overlay var(--vd-duration-fast) allow-discrete;
+    }
+  }
+
+  .vd-popover:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+
+  @media (forced-colors: active) {
+    .vd-popover {
+      border-color: CanvasText;
+    }
+  }
+}

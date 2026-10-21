@@ -1,0 +1,72 @@
+@layer vd.components {
+  .vd-toolbar {
+    --vd-toolbar-gap: var(--vd-space-2);
+    --vd-toolbar-padding: var(--vd-space-2);
+    --vd-toolbar-radius: var(--vd-radius-lg);
+    --vd-toolbar-bg: var(--vd-color-surface);
+    --vd-toolbar-border: var(--vd-color-border);
+    --vd-toolbar-separator: var(--vd-color-border-strong);
+    --vd-toolbar-pressed-bg: var(--vd-color-fill);
+    --vd-toolbar-pressed-fg: var(--vd-color-text);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--vd-toolbar-gap);
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    padding: var(--vd-toolbar-padding);
+    padding-inline: min(var(--vd-toolbar-padding), 3%);
+    border: var(--vd-border-width) solid var(--vd-toolbar-border);
+    border-radius: var(--vd-toolbar-radius);
+    background: var(--vd-toolbar-bg);
+  }
+  .vd-toolbar__group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--vd-toolbar-gap);
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+  .vd-toolbar__item {
+    max-inline-size: 100%;
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+  @media (width < 30rem) {
+    .vd-toolbar__item:not([data-icon-only]) {
+      padding-inline: min(var(--vd-button-padding-inline), 5%);
+    }
+  }
+  .vd-toolbar__item[aria-pressed='true'] {
+    --vd-button-bg: var(--vd-toolbar-pressed-bg);
+    --vd-button-fg: var(--vd-toolbar-pressed-fg);
+    --vd-button-border: var(--vd-toolbar-separator);
+  }
+  .vd-toolbar__separator {
+    flex: none;
+    inline-size: var(--vd-border-width);
+    block-size: var(--vd-space-6);
+    background: var(--vd-toolbar-separator);
+  }
+  .vd-toolbar[data-orientation='vertical'],
+  .vd-toolbar__group[data-orientation='vertical'] {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .vd-toolbar__separator[data-orientation='vertical'] {
+    inline-size: 100%;
+    block-size: var(--vd-border-width);
+  }
+  @media (forced-colors: active) {
+    .vd-toolbar {
+      border-color: CanvasText;
+    }
+    .vd-toolbar__separator {
+      background: CanvasText;
+    }
+    .vd-toolbar__item[aria-pressed='true'] {
+      border-color: Highlight;
+    }
+  }
+}

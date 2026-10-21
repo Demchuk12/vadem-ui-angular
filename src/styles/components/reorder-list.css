@@ -1,0 +1,143 @@
+@layer vd.components {
+  .vd-reorder-list {
+    --vd-reorder-list-gap: var(--vd-space-3);
+    --vd-reorder-list-padding: var(--vd-space-4);
+    --vd-reorder-list-border: var(--vd-color-border);
+    --vd-reorder-list-fg: var(--vd-color-text);
+    --vd-reorder-list-muted: var(--vd-color-text-muted);
+    --vd-reorder-list-active-bg: var(--vd-color-action-subtle);
+    --vd-reorder-list-marker: var(--vd-color-focus);
+    --vd-reorder-list-grip-size: var(--vd-control-height-lg);
+    --vd-reorder-list-compact-action-padding: var(--vd-space-1);
+    --vd-reorder-list-compact-grip-size: var(--vd-control-height-md);
+    display: block;
+    min-inline-size: 0;
+    color: var(--vd-reorder-list-fg);
+    container-type: inline-size;
+  }
+  .vd-reorder-list__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .vd-reorder-list__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: start;
+    gap: var(--vd-reorder-list-gap);
+    padding-block: var(--vd-reorder-list-padding);
+    border-block-end: var(--vd-border-width) solid var(--vd-reorder-list-border);
+  }
+  .vd-reorder-list__item:last-child {
+    border-block-end: 0;
+  }
+  .vd-reorder-list__grip {
+    display: grid;
+    place-items: center;
+    inline-size: var(--vd-reorder-list-grip-size);
+    min-block-size: var(--vd-reorder-list-grip-size);
+    touch-action: none;
+    cursor: grab;
+    user-select: none;
+    color: var(--vd-reorder-list-muted);
+  }
+  .vd-reorder-list__body {
+    min-inline-size: 0;
+  }
+  .vd-reorder-list__title {
+    display: flex;
+    align-items: baseline;
+    gap: var(--vd-reorder-list-gap);
+    font-weight: var(--vd-weight-semibold);
+  }
+  .vd-reorder-list__title bdi {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+  .vd-reorder-list__position {
+    color: var(--vd-reorder-list-muted);
+    font-size: var(--vd-text-sm);
+    font-variant-numeric: tabular-nums;
+  }
+  .vd-reorder-list__description {
+    margin: var(--vd-space-2) 0 0;
+    color: var(--vd-reorder-list-muted);
+    font-size: var(--vd-text-sm);
+    overflow-wrap: anywhere;
+  }
+  .vd-reorder-list__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--vd-space-1);
+    min-inline-size: 0;
+  }
+  .vd-reorder-list__actions .vd-button {
+    max-inline-size: 100%;
+  }
+  .vd-reorder-list__item[data-dragging] {
+    background: var(--vd-reorder-list-active-bg);
+  }
+  .vd-reorder-list__item[data-dragging] .vd-reorder-list__grip {
+    cursor: grabbing;
+  }
+  .vd-reorder-list__item[data-drop]::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    block-size: var(--vd-focus-ring-width);
+    background: var(--vd-reorder-list-marker);
+    pointer-events: none;
+  }
+  .vd-reorder-list__item[data-drop='before']::after {
+    inset-block-start: 0;
+  }
+  .vd-reorder-list__item[data-drop='after']::after {
+    inset-block-end: 0;
+  }
+  .vd-reorder-list__grip[data-disabled] {
+    touch-action: auto;
+    cursor: default;
+  }
+  .vd-reorder-list__empty {
+    padding-block: var(--vd-reorder-list-padding);
+    color: var(--vd-reorder-list-muted);
+  }
+  @container (width < 32rem) {
+    .vd-reorder-list__item {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .vd-reorder-list__body {
+      grid-column: 1 / -1;
+      grid-row: 1;
+    }
+    .vd-reorder-list__grip {
+      grid-column: 2;
+      grid-row: 2;
+      inline-size: var(--vd-reorder-list-compact-grip-size);
+      min-block-size: var(--vd-reorder-list-compact-grip-size);
+    }
+    .vd-reorder-list__actions {
+      grid-column: 1;
+      grid-row: 2;
+    }
+    .vd-reorder-list__actions .vd-icon {
+      display: none;
+    }
+    .vd-reorder-list__actions .vd-button {
+      --vd-button-padding-inline: var(--vd-reorder-list-compact-action-padding);
+    }
+  }
+  @media (forced-colors: active) {
+    .vd-reorder-list__item {
+      border-color: CanvasText;
+    }
+    .vd-reorder-list__item[data-dragging] {
+      outline: var(--vd-border-width) solid Highlight;
+      outline-offset: calc(-1 * var(--vd-border-width));
+    }
+    .vd-reorder-list__item[data-drop]::after {
+      background: Highlight;
+    }
+  }
+}

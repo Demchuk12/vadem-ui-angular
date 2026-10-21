@@ -1,0 +1,1 @@
+export { VdCheckbox } from './checkbox';

@@ -1,0 +1,94 @@
+/* Breadcrumbs - spec: specs/breadcrumbs.md */
+@layer vd.components {
+  .vd-breadcrumbs {
+    --vd-breadcrumbs-gap: var(--vd-space-1-5);
+    --vd-breadcrumbs-fg: var(--vd-color-text-muted);
+    --vd-breadcrumbs-fg-current: var(--vd-color-text);
+    --vd-breadcrumbs-separator: var(--vd-color-text-subtle);
+    /* Lucide chevron-right. */
+    --vd-breadcrumbs-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E");
+
+    font-size: var(--vd-text-sm);
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    line-height: var(--vd-leading-snug);
+  }
+
+  .vd-breadcrumbs > ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--vd-space-1) var(--vd-breadcrumbs-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .vd-breadcrumbs li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--vd-breadcrumbs-gap);
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    color: var(--vd-breadcrumbs-fg);
+  }
+
+  /* Separator before every item but the first; decorative (list semantics carry the order). */
+  .vd-breadcrumbs li + li::before {
+    content: '';
+    flex: none;
+    inline-size: 0.875em;
+    block-size: 0.875em;
+    background-color: var(--vd-breadcrumbs-separator);
+    mask: var(--vd-breadcrumbs-icon) center / contain no-repeat;
+  }
+
+  .vd-breadcrumbs:dir(rtl) li + li::before {
+    scale: -1 1;
+  }
+
+  .vd-breadcrumbs a {
+    border-radius: var(--vd-radius-xs);
+    color: inherit;
+    text-decoration: none;
+    transition: var(--vd-transition-colors);
+  }
+
+  @media (hover: hover) {
+    .vd-breadcrumbs a:hover {
+      color: var(--vd-breadcrumbs-fg-current);
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+  }
+
+  .vd-breadcrumbs a:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+
+  /* Long names truncate; the current page keeps more room than the ancestors. */
+  .vd-breadcrumbs li > :is(a, [aria-current]) {
+    min-inline-size: 0;
+    overflow: hidden;
+    max-inline-size: 16ch;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .vd-breadcrumbs [aria-current='page'] {
+    max-inline-size: 32ch;
+    color: var(--vd-breadcrumbs-fg-current);
+    font-weight: var(--vd-weight-semibold);
+  }
+
+  .vd-breadcrumbs li > .vd-icon:first-child {
+    --vd-icon-size: 1.1em;
+  }
+
+  @media (forced-colors: active) {
+    .vd-breadcrumbs li + li::before {
+      background-color: CanvasText;
+    }
+  }
+}

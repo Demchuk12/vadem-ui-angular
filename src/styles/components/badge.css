@@ -1,0 +1,91 @@
+/* Badge - spec: specs/badge.md. Signature: mono eyebrow label. */
+@layer vd.components {
+  .vd-badge {
+    --vd-badge-bg: var(--vd-color-fill);
+    --vd-badge-fg: var(--vd-color-text-muted);
+    --vd-badge-border: var(--vd-color-border);
+    --vd-badge-dot: var(--vd-color-text-subtle);
+    --vd-badge-radius: var(--vd-radius-sm);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--vd-space-1-5);
+    max-inline-size: 100%;
+    min-block-size: var(--vd-space-6);
+    padding-block: var(--vd-space-0-5);
+    padding-inline: var(--vd-space-2);
+    border: var(--vd-border-width) solid var(--vd-badge-border);
+    border-radius: var(--vd-badge-radius);
+    background-color: var(--vd-badge-bg);
+    color: var(--vd-badge-fg);
+    font-family: var(--vd-font-mono);
+    font-size: var(--vd-text-xs);
+    font-weight: var(--vd-weight-medium);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--vd-tracking-caps);
+    line-height: var(--vd-leading-snug);
+    text-transform: uppercase;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  .vd-badge > .vd-icon {
+    --vd-icon-size: 1.15em;
+
+    margin-inline-start: calc(var(--vd-space-0-5) * -1);
+  }
+
+  .vd-badge[data-dot]::before {
+    content: '';
+    flex: none;
+    inline-size: var(--vd-space-1-5);
+    block-size: var(--vd-space-1-5);
+    border-radius: var(--vd-radius-full);
+    background-color: var(--vd-badge-dot);
+  }
+
+  .vd-badge[data-variant='accent'] {
+    --vd-badge-bg: var(--vd-color-action-subtle);
+    --vd-badge-fg: var(--vd-color-action-text);
+    --vd-badge-border: color-mix(in oklch, var(--vd-color-action) 35%, transparent);
+    --vd-badge-dot: var(--vd-color-action);
+  }
+
+  .vd-badge[data-variant='success'] {
+    --vd-badge-bg: var(--vd-color-success-subtle);
+    --vd-badge-fg: var(--vd-color-success-text);
+    --vd-badge-border: var(--vd-color-success-border);
+    --vd-badge-dot: var(--vd-color-success);
+  }
+
+  .vd-badge[data-variant='warning'] {
+    --vd-badge-bg: var(--vd-color-warning-subtle);
+    --vd-badge-fg: var(--vd-color-warning-text);
+    --vd-badge-border: var(--vd-color-warning-border);
+    --vd-badge-dot: var(--vd-color-warning);
+  }
+
+  .vd-badge[data-variant='danger'] {
+    --vd-badge-bg: var(--vd-color-danger-subtle);
+    --vd-badge-fg: var(--vd-color-danger-text);
+    --vd-badge-border: var(--vd-color-danger-border);
+    --vd-badge-dot: var(--vd-color-danger);
+  }
+
+  .vd-badge[data-variant='info'] {
+    --vd-badge-bg: var(--vd-color-info-subtle);
+    --vd-badge-fg: var(--vd-color-info-text);
+    --vd-badge-border: var(--vd-color-info-border);
+    --vd-badge-dot: var(--vd-color-info);
+  }
+
+  @media (forced-colors: active) {
+    .vd-badge {
+      border-color: CanvasText;
+    }
+
+    .vd-badge[data-dot]::before {
+      background-color: CanvasText;
+    }
+  }
+}

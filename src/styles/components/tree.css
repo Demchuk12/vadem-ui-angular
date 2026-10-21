@@ -1,0 +1,88 @@
+@layer vd.components {
+  .vd-tree {
+    --vd-tree-gap: var(--vd-space-1);
+    --vd-tree-indent: var(--vd-space-4);
+    --vd-tree-padding: var(--vd-space-2);
+    --vd-tree-radius: var(--vd-radius-sm);
+    --vd-tree-height: var(--vd-control-height-md);
+    --vd-tree-bg-hover: var(--vd-color-fill-hover);
+    --vd-tree-bg-selected: var(--vd-color-fill);
+    --vd-tree-fg: var(--vd-color-text);
+    --vd-tree-muted: var(--vd-color-text-muted);
+    --vd-tree-ring: var(--vd-color-focus);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--vd-tree-fg);
+    min-inline-size: 0;
+  }
+  .vd-tree__group {
+    margin: 0;
+    padding: 0;
+    padding-inline-start: min(var(--vd-tree-indent), 10%);
+    list-style: none;
+  }
+  .vd-tree-item {
+    min-inline-size: 0;
+    outline: none;
+  }
+  .vd-tree-item__row {
+    display: flex;
+    align-items: center;
+    gap: var(--vd-tree-gap);
+    min-block-size: var(--vd-tree-height);
+    padding: var(--vd-tree-padding);
+    border-radius: var(--vd-tree-radius);
+    cursor: pointer;
+    transition: var(--vd-transition-colors);
+  }
+  .vd-tree-item__label {
+    min-inline-size: 0;
+    flex: 1;
+    overflow-wrap: anywhere;
+  }
+  .vd-tree-item__toggle,
+  .vd-tree-item__check {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--vd-space-6);
+    block-size: var(--vd-space-6);
+    color: var(--vd-tree-muted);
+  }
+  .vd-tree-item__check {
+    inline-size: var(--vd-space-4);
+  }
+  .vd-tree-item:not([data-selected]) > .vd-tree-item__row > .vd-tree-item__check {
+    display: none;
+  }
+  .vd-tree-item[data-selected] > .vd-tree-item__row {
+    background: var(--vd-tree-bg-selected);
+  }
+  .vd-tree-item:focus-visible > .vd-tree-item__row,
+  .vd-tree:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-tree-ring);
+    outline-offset: calc(var(--vd-border-width) * -1);
+  }
+  .vd-tree-item[data-disabled] > .vd-tree-item__row {
+    color: var(--vd-tree-muted);
+    cursor: not-allowed;
+  }
+  @media (hover: hover) {
+    .vd-tree-item:not([data-disabled]) > .vd-tree-item__row:hover {
+      background: var(--vd-tree-bg-hover);
+    }
+  }
+  @media (forced-colors: active) {
+    .vd-tree-item[data-selected] > .vd-tree-item__row {
+      outline: var(--vd-border-width) solid Highlight;
+    }
+    .vd-tree-item:focus-visible > .vd-tree-item__row,
+    .vd-tree:focus-visible {
+      outline-color: Highlight;
+    }
+    .vd-tree-item[data-disabled] > .vd-tree-item__row {
+      color: GrayText;
+    }
+  }
+}

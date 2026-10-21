@@ -1,0 +1,236 @@
+/* Ordered process navigation. Spec: specs/stepper.md. */
+@layer vd.components {
+  .vd-stepper {
+    --vd-stepper-gap: var(--vd-space-3);
+    --vd-stepper-padding: var(--vd-space-3);
+    --vd-stepper-indicator-size: var(--vd-control-height-sm);
+    --vd-stepper-radius: var(--vd-radius-control);
+    --vd-stepper-connector: var(--vd-color-border-strong);
+    --vd-stepper-connector-complete: var(--vd-color-action-text);
+    --vd-stepper-fg: var(--vd-color-text);
+    --vd-stepper-fg-muted: var(--vd-color-text-muted);
+    --vd-stepper-current-bg: var(--vd-color-action);
+    --vd-stepper-current-fg: var(--vd-color-on-action);
+    --vd-stepper-complete-bg: var(--vd-color-action-subtle);
+    --vd-stepper-complete-fg: var(--vd-color-action-text);
+    --vd-stepper-error-bg: var(--vd-color-danger-subtle);
+    --vd-stepper-error-fg: var(--vd-color-danger-text);
+    --vd-stepper-hover: var(--vd-color-fill);
+
+    display: block;
+    container: vd-stepper / inline-size;
+  }
+
+  .vd-stepper > ol {
+    display: flex;
+    gap: var(--vd-stepper-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .vd-stepper > ol > li {
+    position: relative;
+    flex: 1;
+    min-inline-size: 0;
+  }
+
+  .vd-stepper > ol > li:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    inset-block-start: calc(var(--vd-stepper-padding) + var(--vd-stepper-indicator-size) / 2);
+    inset-inline-start: calc(
+      var(--vd-stepper-padding) + var(--vd-stepper-indicator-size) + var(--vd-stepper-gap)
+    );
+    inset-inline-end: 0;
+    block-size: var(--vd-border-width);
+    background: var(--vd-stepper-connector);
+    pointer-events: none;
+  }
+
+  .vd-stepper > ol > li:has(> .vd-step[data-completed]:not([data-invalid]))::after {
+    background: var(--vd-stepper-connector-complete);
+  }
+
+  .vd-step {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--vd-stepper-gap);
+    inline-size: 100%;
+    min-inline-size: 0;
+    padding: var(--vd-stepper-padding);
+    border: 0;
+    border-radius: var(--vd-stepper-radius);
+    background: transparent;
+    color: var(--vd-stepper-fg);
+    text-align: start;
+    font: inherit;
+    cursor: pointer;
+    transition: var(--vd-transition-colors);
+  }
+
+  .vd-step__indicator {
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--vd-stepper-indicator-size);
+    block-size: var(--vd-stepper-indicator-size);
+    border: var(--vd-border-width) solid var(--vd-color-border-control);
+    border-radius: var(--vd-radius-full);
+    background: var(--vd-color-surface);
+    color: var(--vd-stepper-fg-muted);
+    font-size: var(--vd-text-sm);
+    font-weight: var(--vd-weight-semibold);
+    font-variant-numeric: tabular-nums;
+    transition: var(--vd-transition-colors);
+  }
+
+  .vd-step__indicator vd-icon {
+    --vd-icon-size: var(--vd-space-4);
+  }
+
+  .vd-step__content {
+    display: grid;
+    gap: var(--vd-space-1);
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .vd-step__title {
+    font-size: var(--vd-text-sm);
+    font-weight: var(--vd-weight-semibold);
+    line-height: var(--vd-leading-snug);
+  }
+
+  /* Current remains recognizable when completion/error takes indicator priority. */
+  .vd-step[data-current] .vd-step__title {
+    text-decoration: underline;
+    text-decoration-thickness: var(--vd-border-width);
+    text-underline-offset: var(--vd-space-1);
+  }
+
+  .vd-step__description {
+    color: var(--vd-stepper-fg-muted);
+    font-size: var(--vd-text-sm);
+    line-height: var(--vd-leading-normal);
+  }
+
+  .vd-step[data-state='current'] .vd-step__indicator {
+    border-color: var(--vd-stepper-current-bg);
+    background: var(--vd-stepper-current-bg);
+    color: var(--vd-stepper-current-fg);
+  }
+
+  .vd-step[data-state='complete'] .vd-step__indicator {
+    border-color: var(--vd-stepper-complete-fg);
+    background: var(--vd-stepper-complete-bg);
+    color: var(--vd-stepper-complete-fg);
+  }
+
+  .vd-step[data-state='error'] .vd-step__indicator {
+    border-color: var(--vd-stepper-error-fg);
+    background: var(--vd-stepper-error-bg);
+    color: var(--vd-stepper-error-fg);
+  }
+
+  .vd-step[data-state='error'] .vd-step__title {
+    color: var(--vd-stepper-error-fg);
+  }
+
+  .vd-step:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+
+  .vd-step:disabled {
+    opacity: var(--vd-opacity-disabled);
+    cursor: not-allowed;
+  }
+
+  @media (hover: hover) {
+    .vd-step:not(:disabled):hover {
+      background: var(--vd-stepper-hover);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .vd-step:not(:disabled):active .vd-step__indicator {
+      scale: var(--vd-press-scale);
+    }
+  }
+
+  .vd-stepper[data-orientation='vertical'] > ol {
+    flex-direction: column;
+  }
+
+  .vd-stepper[data-orientation='vertical'] .vd-step {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .vd-stepper[data-orientation='vertical'] > ol > li:not(:last-child)::after {
+    inset-block-start: calc(
+      var(--vd-stepper-padding) + var(--vd-stepper-indicator-size) + var(--vd-space-1)
+    );
+    inset-block-end: calc(var(--vd-stepper-gap) * -1 + var(--vd-space-1));
+    inset-inline-start: calc(var(--vd-stepper-padding) + var(--vd-stepper-indicator-size) / 2);
+    inset-inline-end: auto;
+    inline-size: var(--vd-border-width);
+    block-size: auto;
+  }
+
+  /* Container breakpoint is structural (media/container queries cannot read tokens). */
+  @container vd-stepper (width < 30rem) {
+    .vd-stepper[data-orientation='horizontal'] > ol {
+      flex-direction: column;
+    }
+
+    .vd-stepper[data-orientation='horizontal'] .vd-step {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    .vd-stepper[data-orientation='horizontal'] > ol > li:not(:last-child)::after {
+      inset-block-start: calc(
+        var(--vd-stepper-padding) + var(--vd-stepper-indicator-size) + var(--vd-space-1)
+      );
+      inset-block-end: calc(var(--vd-stepper-gap) * -1 + var(--vd-space-1));
+      inset-inline-start: calc(var(--vd-stepper-padding) + var(--vd-stepper-indicator-size) / 2);
+      inset-inline-end: auto;
+      inline-size: var(--vd-border-width);
+      block-size: auto;
+    }
+  }
+
+  /* At text zoom, preserve label width instead of squeezing it beside the indicator. */
+  @container vd-stepper (width < 12rem) {
+    .vd-stepper[data-orientation] .vd-step {
+      flex-direction: column;
+    }
+
+    .vd-stepper[data-orientation] > ol > li:not(:last-child)::after {
+      display: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .vd-step__indicator {
+      border-color: CanvasText;
+    }
+
+    .vd-step[data-current] .vd-step__indicator {
+      outline: var(--vd-focus-ring-width) solid Highlight;
+      outline-offset: var(--vd-focus-ring-offset);
+    }
+
+    .vd-stepper > ol > li:not(:last-child)::after {
+      background: CanvasText;
+    }
+
+    .vd-step:disabled {
+      opacity: 1;
+      color: GrayText;
+    }
+  }
+}

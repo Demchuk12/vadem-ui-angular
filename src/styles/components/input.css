@@ -1,0 +1,171 @@
+/* Input, textarea, input group - spec: specs/input.md */
+@layer vd.components {
+  .vd-input,
+  .vd-input-group {
+    --vd-input-height: var(--vd-control-height-md);
+    --vd-input-padding-inline: var(--vd-space-3);
+    --vd-input-font-size: var(--vd-text-md);
+    --vd-input-radius: var(--vd-radius-md);
+    --vd-input-bg: var(--vd-color-field);
+    --vd-input-fg: var(--vd-color-text);
+    --vd-input-border: var(--vd-color-border-control);
+    --vd-input-border-hover: var(--vd-color-border-control-hover);
+    --vd-input-ring: var(--vd-color-focus);
+    --vd-input-placeholder: var(--vd-color-text-subtle);
+  }
+
+  /* Sizes: on the input itself, or on a group via the input inside it. */
+  .vd-input[data-size='sm'],
+  .vd-input-group:has(> .vd-input[data-size='sm']) {
+    --vd-input-height: var(--vd-control-height-sm);
+    --vd-input-padding-inline: var(--vd-space-2);
+    --vd-input-font-size: var(--vd-text-sm);
+    --vd-input-radius: var(--vd-radius-sm);
+  }
+
+  .vd-input[data-size='lg'],
+  .vd-input-group:has(> .vd-input[data-size='lg']) {
+    --vd-input-height: var(--vd-control-height-lg);
+    --vd-input-padding-inline: var(--vd-space-4);
+    --vd-input-radius: var(--vd-radius-lg);
+  }
+
+  /* Invalid: one switch for every boundary/ring color. */
+  .vd-input[data-invalid],
+  .vd-input-group:has(> .vd-input[data-invalid]) {
+    --vd-input-border: var(--vd-color-danger);
+    --vd-input-border-hover: var(--vd-color-danger);
+    --vd-input-ring: var(--vd-color-danger);
+  }
+
+  /* ------------------------------------------------------------ boundary */
+
+  .vd-input,
+  .vd-input-group {
+    inline-size: 100%;
+    min-block-size: var(--vd-input-height);
+    border: var(--vd-border-width) solid var(--vd-input-border);
+    border-radius: var(--vd-input-radius);
+    background-color: var(--vd-input-bg);
+    color: var(--vd-input-fg);
+    font-family: inherit;
+    font-size: var(--vd-input-font-size);
+    line-height: var(--vd-leading-snug);
+    transition: var(--vd-transition-colors);
+  }
+
+  .vd-input {
+    padding-block: var(--vd-space-1);
+    padding-inline: var(--vd-input-padding-inline);
+    appearance: none;
+  }
+
+  .vd-input::placeholder {
+    color: var(--vd-input-placeholder);
+    opacity: 1;
+  }
+
+  @media (hover: hover) {
+    .vd-input:not(:disabled, :read-only, :focus):hover,
+    .vd-input-group:not(:has(> .vd-input:is(:disabled, :read-only, :focus))):hover {
+      border-color: var(--vd-input-border-hover);
+    }
+  }
+
+  /* Focus: the outline sits on the border, so the ring reads as a crisp 2px edge. */
+  .vd-input:focus-visible,
+  .vd-input-group:has(> .vd-input:focus-visible) {
+    border-color: var(--vd-input-ring);
+    outline: var(--vd-focus-ring-width) solid var(--vd-input-ring);
+    outline-offset: calc(var(--vd-border-width) * -1);
+  }
+
+  .vd-input:read-only:not(:disabled),
+  .vd-input-group:has(> .vd-input:read-only:not(:disabled)) {
+    --vd-input-bg: var(--vd-color-field-readonly);
+    --vd-input-border: var(--vd-color-border-strong);
+  }
+
+  .vd-input:disabled,
+  .vd-input-group:has(> .vd-input:disabled) {
+    opacity: var(--vd-opacity-disabled);
+    cursor: not-allowed;
+  }
+
+  /* Keep our colors when the browser autofills. */
+  .vd-input:autofill {
+    -webkit-text-fill-color: var(--vd-input-fg);
+    box-shadow: inset 0 0 0 100vmax var(--vd-color-surface-raised);
+    caret-color: var(--vd-input-fg);
+  }
+
+  /* ------------------------------------------------------------- textarea */
+
+  textarea.vd-input {
+    --vd-input-min-rows: 3;
+
+    display: block;
+    min-block-size: calc(
+      var(--vd-input-font-size) * var(--vd-leading-snug) * var(--vd-input-min-rows) +
+        var(--vd-space-2) * 2
+    );
+    max-block-size: 50vh;
+    padding-block: var(--vd-space-2);
+    resize: vertical;
+    field-sizing: content;
+  }
+
+  /* ---------------------------------------------------------------- group */
+
+  .vd-input-group {
+    display: flex;
+    align-items: center;
+    gap: var(--vd-space-2);
+    padding-inline: var(--vd-input-padding-inline);
+    cursor: text;
+  }
+
+  .vd-input-group > .vd-input {
+    flex: 1;
+    min-inline-size: 0;
+    min-block-size: calc(var(--vd-input-height) - var(--vd-border-width) * 2);
+    padding-inline: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    outline: none;
+    opacity: 1;
+  }
+
+  .vd-input-group > .vd-icon {
+    color: var(--vd-color-text-subtle);
+  }
+
+  .vd-input-group:has(> .vd-input:focus-visible) > .vd-icon[slot='start'] {
+    color: var(--vd-color-text-muted);
+  }
+
+  /* Buttons inside sit 4px from the edge with a concentric radius. */
+  .vd-input-group > .vd-button {
+    --vd-button-height: calc(var(--vd-input-height) - var(--vd-space-2));
+    --vd-button-radius: max(var(--vd-radius-xs), calc(var(--vd-input-radius) - var(--vd-space-1)));
+
+    flex: none;
+    margin-inline: calc(var(--vd-space-1) - var(--vd-input-padding-inline));
+  }
+
+  .vd-input-group > .vd-button[slot='start'] {
+    margin-inline-end: 0;
+  }
+
+  .vd-input-group > .vd-button[slot='end'] {
+    margin-inline-start: 0;
+  }
+
+  @media (forced-colors: active) {
+    .vd-input:focus-visible,
+    .vd-input-group:has(> .vd-input:focus-visible) {
+      outline-color: Highlight;
+    }
+  }
+}

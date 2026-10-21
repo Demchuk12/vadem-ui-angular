@@ -1,0 +1,162 @@
+/* Progress and meter (native elements) - spec: specs/progress.md */
+/* Engine pseudo-elements can't share a rule (an unknown selector drops the whole rule), so
+   -webkit- and -moz- parts are written separately. */
+@layer vd.components {
+  .vd-progress,
+  .vd-meter {
+    --vd-progress-height: var(--vd-space-2);
+    --vd-progress-radius: var(--vd-radius-full);
+    --vd-progress-track: var(--vd-color-fill-hover);
+    --vd-progress-fill: var(--vd-color-action);
+
+    appearance: none;
+    display: block;
+    inline-size: 100%;
+    block-size: var(--vd-progress-height);
+    overflow: hidden;
+    border: 0;
+    border-radius: var(--vd-progress-radius);
+    background: var(--vd-progress-track);
+    color: var(--vd-progress-fill);
+  }
+
+  :is(.vd-progress, .vd-meter)[data-size='sm'] {
+    --vd-progress-height: var(--vd-space-1);
+  }
+
+  .vd-progress[data-variant='success'] {
+    --vd-progress-fill: var(--vd-color-success);
+  }
+
+  .vd-progress[data-variant='warning'] {
+    --vd-progress-fill: var(--vd-color-warning);
+  }
+
+  .vd-progress[data-variant='danger'] {
+    --vd-progress-fill: var(--vd-color-danger);
+  }
+
+  /* ------------------------------------------------------------ progress */
+
+  .vd-progress::-webkit-progress-bar {
+    border-radius: var(--vd-progress-radius);
+    background: var(--vd-progress-track);
+  }
+
+  .vd-progress::-webkit-progress-value {
+    border-radius: var(--vd-progress-radius);
+    background: var(--vd-progress-fill);
+    transition: inline-size var(--vd-duration-slow) var(--vd-ease-out);
+  }
+
+  .vd-progress::-moz-progress-bar {
+    border-radius: var(--vd-progress-radius);
+    background: var(--vd-progress-fill);
+  }
+
+  /* Indeterminate: a short segment sweeps across the track. */
+  .vd-progress:indeterminate {
+    background-image: linear-gradient(
+      to right,
+      transparent,
+      var(--vd-progress-fill) 35%,
+      var(--vd-progress-fill) 65%,
+      transparent
+    );
+    background-repeat: no-repeat;
+    background-size: 40% 100%;
+    background-position: -100% 0;
+  }
+
+  .vd-progress:indeterminate::-webkit-progress-bar {
+    background: transparent;
+  }
+
+  .vd-progress:indeterminate::-moz-progress-bar {
+    background: transparent;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .vd-progress:indeterminate {
+      animation: vd-progress-sweep var(--vd-duration-shimmer) var(--vd-ease-in-out) infinite;
+    }
+  }
+
+  /* Reduced motion: a steady, half-strength full bar still reads as "working". */
+  @media (prefers-reduced-motion: reduce) {
+    .vd-progress:indeterminate {
+      background-image: none;
+      background-color: color-mix(in oklch, var(--vd-progress-fill) 45%, var(--vd-progress-track));
+    }
+  }
+
+  @keyframes vd-progress-sweep {
+    from {
+      background-position: -100% 0;
+    }
+
+    to {
+      background-position: 200% 0;
+    }
+  }
+
+  /* --------------------------------------------------------------- meter */
+  /* optimum region -> accent, sub-optimum -> warning, worst -> danger (native low/high/optimum). */
+
+  .vd-meter::-webkit-meter-bar {
+    block-size: var(--vd-progress-height);
+    border: 0;
+    border-radius: var(--vd-progress-radius);
+    background: var(--vd-progress-track);
+  }
+
+  .vd-meter::-webkit-meter-optimum-value {
+    border-radius: var(--vd-progress-radius);
+    background: var(--vd-color-action);
+    transition: inline-size var(--vd-duration-slow) var(--vd-ease-out);
+  }
+
+  .vd-meter::-webkit-meter-suboptimum-value {
+    border-radius: var(--vd-progress-radius);
+    background: var(--vd-color-warning);
+    transition: inline-size var(--vd-duration-slow) var(--vd-ease-out);
+  }
+
+  .vd-meter::-webkit-meter-even-less-good-value {
+    border-radius: var(--vd-progress-radius);
+    background: var(--vd-color-danger);
+    transition: inline-size var(--vd-duration-slow) var(--vd-ease-out);
+  }
+
+  .vd-meter::-moz-meter-bar {
+    border-radius: var(--vd-progress-radius);
+    background: var(--vd-color-action);
+  }
+
+  .vd-meter:-moz-meter-sub-optimum::-moz-meter-bar {
+    background: var(--vd-color-warning);
+  }
+
+  .vd-meter:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+    background: var(--vd-color-danger);
+  }
+
+  @media (forced-colors: active) {
+    .vd-progress,
+    .vd-meter {
+      border: var(--vd-border-width) solid CanvasText;
+    }
+
+    .vd-progress::-webkit-progress-value,
+    .vd-meter::-webkit-meter-optimum-value,
+    .vd-meter::-webkit-meter-suboptimum-value,
+    .vd-meter::-webkit-meter-even-less-good-value {
+      background: Highlight;
+    }
+
+    .vd-progress::-moz-progress-bar,
+    .vd-meter::-moz-meter-bar {
+      background: Highlight;
+    }
+  }
+}

@@ -1,0 +1,58 @@
+@layer vd.components {
+  .vd-editable-text {
+    --vd-editable-text-gap: var(--vd-space-3);
+    --vd-editable-text-label-size: var(--vd-text-sm);
+    --vd-editable-text-label-color: var(--vd-color-text);
+    --vd-editable-text-value-color: var(--vd-color-text);
+    --vd-editable-text-empty-color: var(--vd-color-text-muted);
+    --vd-editable-text-icon-color: var(--vd-color-text-muted);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--vd-editable-text-gap);
+    min-inline-size: 0;
+  }
+  .vd-editable-text__label {
+    color: var(--vd-editable-text-label-color);
+    font-size: var(--vd-editable-text-label-size);
+    font-weight: var(--vd-weight-medium);
+    overflow-wrap: anywhere;
+  }
+  .vd-editable-text__trigger {
+    justify-content: space-between;
+    inline-size: 100%;
+    min-inline-size: 0;
+    text-align: start;
+    color: var(--vd-editable-text-value-color);
+  }
+  .vd-editable-text__trigger > .vd-button__label {
+    min-inline-size: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .vd-editable-text__trigger > .vd-icon {
+    flex: none;
+    color: var(--vd-editable-text-icon-color);
+  }
+  .vd-editable-text__value[data-empty] {
+    color: var(--vd-editable-text-empty-color);
+  }
+  .vd-editable-text .vd-field__error > span {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+  .vd-editable-text .vd-field__hint,
+  .vd-editable-text .vd-field__label {
+    overflow-wrap: anywhere;
+  }
+  .vd-editable-text__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--vd-editable-text-gap);
+  }
+  .vd-editable-text__actions > .vd-button {
+    --vd-button-padding-inline: var(--vd-space-1);
+    max-inline-size: 100%;
+    white-space: normal;
+  }
+}

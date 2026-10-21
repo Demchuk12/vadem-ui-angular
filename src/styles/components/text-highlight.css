@@ -1,0 +1,22 @@
+@layer vd.components {
+  .vd-text-highlight {
+    --vd-text-highlight-bg: var(--vd-color-action-subtle);
+    --vd-text-highlight-fg: var(--vd-color-action-text);
+    --vd-text-highlight-radius: var(--vd-radius-xs);
+
+    display: inline;
+  }
+  .vd-text-highlight__match {
+    padding: 0;
+    border-radius: var(--vd-text-highlight-radius);
+    background: var(--vd-text-highlight-bg);
+    color: var(--vd-text-highlight-fg);
+    font: inherit;
+  }
+  @media (forced-colors: active) {
+    .vd-text-highlight__match {
+      text-decoration: underline;
+      text-decoration-thickness: var(--vd-border-width);
+    }
+  }
+}

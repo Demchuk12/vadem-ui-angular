@@ -1,0 +1,112 @@
+/* Progress ring - spec: specs/progress.md */
+@layer vd.components {
+  .vd-progress-ring {
+    --vd-progress-ring-size: var(--vd-space-6);
+    --vd-progress-ring-stroke: 2.5;
+    --vd-progress-ring-track: var(--vd-color-fill-hover);
+    --vd-progress-ring-fill: var(--vd-color-action);
+
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--vd-progress-ring-size);
+    block-size: var(--vd-progress-ring-size);
+    vertical-align: middle;
+  }
+  .vd-progress-ring[data-size='sm'] {
+    --vd-progress-ring-size: var(--vd-space-4);
+    --vd-progress-ring-stroke: 3;
+  }
+  .vd-progress-ring[data-size='lg'] {
+    --vd-progress-ring-size: var(--vd-space-16);
+    --vd-progress-ring-stroke: 1.75;
+  }
+  .vd-progress-ring[data-variant='success'] {
+    --vd-progress-ring-fill: var(--vd-color-success);
+  }
+  .vd-progress-ring[data-variant='warning'] {
+    --vd-progress-ring-fill: var(--vd-color-warning);
+  }
+  .vd-progress-ring[data-variant='danger'] {
+    --vd-progress-ring-fill: var(--vd-color-danger);
+  }
+
+  .vd-progress-ring__svg {
+    grid-area: 1 / 1;
+    inline-size: 100%;
+    block-size: 100%;
+    /* Start at 12 o'clock and fill clockwise; mirrored in RTL like other progress. */
+    rotate: -90deg;
+    overflow: visible;
+  }
+  .vd-progress-ring:dir(rtl) .vd-progress-ring__svg {
+    scale: 1 -1;
+  }
+  .vd-progress-ring__track,
+  .vd-progress-ring__indicator {
+    fill: none;
+    stroke-width: var(--vd-progress-ring-stroke);
+  }
+  .vd-progress-ring__track {
+    stroke: var(--vd-progress-ring-track);
+  }
+  .vd-progress-ring__indicator {
+    stroke: var(--vd-progress-ring-fill);
+    stroke-linecap: round;
+    stroke-dasharray: calc(var(--vd-progress-ring-value, 0) * 1) 100;
+    transition: stroke-dasharray var(--vd-duration-slow) var(--vd-ease-out);
+  }
+  .vd-progress-ring__value {
+    grid-area: 1 / 1;
+    font-size: var(--vd-text-md);
+    font-weight: var(--vd-weight-semibold);
+    font-variant-numeric: tabular-nums;
+  }
+  /* Only the large ring has room for a percentage. */
+  .vd-progress-ring:not([data-size='lg']) .vd-progress-ring__value {
+    display: none;
+  }
+  /* A zero-length round-capped arc would paint a dot; show the bare track instead. */
+  .vd-progress-ring[aria-valuenow='0'] .vd-progress-ring__indicator {
+    visibility: hidden;
+  }
+
+  /* Indeterminate: a quarter arc spins. */
+  .vd-progress-ring[data-indeterminate] .vd-progress-ring__indicator {
+    stroke-dasharray: 25 100;
+    transition: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .vd-progress-ring[data-indeterminate] .vd-progress-ring__svg {
+      animation: vd-progress-ring-spin var(--vd-duration-spin) linear infinite;
+    }
+  }
+  /* Reduced motion: no movement; a dashed, half-strength full ring reads as "waiting"
+     and cannot be mistaken for 25% done. */
+  @media (prefers-reduced-motion: reduce) {
+    .vd-progress-ring[data-indeterminate] .vd-progress-ring__indicator {
+      stroke: color-mix(in oklch, var(--vd-progress-ring-fill) 55%, var(--vd-progress-ring-track));
+      stroke-dasharray: 4 4;
+      stroke-linecap: butt;
+    }
+    .vd-progress-ring__indicator {
+      transition: none;
+    }
+  }
+
+  @keyframes vd-progress-ring-spin {
+    to {
+      rotate: 270deg;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .vd-progress-ring__track {
+      stroke: GrayText;
+    }
+    .vd-progress-ring__indicator {
+      stroke: Highlight;
+    }
+  }
+}

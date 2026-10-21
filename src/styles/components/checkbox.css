@@ -1,0 +1,115 @@
+/* Checkbox - spec: specs/checkbox.md */
+@layer vd.components {
+  .vd-checkbox {
+    --vd-checkbox-size: 1.125rem;
+    --vd-checkbox-radius: var(--vd-radius-xs);
+    --vd-checkbox-bg: var(--vd-color-field);
+    --vd-checkbox-border: var(--vd-color-border-control);
+    --vd-checkbox-border-hover: var(--vd-color-border-control-hover);
+    --vd-checkbox-bg-checked: var(--vd-color-action);
+    --vd-checkbox-bg-checked-hover: var(--vd-color-action-hover);
+    --vd-checkbox-mark: var(--vd-color-on-action);
+    /* Lucide check / minus geometry, drawn bolder for the small box. */
+    --vd-checkbox-icon-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+    --vd-checkbox-icon-mixed: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.25' stroke-linecap='round'%3E%3Cpath d='M6 12h12'/%3E%3C/svg%3E");
+
+    appearance: none;
+    position: relative;
+    display: inline-grid;
+    place-content: center;
+    flex: none;
+    inline-size: var(--vd-checkbox-size);
+    block-size: var(--vd-checkbox-size);
+    margin: 0;
+    border: var(--vd-border-width) solid var(--vd-checkbox-border);
+    border-radius: var(--vd-checkbox-radius);
+    background-color: var(--vd-checkbox-bg);
+    vertical-align: middle;
+    cursor: pointer;
+    transition:
+      var(--vd-transition-colors),
+      scale var(--vd-duration-fast) var(--vd-ease-out);
+  }
+
+  .vd-checkbox::before {
+    content: '';
+    inline-size: calc(var(--vd-checkbox-size) * 0.75);
+    block-size: calc(var(--vd-checkbox-size) * 0.75);
+    background-color: var(--vd-checkbox-mark);
+    mask: var(--vd-checkbox-icon-check) center / contain no-repeat;
+    opacity: 0;
+    scale: 0.4;
+    transition:
+      opacity var(--vd-duration-fast) var(--vd-ease-out),
+      scale var(--vd-duration-base) var(--vd-ease-spring);
+  }
+
+  .vd-checkbox:is(:checked, :indeterminate) {
+    --vd-checkbox-bg: var(--vd-checkbox-bg-checked);
+    --vd-checkbox-border: var(--vd-checkbox-bg-checked);
+    --vd-checkbox-border-hover: var(--vd-checkbox-bg-checked-hover);
+
+    box-shadow: var(--vd-highlight-top);
+  }
+
+  .vd-checkbox:is(:checked, :indeterminate)::before {
+    opacity: 1;
+    scale: 1;
+  }
+
+  .vd-checkbox:indeterminate::before {
+    mask-image: var(--vd-checkbox-icon-mixed);
+  }
+
+  @media (hover: hover) {
+    .vd-checkbox:not(:disabled):hover,
+    .vd-choice:has(> .vd-checkbox:not(:disabled)):hover > .vd-checkbox {
+      border-color: var(--vd-checkbox-border-hover);
+    }
+
+    .vd-checkbox:is(:checked, :indeterminate):not(:disabled):hover,
+    .vd-choice:hover > .vd-checkbox:is(:checked, :indeterminate):not(:disabled) {
+      background-color: var(--vd-checkbox-bg-checked-hover);
+    }
+  }
+
+  .vd-checkbox:not(:disabled):active {
+    scale: var(--vd-press-scale);
+  }
+
+  .vd-checkbox:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+
+  .vd-checkbox[data-invalid] {
+    --vd-checkbox-border: var(--vd-color-danger);
+    --vd-checkbox-border-hover: var(--vd-color-danger);
+  }
+
+  .vd-checkbox:disabled {
+    opacity: var(--vd-opacity-disabled);
+    cursor: not-allowed;
+  }
+
+  @media (forced-colors: active) {
+    .vd-checkbox {
+      forced-color-adjust: none;
+      border-color: ButtonText;
+      background-color: Canvas;
+    }
+
+    .vd-checkbox:is(:checked, :indeterminate) {
+      border-color: Highlight;
+      background-color: Highlight;
+    }
+
+    .vd-checkbox::before {
+      background-color: HighlightText;
+    }
+
+    .vd-checkbox:disabled {
+      border-color: GrayText;
+    }
+  }
+}

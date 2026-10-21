@@ -1,0 +1,26 @@
+/* Native OTP editing and Field semantics: specs/otp-input.md. */
+@layer vd.components {
+  .vd-otp-input {
+    --vd-otp-input-font: var(--vd-font-mono);
+    --vd-otp-input-font-size: var(--vd-text-lg);
+    --vd-otp-input-tracking: var(--vd-space-2);
+
+    inline-size: min(
+      100%,
+      calc(
+        var(--vd-otp-input-length) * (1ch + var(--vd-otp-input-tracking)) +
+          var(--vd-input-padding-inline) * 2 + var(--vd-border-width) * 2
+      )
+    );
+    min-inline-size: 0;
+    font-family: var(--vd-otp-input-font);
+    font-size: var(--vd-otp-input-font-size);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--vd-otp-input-tracking);
+    text-align: start;
+  }
+
+  .vd-otp-input[data-size='sm'] {
+    --vd-otp-input-font-size: var(--vd-text-md);
+  }
+}

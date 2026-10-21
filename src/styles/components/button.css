@@ -1,0 +1,174 @@
+/* Button - spec: specs/button.md */
+@layer vd.components {
+  .vd-button {
+    --vd-button-height: var(--vd-control-height-md);
+    --vd-button-padding-inline: var(--vd-space-4);
+    --vd-button-gap: var(--vd-space-2);
+    --vd-button-font-size: var(--vd-text-sm);
+    --vd-button-radius: var(--vd-radius-md);
+    --vd-button-bg: var(--vd-color-fill);
+    --vd-button-bg-hover: var(--vd-color-fill-hover);
+    --vd-button-bg-active: var(--vd-color-fill-active);
+    --vd-button-fg: var(--vd-color-text);
+    --vd-button-fg-hover: var(--vd-button-fg);
+    --vd-button-border: var(--vd-color-border-strong);
+    --vd-button-shadow: none;
+    --vd-button-shadow-hover: var(--vd-button-shadow);
+    --vd-button-sheen: none;
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--vd-button-gap);
+    min-block-size: var(--vd-button-height);
+    padding-block: var(--vd-space-1);
+    padding-inline: var(--vd-button-padding-inline);
+    border: var(--vd-border-width) solid var(--vd-button-border);
+    border-radius: var(--vd-button-radius);
+    background-color: var(--vd-button-bg);
+    background-image: var(--vd-button-sheen);
+    box-shadow: var(--vd-button-shadow);
+    color: var(--vd-button-fg);
+    font-family: inherit;
+    font-size: var(--vd-button-font-size);
+    font-weight: var(--vd-weight-semibold);
+    line-height: var(--vd-leading-snug);
+    text-align: center;
+    text-decoration: none;
+    text-wrap: balance;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      var(--vd-transition-colors),
+      scale var(--vd-duration-fast) var(--vd-ease-out);
+  }
+
+  .vd-button:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+
+  .vd-button__label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--vd-button-gap);
+    min-inline-size: 0;
+  }
+
+  /* Empty label (icon-only with the icon in a slot) shouldn't add a gap. */
+  .vd-button__label:empty {
+    display: none;
+  }
+
+  /* Optical alignment: icons carry visual padding of their own. */
+  .vd-button > [slot='start'] {
+    margin-inline-start: calc(var(--vd-space-1) * -1);
+  }
+
+  .vd-button > [slot='end'] {
+    margin-inline-end: calc(var(--vd-space-1) * -1);
+  }
+
+  /* ---------------------------------------------------------------- variants */
+
+  .vd-button[data-variant='primary'] {
+    --vd-button-bg: var(--vd-color-action);
+    --vd-button-bg-hover: var(--vd-color-action-hover);
+    --vd-button-bg-active: var(--vd-color-action-active);
+    --vd-button-fg: var(--vd-color-on-action);
+    --vd-button-border: transparent;
+    --vd-button-sheen: linear-gradient(to bottom, var(--vd-color-sheen), transparent);
+    --vd-button-shadow: var(--vd-highlight-top), var(--vd-shadow-sm);
+    --vd-button-shadow-hover: var(--vd-highlight-top), var(--vd-shadow-glow-action);
+  }
+
+  .vd-button[data-variant='ghost'] {
+    --vd-button-bg: transparent;
+    --vd-button-border: transparent;
+    --vd-button-fg: var(--vd-color-text-muted);
+    --vd-button-fg-hover: var(--vd-color-text);
+  }
+
+  .vd-button[data-variant='danger'] {
+    --vd-button-bg: var(--vd-color-danger);
+    --vd-button-bg-hover: var(--vd-color-danger-hover);
+    --vd-button-bg-active: var(--vd-color-danger);
+    --vd-button-fg: var(--vd-color-on-status);
+    --vd-button-border: transparent;
+    --vd-button-sheen: linear-gradient(to bottom, var(--vd-color-sheen), transparent);
+    --vd-button-shadow: var(--vd-highlight-top), var(--vd-shadow-sm);
+  }
+
+  /* ------------------------------------------------------------------- sizes */
+
+  .vd-button[data-size='sm'] {
+    --vd-button-height: var(--vd-control-height-sm);
+    --vd-button-padding-inline: var(--vd-space-3);
+    --vd-button-gap: var(--vd-space-1-5);
+    --vd-button-radius: var(--vd-radius-sm);
+  }
+
+  .vd-button[data-size='lg'] {
+    --vd-button-height: var(--vd-control-height-lg);
+    --vd-button-padding-inline: var(--vd-space-5);
+    --vd-button-font-size: var(--vd-text-md);
+    --vd-button-radius: var(--vd-radius-lg);
+  }
+
+  .vd-button[data-icon-only] {
+    inline-size: var(--vd-button-height);
+    padding-inline: 0;
+  }
+
+  /* ------------------------------------------------------------------ states */
+
+  @media (hover: hover) {
+    .vd-button:not(:disabled, [aria-disabled='true']):hover {
+      background-color: var(--vd-button-bg-hover);
+      box-shadow: var(--vd-button-shadow-hover);
+      color: var(--vd-button-fg-hover);
+    }
+  }
+
+  .vd-button:not(:disabled, [aria-disabled='true']):active {
+    background-color: var(--vd-button-bg-active);
+    scale: var(--vd-press-scale);
+  }
+
+  .vd-button:is(:disabled, [aria-disabled='true']):not([data-loading]) {
+    opacity: var(--vd-opacity-disabled);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  /* Loading keeps the width: content stays in flow (and in the a11y tree), just invisible. */
+  .vd-button[data-loading] {
+    cursor: progress;
+  }
+
+  .vd-button[data-loading] > :not(.vd-button__spinner) {
+    opacity: 0;
+  }
+
+  .vd-button__spinner {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  @media (forced-colors: active) {
+    .vd-button {
+      border-color: ButtonText;
+    }
+
+    .vd-button:is(:disabled, [aria-disabled='true']) {
+      border-color: GrayText;
+      color: GrayText;
+    }
+  }
+}

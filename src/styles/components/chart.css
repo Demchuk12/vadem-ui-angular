@@ -1,0 +1,308 @@
+/* Charts - spec: specs/chart.md. Mark specs follow the dataviz method: thin bars, 2px lines,
+   8px dots with a 2px surface ring, hairline solid grid, text in text tokens only. */
+@layer vd.components {
+  .vd-chart {
+    --vd-chart-surface: var(--vd-color-surface);
+    --vd-chart-grid: var(--vd-color-border);
+    --vd-chart-axis: var(--vd-color-text-muted);
+    --vd-chart-band: var(--vd-color-fill);
+    --vd-chart-crosshair: var(--vd-color-border-strong);
+    --vd-chart-area-opacity: 0.12;
+
+    display: block;
+    min-inline-size: 0;
+  }
+
+  /* Series identity: slots 1..8 in fixed order; a lone series uses the accent. */
+  :is(.vd-chart, .vd-sparkline) [data-series='accent'] {
+    --vd-chart-series: var(--vd-color-action);
+  }
+  .vd-chart [data-series='1'] {
+    --vd-chart-series: var(--vd-color-chart-1);
+  }
+  .vd-chart [data-series='2'] {
+    --vd-chart-series: var(--vd-color-chart-2);
+  }
+  .vd-chart [data-series='3'] {
+    --vd-chart-series: var(--vd-color-chart-3);
+  }
+  .vd-chart [data-series='4'] {
+    --vd-chart-series: var(--vd-color-chart-4);
+  }
+  .vd-chart [data-series='5'] {
+    --vd-chart-series: var(--vd-color-chart-5);
+  }
+  .vd-chart [data-series='6'] {
+    --vd-chart-series: var(--vd-color-chart-6);
+  }
+  .vd-chart [data-series='7'] {
+    --vd-chart-series: var(--vd-color-chart-7);
+  }
+  .vd-chart [data-series='8'] {
+    --vd-chart-series: var(--vd-color-chart-8);
+  }
+
+  .vd-chart__figure {
+    display: grid;
+    gap: var(--vd-space-3);
+    margin: 0;
+    min-inline-size: 0;
+  }
+  .vd-chart__head {
+    display: grid;
+    gap: var(--vd-space-1);
+  }
+  .vd-chart__title {
+    color: var(--vd-color-text);
+    font-size: var(--vd-text-md);
+    font-weight: var(--vd-weight-semibold);
+  }
+  .vd-chart__description {
+    color: var(--vd-color-text-muted);
+    font-size: var(--vd-text-sm);
+  }
+
+  .vd-chart__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--vd-space-2) var(--vd-space-4);
+  }
+  .vd-chart__table-toggle {
+    margin-inline-start: auto;
+  }
+  .vd-chart__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--vd-space-1) var(--vd-space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--vd-color-text-muted);
+    font-size: var(--vd-text-sm);
+  }
+  .vd-chart__legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--vd-space-2);
+  }
+  /* Keys mirror the mark: a square for bars, a short stroke for lines. */
+  .vd-chart__key {
+    flex: none;
+    inline-size: 0.625rem;
+    block-size: 0.625rem;
+    border-radius: var(--vd-radius-xs);
+    background: var(--vd-chart-series);
+  }
+  .vd-chart__key[data-kind='line'] {
+    inline-size: 0.875rem;
+    block-size: 2px;
+    border-radius: var(--vd-radius-full);
+  }
+
+  /* Pixel coordinates come from the LTR plot; tooltip text sets its own direction. */
+  /* Refetch: hold the previous render, muted; no skeleton and no layout jump. */
+  .vd-chart__figure[data-loading] :is(.vd-chart__plot, .vd-chart__table-wrap) {
+    opacity: 0.5;
+    transition: opacity var(--vd-duration-base) var(--vd-ease-out);
+  }
+  .vd-chart__plot {
+    position: relative;
+    min-inline-size: 0;
+    direction: ltr;
+  }
+  /* Plot geometry is not mirrored in RTL (like numbers); labels around it are. */
+  .vd-chart__svg {
+    display: block;
+    overflow: visible;
+    direction: ltr;
+    font-family: var(--vd-font-sans);
+    font-size: var(--vd-text-xs);
+    font-variant-numeric: tabular-nums;
+  }
+  .vd-chart__grid line {
+    stroke: var(--vd-chart-grid);
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+  }
+  .vd-chart__grid line[data-zero] {
+    stroke: var(--vd-chart-crosshair);
+  }
+  .vd-chart__grid text,
+  .vd-chart__axis text {
+    fill: var(--vd-chart-axis);
+  }
+  .vd-chart__end-labels text {
+    fill: var(--vd-color-text-muted);
+    font-size: var(--vd-text-xs);
+  }
+  .vd-chart__band {
+    fill: var(--vd-chart-band);
+  }
+
+  .vd-chart__bar {
+    fill: var(--vd-chart-series);
+  }
+  /* Emphasis: the rest of the series recedes; hovering a muted bar restores it. */
+  .vd-chart__bar[data-muted] {
+    fill: color-mix(in oklch, var(--vd-chart-series) 45%, transparent);
+  }
+  .vd-chart__line {
+    fill: none;
+    stroke: var(--vd-chart-series);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .vd-chart__area {
+    fill: var(--vd-chart-series);
+    opacity: var(--vd-chart-area-opacity);
+  }
+  .vd-chart__dot {
+    fill: var(--vd-chart-series);
+    stroke: var(--vd-chart-surface);
+    stroke-width: 2;
+    paint-order: stroke;
+  }
+  .vd-chart__crosshair {
+    stroke: var(--vd-chart-crosshair);
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+  }
+
+  /* Hit targets: whole bands, invisible until keyboard focus. */
+  .vd-chart__hit {
+    fill: transparent;
+    outline: none;
+  }
+  .vd-chart__hit:focus-visible {
+    stroke: var(--vd-color-focus);
+    stroke-width: var(--vd-focus-ring-width);
+  }
+
+  .vd-chart__tooltip {
+    position: absolute;
+    inset-block-start: var(--vd-chart-tip-y, 0);
+    inset-inline-start: var(--vd-chart-tip-x, 0);
+    z-index: 1;
+    display: grid;
+    gap: var(--vd-space-1);
+    inline-size: max-content;
+    max-inline-size: 16rem;
+    padding: var(--vd-space-2) var(--vd-space-3);
+    border: var(--vd-border-width) solid var(--vd-color-border-strong);
+    border-radius: var(--vd-radius-md);
+    background: var(--vd-color-surface-overlay);
+    box-shadow: var(--vd-highlight-top), var(--vd-shadow-md);
+    font-size: var(--vd-text-xs);
+    pointer-events: none;
+    translate: var(--vd-space-3) 0;
+  }
+  .vd-chart__tooltip[data-side='start'] {
+    translate: calc(-100% - var(--vd-space-3)) 0;
+  }
+  .vd-chart__tooltip-category {
+    color: var(--vd-color-text-muted);
+  }
+  .vd-chart__tooltip-row {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--vd-space-2);
+  }
+  /* Values lead (strong), series names follow (muted). */
+  .vd-chart__tooltip-value {
+    color: var(--vd-color-text);
+    font-weight: var(--vd-weight-semibold);
+    font-variant-numeric: tabular-nums;
+  }
+  .vd-chart__tooltip-name {
+    color: var(--vd-color-text-muted);
+    overflow-wrap: anywhere;
+  }
+
+  .vd-chart__table-wrap {
+    max-inline-size: 100%;
+    overflow-x: auto;
+    border-radius: var(--vd-radius-sm);
+  }
+  .vd-chart__table-wrap:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+  .vd-chart__table {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-size: var(--vd-text-sm);
+  }
+  .vd-chart__table :is(th, td) {
+    padding: var(--vd-space-2) var(--vd-space-3);
+    border-block-end: var(--vd-border-width) solid var(--vd-color-border);
+    text-align: start;
+  }
+  .vd-chart__table td {
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+  }
+  .vd-chart__table thead th {
+    color: var(--vd-color-text-muted);
+    font-weight: var(--vd-weight-medium);
+  }
+
+  /* ------------------------------------------------------------ sparkline */
+
+  .vd-sparkline {
+    --vd-sparkline-ink: var(--vd-color-text-subtle);
+    --vd-sparkline-block-size: var(--vd-space-8);
+
+    position: relative;
+    display: block;
+    inline-size: 100%;
+    block-size: var(--vd-sparkline-block-size);
+    /* Geometry only, no text: keep it LTR so the dot matches the SVG's x. */
+    direction: ltr;
+  }
+  .vd-sparkline__svg {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    overflow: visible;
+    direction: ltr;
+  }
+  .vd-sparkline__line {
+    fill: none;
+    stroke: var(--vd-sparkline-ink);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .vd-sparkline__area {
+    fill: var(--vd-sparkline-ink);
+    opacity: 0.08;
+  }
+  /* Current period in the accent; an HTML dot stays round however the SVG stretches. */
+  .vd-sparkline__dot {
+    position: absolute;
+    inset-block-start: var(--vd-sparkline-y);
+    inset-inline-start: var(--vd-sparkline-x);
+    inline-size: 0.5rem;
+    block-size: 0.5rem;
+    border: 2px solid var(--vd-color-surface);
+    border-radius: var(--vd-radius-full);
+    background: var(--vd-color-action);
+    box-sizing: content-box;
+    translate: -50% -50%;
+  }
+
+  @media (forced-colors: active) {
+    /* Keep series hues; the legend and data table carry identity as text. */
+    .vd-chart__svg,
+    .vd-chart__key,
+    .vd-sparkline {
+      forced-color-adjust: none;
+    }
+    .vd-chart__tooltip {
+      border-color: CanvasText;
+    }
+  }
+}

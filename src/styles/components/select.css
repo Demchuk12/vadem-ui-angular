@@ -1,0 +1,257 @@
+/* Select, combobox, listbox, option - spec: specs/select.md */
+@layer vd.components {
+  /* ------------------------------------------------------------ the field */
+  /* Same box as vdInput: control height, field background, 3:1 border, ring on the border. */
+
+  .vd-select,
+  .vd-combobox,
+  .vd-multi-select {
+    --vd-select-height: var(--vd-control-height-md);
+    --vd-select-padding-inline: var(--vd-space-3);
+    --vd-select-font-size: var(--vd-text-md);
+    --vd-select-radius: var(--vd-radius-md);
+    --vd-select-bg: var(--vd-color-field);
+    --vd-select-border: var(--vd-color-border-control);
+    --vd-select-border-hover: var(--vd-color-border-control-hover);
+    --vd-select-ring: var(--vd-color-focus);
+
+    position: relative;
+    display: block;
+    inline-size: 100%;
+  }
+
+  :is(.vd-select, .vd-combobox, .vd-multi-select)[data-size='sm'] {
+    --vd-select-height: var(--vd-control-height-sm);
+    --vd-select-padding-inline: var(--vd-space-2);
+    --vd-select-font-size: var(--vd-text-sm);
+    --vd-select-radius: var(--vd-radius-sm);
+  }
+
+  :is(.vd-select, .vd-combobox, .vd-multi-select)[data-size='lg'] {
+    --vd-select-height: var(--vd-control-height-lg);
+    --vd-select-padding-inline: var(--vd-space-4);
+    --vd-select-radius: var(--vd-radius-lg);
+  }
+
+  :is(.vd-select, .vd-combobox, .vd-multi-select)[data-invalid] {
+    --vd-select-border: var(--vd-color-danger);
+    --vd-select-border-hover: var(--vd-color-danger);
+    --vd-select-ring: var(--vd-color-danger);
+  }
+
+  .vd-select__trigger,
+  .vd-combobox__field {
+    display: flex;
+    align-items: center;
+    gap: var(--vd-space-2);
+    inline-size: 100%;
+    min-block-size: var(--vd-select-height);
+    padding-block: var(--vd-space-1);
+    padding-inline: var(--vd-select-padding-inline);
+    border: var(--vd-border-width) solid var(--vd-select-border);
+    border-radius: var(--vd-select-radius);
+    background-color: var(--vd-select-bg);
+    color: var(--vd-color-text);
+    font-family: inherit;
+    font-size: var(--vd-select-font-size);
+    line-height: var(--vd-leading-snug);
+    text-align: start;
+    transition: var(--vd-transition-colors);
+  }
+
+  .vd-select__trigger {
+    cursor: pointer;
+  }
+
+  .vd-combobox__field {
+    cursor: text;
+  }
+
+  @media (hover: hover) {
+    .vd-select:not([data-disabled]) .vd-select__trigger:hover,
+    .vd-combobox:not([data-disabled]) .vd-combobox__field:hover {
+      border-color: var(--vd-select-border-hover);
+    }
+  }
+
+  .vd-select__trigger:focus-visible,
+  .vd-select[data-open] .vd-select__trigger,
+  .vd-combobox__field:has(.vd-combobox__input:focus-visible) {
+    border-color: var(--vd-select-ring);
+    outline: var(--vd-focus-ring-width) solid var(--vd-select-ring);
+    outline-offset: calc(var(--vd-border-width) * -1);
+  }
+
+  :is(.vd-select, .vd-combobox, .vd-multi-select)[data-disabled] {
+    opacity: var(--vd-opacity-disabled);
+  }
+
+  :is(.vd-select, .vd-combobox)[data-disabled] :is(.vd-select__trigger, .vd-combobox__field) {
+    cursor: not-allowed;
+  }
+
+  .vd-select__value {
+    flex: 1;
+    /* Zero preferred width: the (nowrap) selected label never sets the select's min-content
+       size, so long values truncate instead of widening grid/flex parents. */
+    inline-size: 0;
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .vd-select__value[data-placeholder] {
+    color: var(--vd-color-text-subtle);
+  }
+
+  .vd-select__chevron {
+    color: var(--vd-color-text-subtle);
+    transition: rotate var(--vd-duration-base) var(--vd-ease-out);
+  }
+
+  :is(.vd-select, .vd-combobox, .vd-multi-select)[data-open] .vd-select__chevron {
+    rotate: 180deg;
+  }
+
+  .vd-combobox__icon {
+    color: var(--vd-color-text-subtle);
+  }
+
+  .vd-combobox__input {
+    flex: 1;
+    min-inline-size: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    outline: none;
+  }
+
+  .vd-combobox__input::placeholder {
+    color: var(--vd-color-text-subtle);
+    opacity: 1;
+  }
+
+  /* --------------------------------------------------------------- listbox */
+
+  .vd-listbox {
+    --vd-listbox-padding: var(--vd-space-1);
+    --vd-listbox-radius: var(--vd-radius-lg);
+    --vd-listbox-max-height: 20rem;
+
+    /* Geometry on the base rule (D45). Anchored under the field, at least as wide as it. */
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    margin-block-start: var(--vd-space-1);
+    position-area: block-end span-inline-end;
+    position-try-fallbacks: flip-block;
+    min-inline-size: anchor-size(inline);
+    max-inline-size: min(28rem, 100vw - var(--vd-space-4) * 2);
+    max-block-size: min(var(--vd-listbox-max-height), 50dvh);
+    padding: var(--vd-listbox-padding);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: var(--vd-border-width) solid var(--vd-color-border-strong);
+    border-radius: var(--vd-listbox-radius);
+    background-color: var(--vd-color-surface-overlay);
+    box-shadow: var(--vd-highlight-top), var(--vd-shadow-lg);
+    color: var(--vd-color-text);
+    scrollbar-width: thin;
+
+    opacity: 0;
+    translate: 0 calc(var(--vd-space-1) * -1);
+    transition:
+      opacity var(--vd-duration-fast) var(--vd-ease-out),
+      translate var(--vd-duration-base) var(--vd-ease-out),
+      display var(--vd-duration-fast) allow-discrete,
+      overlay var(--vd-duration-fast) allow-discrete;
+  }
+
+  .vd-listbox:popover-open {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  @starting-style {
+    .vd-listbox:popover-open {
+      opacity: 0;
+      translate: 0 calc(var(--vd-space-1) * -1);
+    }
+  }
+
+  .vd-listbox__empty {
+    padding: var(--vd-space-3);
+    color: var(--vd-color-text-muted);
+    font-size: var(--vd-text-sm);
+    text-align: center;
+  }
+
+  /* ---------------------------------------------------------------- option */
+
+  .vd-option {
+    display: flex;
+    align-items: center;
+    gap: var(--vd-space-2);
+    min-block-size: var(--vd-control-height-sm);
+    padding-block: var(--vd-space-1-5);
+    padding-inline: var(--vd-space-3) var(--vd-space-2);
+    border-radius: max(
+      var(--vd-radius-xs),
+      calc(var(--vd-listbox-radius) - var(--vd-listbox-padding))
+    );
+    font-size: var(--vd-text-sm);
+    line-height: var(--vd-leading-snug);
+    cursor: pointer;
+    user-select: none;
+    scroll-margin-block: var(--vd-listbox-padding);
+  }
+
+  .vd-option__label {
+    display: flex;
+    align-items: center;
+    gap: var(--vd-space-2);
+    flex: 1;
+    min-inline-size: 0;
+  }
+
+  .vd-option__check {
+    --vd-icon-size: var(--vd-space-4);
+
+    color: var(--vd-color-text-accent);
+    opacity: 0;
+  }
+
+  .vd-option[aria-selected='true'] {
+    font-weight: var(--vd-weight-semibold);
+  }
+
+  .vd-option[aria-selected='true'] .vd-option__check {
+    opacity: 1;
+  }
+
+  .vd-option[data-active] {
+    background-color: var(--vd-color-fill-hover);
+  }
+
+  .vd-option[aria-disabled='true'] {
+    color: var(--vd-color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  .vd-option[aria-disabled='true'][data-active] {
+    background-color: transparent;
+  }
+
+  @media (forced-colors: active) {
+    .vd-option[data-active] {
+      outline: var(--vd-border-width) solid Highlight;
+    }
+
+    .vd-listbox {
+      border-color: CanvasText;
+    }
+  }
+}

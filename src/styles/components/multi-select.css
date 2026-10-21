@@ -1,0 +1,156 @@
+/* Multiple selection shares the select field tokens and listbox/option styles. */
+@layer vd.components {
+  .vd-multi-select {
+    --vd-multi-select-gap: var(--vd-space-1);
+    --vd-multi-select-chip-bg: var(--vd-color-action-subtle);
+    --vd-multi-select-chip-fg: var(--vd-color-action-text);
+    --vd-multi-select-chip-radius: max(
+      var(--vd-radius-xs),
+      calc(var(--vd-select-radius) - var(--vd-space-1))
+    );
+    --vd-multi-select-remove-size: var(--vd-space-6);
+    --vd-multi-select-input-width: calc(var(--vd-control-height-lg) * 2);
+  }
+
+  .vd-multi-select__field {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--vd-multi-select-gap);
+    min-block-size: var(--vd-select-height);
+    padding: var(--vd-space-1) var(--vd-select-padding-inline);
+    border: var(--vd-border-width) solid var(--vd-select-border);
+    border-radius: var(--vd-select-radius);
+    background: var(--vd-select-bg);
+    color: var(--vd-color-text);
+    font-size: var(--vd-select-font-size);
+    line-height: var(--vd-leading-snug);
+    transition: var(--vd-transition-colors);
+  }
+
+  .vd-multi-select__field:has(:focus-visible) {
+    border-color: var(--vd-select-ring);
+    outline: var(--vd-focus-ring-width) solid var(--vd-select-ring);
+    outline-offset: calc(var(--vd-border-width) * -1);
+  }
+
+  .vd-multi-select__input {
+    flex: 1 1 var(--vd-multi-select-input-width);
+    inline-size: 0;
+    min-inline-size: min(var(--vd-multi-select-input-width), 100%);
+    min-block-size: var(--vd-multi-select-remove-size);
+    padding: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+  }
+
+  .vd-multi-select__input::placeholder {
+    color: var(--vd-color-text-subtle);
+    opacity: 1;
+  }
+
+  .vd-multi-select__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--vd-multi-select-gap);
+    max-inline-size: 100%;
+    padding-inline-start: var(--vd-space-2);
+    border-radius: var(--vd-multi-select-chip-radius);
+    background: var(--vd-multi-select-chip-bg);
+    color: var(--vd-multi-select-chip-fg);
+    font-size: var(--vd-text-sm);
+  }
+
+  .vd-multi-select__label {
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .vd-multi-select__remove {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--vd-multi-select-remove-size);
+    block-size: var(--vd-multi-select-remove-size);
+    padding: 0;
+    border: 0;
+    border-radius: var(--vd-multi-select-chip-radius);
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: var(--vd-transition-colors);
+  }
+
+  .vd-multi-select__remove vd-icon {
+    --vd-icon-size: var(--vd-space-3);
+  }
+
+  .vd-multi-select__remove:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-select-ring);
+    outline-offset: calc(var(--vd-border-width) * -1);
+  }
+
+  .vd-multi-select__remove:disabled {
+    color: var(--vd-color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  .vd-multi-select[data-disabled] .vd-multi-select__field {
+    cursor: not-allowed;
+  }
+
+  @media (hover: hover) {
+    .vd-multi-select:not([data-disabled]) .vd-multi-select__field:hover {
+      border-color: var(--vd-select-border-hover);
+    }
+
+    .vd-multi-select__remove:not(:disabled):hover {
+      background: var(--vd-color-fill-hover);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .vd-multi-select__remove:not(:disabled):active {
+      scale: var(--vd-press-scale);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vd-multi-select__list {
+      translate: none;
+    }
+
+    @starting-style {
+      .vd-multi-select__list:popover-open {
+        translate: none;
+      }
+    }
+  }
+
+  @media (forced-colors: active) {
+    .vd-multi-select__field,
+    .vd-multi-select__chip {
+      border: var(--vd-border-width) solid CanvasText;
+    }
+
+    .vd-multi-select__remove:disabled {
+      color: GrayText;
+    }
+  }
+
+  /* An unanchored browser still gets a usable, viewport-bounded panel. */
+  @supports not (position-area: block-end) {
+    .vd-multi-select__list {
+      inset: var(--vd-space-4);
+      min-inline-size: 0;
+      block-size: fit-content;
+      margin: auto;
+      translate: none;
+    }
+  }
+}

@@ -1,0 +1,224 @@
+/* Demo app shell. Consumer CSS: Vadem tokens only, no library internals. */
+
+/* Layout, docking, rail and drawer come from vd-sidebar-layout; only tokens are tuned here. */
+.frame {
+  --vd-sidebar-bg: var(--vd-color-surface-sunken);
+}
+
+/* ------------------------------------------------------------- sidebar */
+
+.frame__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--vd-space-2);
+  padding: var(--vd-space-1-5) var(--vd-space-2);
+  border-radius: var(--vd-radius-control);
+  color: inherit;
+  text-decoration: none;
+}
+
+.frame__mark {
+  block-size: var(--vd-space-6);
+  inline-size: auto;
+}
+
+.frame__brand-name {
+  font-size: var(--vd-text-md);
+  font-weight: var(--vd-weight-extrabold);
+  letter-spacing: var(--vd-tracking-tight);
+}
+
+.frame__secondary {
+  margin-block-start: var(--vd-space-4);
+}
+
+.frame__usage {
+  display: grid;
+  gap: var(--vd-space-2);
+  margin-block-start: auto;
+  padding: var(--vd-space-3);
+  border: var(--vd-border-width) solid var(--vd-color-border);
+  border-radius: var(--vd-radius-lg);
+  background: var(--vd-color-surface);
+  box-shadow: var(--vd-highlight-top);
+  font-size: var(--vd-text-xs);
+  color: var(--vd-color-text-muted);
+}
+
+.frame__usage-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.frame__usage-value {
+  color: var(--vd-color-text);
+  font-weight: var(--vd-weight-semibold);
+}
+
+.frame__account {
+  display: flex;
+  align-items: center;
+  gap: var(--vd-space-3);
+  inline-size: 100%;
+  padding: var(--vd-space-2);
+  border: 0;
+  border-radius: var(--vd-radius-control);
+  background: transparent;
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: var(--vd-transition-colors);
+}
+
+.frame__account:hover,
+.frame__account[aria-expanded='true'] {
+  background: var(--vd-color-fill);
+}
+
+/* The usage card normally pushes the account to the bottom; in the rail it is hidden. */
+.frame[data-collapsed] .frame__account {
+  margin-block-start: auto;
+}
+
+.frame__account > .vd-icon {
+  color: var(--vd-color-text-subtle);
+}
+
+.frame__account-text {
+  display: grid;
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.frame__account-name,
+.frame__account-mail {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.frame__account-name {
+  font-size: var(--vd-text-sm);
+  font-weight: var(--vd-weight-semibold);
+}
+
+.frame__account-mail {
+  font-size: var(--vd-text-xs);
+  color: var(--vd-color-text-muted);
+}
+
+/* ------------------------------------------------------------- top bar */
+
+.frame__body {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.frame__top {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--vd-space-3);
+  min-block-size: var(--vd-space-16);
+  padding-inline: var(--vd-space-8);
+  padding-block: var(--vd-space-2);
+  border-block-end: var(--vd-border-width) solid var(--vd-color-border);
+  background-color: var(--vd-color-bg);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .frame__top {
+    background-color: var(--vd-color-surface-glass);
+    backdrop-filter: var(--vd-backdrop-glass);
+  }
+}
+
+.frame__search {
+  flex: 0 1 24rem;
+}
+
+.frame__kbd {
+  color: var(--vd-color-text-subtle);
+}
+
+.frame__top-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--vd-space-1);
+  margin-inline-start: auto;
+}
+
+.frame__new {
+  margin-inline-start: var(--vd-space-2);
+}
+
+.frame__bell {
+  position: relative;
+}
+
+.frame__dot {
+  position: absolute;
+  inset-block-start: var(--vd-space-2);
+  inset-inline-end: var(--vd-space-2);
+  inline-size: var(--vd-space-2);
+  block-size: var(--vd-space-2);
+  border: calc(var(--vd-border-width) * 2) solid var(--vd-color-bg);
+  border-radius: var(--vd-radius-full);
+  background: var(--vd-color-danger);
+  box-sizing: content-box;
+  translate: 25% -25%;
+}
+
+/* The brand lives in the sidebar while it is docked. */
+.frame[data-mode='docked'] .frame__top-brand {
+  display: none;
+}
+
+.frame__main {
+  flex: 1;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  container-type: inline-size;
+  inline-size: 100%;
+  max-inline-size: 80rem;
+  padding: var(--vd-space-10) var(--vd-space-8) var(--vd-space-20);
+}
+
+.frame__main:focus {
+  outline: none;
+}
+
+/* ------------------------------------------------------------- tablets */
+
+@media (width < 64rem) {
+  .frame__top {
+    gap: var(--vd-space-2);
+    padding-inline: var(--vd-space-4);
+  }
+
+  .frame__search {
+    flex: 1 1 auto;
+  }
+
+  .frame__main {
+    padding: var(--vd-space-8) var(--vd-space-6) var(--vd-space-16);
+  }
+}
+
+/* --------------------------------------------------------------- phones */
+
+@media (width < 40rem) {
+  .frame__search,
+  .frame__new {
+    display: none;
+  }
+
+  .frame__main {
+    padding: var(--vd-space-6) var(--vd-space-4) var(--vd-space-16);
+  }
+}

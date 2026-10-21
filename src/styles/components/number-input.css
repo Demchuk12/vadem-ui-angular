@@ -1,0 +1,33 @@
+@layer vd.components {
+  .vd-number-input {
+    --vd-number-input-button-size: calc(var(--vd-input-height) - var(--vd-space-2));
+    --vd-number-input-gap: var(--vd-space-1);
+    --vd-number-input-padding: var(--vd-space-1);
+    gap: var(--vd-number-input-gap);
+    padding-inline: var(--vd-number-input-padding);
+  }
+  .vd-number-input > .vd-button[slot] {
+    inline-size: min(var(--vd-number-input-button-size), 20%);
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+  .vd-number-input > .vd-button > vd-icon {
+    max-inline-size: 100%;
+    flex-shrink: 1;
+  }
+  .vd-number-input__input {
+    appearance: textfield;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .vd-number-input__input::-webkit-inner-spin-button,
+  .vd-number-input__input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  @media (forced-colors: active) {
+    .vd-number-input {
+      border-color: CanvasText;
+    }
+  }
+}

@@ -1,0 +1,160 @@
+/*
+ * Base document styles: typography defaults, focus, selection, scrollbars.
+ * Import separately (or skip) if the host app owns its base styles.
+ */
+@layer vd.base {
+  html {
+    background-color: var(--vd-color-bg);
+    color: var(--vd-color-text);
+    font-family: var(--vd-font-sans);
+    font-size: 100%;
+    line-height: var(--vd-leading-normal);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    accent-color: var(--vd-color-action);
+    caret-color: var(--vd-color-focus);
+    scrollbar-color: var(--vd-color-border-strong) transparent;
+    /* Reserve the scrollbar's space permanently so locking scroll (modals) or content that
+       starts/stops overflowing never shifts the page sideways. */
+    scrollbar-gutter: stable;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html:focus-within {
+      scroll-behavior: smooth;
+    }
+  }
+
+  ::selection {
+    background-color: var(--vd-color-selection);
+  }
+
+  :focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: var(--vd-weight-bold);
+    line-height: var(--vd-leading-snug);
+    letter-spacing: var(--vd-tracking-tight);
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: var(--vd-text-4xl);
+    font-weight: var(--vd-weight-extrabold);
+    line-height: var(--vd-leading-tight);
+    letter-spacing: var(--vd-tracking-tighter);
+  }
+
+  h2 {
+    font-size: var(--vd-text-3xl);
+    line-height: var(--vd-leading-tight);
+  }
+
+  h3 {
+    font-size: var(--vd-text-2xl);
+  }
+
+  h4 {
+    font-size: var(--vd-text-xl);
+  }
+
+  h5 {
+    font-size: var(--vd-text-lg);
+  }
+
+  h6 {
+    font-size: var(--vd-text-md);
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: var(--vd-color-text-accent);
+    text-decoration-thickness: from-font;
+    text-underline-offset: 0.2em;
+  }
+
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: var(--vd-font-mono);
+    font-size: 0.9em;
+    font-variant-ligatures: contextual;
+  }
+
+  :not(pre) > code {
+    padding-block: var(--vd-space-0-5);
+    padding-inline: var(--vd-space-1);
+    border-radius: var(--vd-radius-xs);
+    background-color: var(--vd-color-fill);
+  }
+
+  pre {
+    padding: var(--vd-space-4);
+    overflow-x: auto;
+    border: var(--vd-border-width) solid var(--vd-color-border);
+    border-radius: var(--vd-radius-surface);
+    background-color: var(--vd-color-surface-sunken);
+    line-height: var(--vd-leading-relaxed);
+    tab-size: 2;
+  }
+
+  kbd {
+    display: inline-block;
+    min-inline-size: 1.6em;
+    padding-inline: var(--vd-space-1);
+    border: var(--vd-border-width) solid var(--vd-color-border-strong);
+    border-block-end-width: 2px;
+    border-radius: var(--vd-radius-xs);
+    background-color: var(--vd-color-surface-raised);
+    font-size: var(--vd-text-xs);
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  hr {
+    border: 0;
+    border-block-start: var(--vd-border-width) solid var(--vd-color-border);
+  }
+
+  table {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Signature: mono eyebrow label. */
+  .vd-eyebrow {
+    font-family: var(--vd-font-mono);
+    font-size: var(--vd-text-xs);
+    font-weight: var(--vd-weight-medium);
+    line-height: var(--vd-leading-normal);
+    letter-spacing: var(--vd-tracking-caps);
+    text-transform: uppercase;
+    color: var(--vd-color-text-muted);
+  }
+
+  .vd-tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .vd-visually-hidden:not(:focus-within, :active) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

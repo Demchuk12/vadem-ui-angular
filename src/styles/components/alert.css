@@ -1,0 +1,159 @@
+/* Alert (inline callout) - spec: specs/alert.md */
+@layer vd.components {
+  .vd-alert {
+    --vd-alert-bg: var(--vd-color-fill);
+    --vd-alert-border: var(--vd-color-border-strong);
+    --vd-alert-icon: var(--vd-color-text-muted);
+    --vd-alert-fg: var(--vd-color-text-muted);
+    --vd-alert-title: var(--vd-color-text);
+    --vd-alert-radius: var(--vd-radius-lg);
+    --vd-alert-padding: var(--vd-space-3) var(--vd-space-4);
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--vd-space-3);
+    padding: var(--vd-alert-padding);
+    border: var(--vd-border-width) solid var(--vd-alert-border);
+    border-radius: var(--vd-alert-radius);
+    background-color: var(--vd-alert-bg);
+    color: var(--vd-alert-fg);
+    font-size: var(--vd-text-sm);
+    line-height: var(--vd-leading-normal);
+  }
+
+  .vd-alert[data-variant='info'] {
+    --vd-alert-bg: var(--vd-color-info-subtle);
+    --vd-alert-border: var(--vd-color-info-border);
+    --vd-alert-icon: var(--vd-color-info-text);
+  }
+
+  .vd-alert[data-variant='success'] {
+    --vd-alert-bg: var(--vd-color-success-subtle);
+    --vd-alert-border: var(--vd-color-success-border);
+    --vd-alert-icon: var(--vd-color-success-text);
+  }
+
+  .vd-alert[data-variant='warning'] {
+    --vd-alert-bg: var(--vd-color-warning-subtle);
+    --vd-alert-border: var(--vd-color-warning-border);
+    --vd-alert-icon: var(--vd-color-warning-text);
+  }
+
+  .vd-alert[data-variant='danger'] {
+    --vd-alert-bg: var(--vd-color-danger-subtle);
+    --vd-alert-border: var(--vd-color-danger-border);
+    --vd-alert-icon: var(--vd-color-danger-text);
+  }
+
+  /* Optically centered on the first line of text. */
+  .vd-alert__icon {
+    flex: none;
+    block-size: calc(1em * var(--vd-leading-normal));
+    color: var(--vd-alert-icon);
+  }
+
+  .vd-alert__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    flex: 1;
+    gap: var(--vd-space-1);
+    min-inline-size: 0;
+  }
+
+  .vd-alert__content > * {
+    margin: 0;
+  }
+
+  .vd-alert__title {
+    color: var(--vd-alert-title);
+    font-weight: var(--vd-weight-semibold);
+  }
+
+  /* Actions or a close button at the end; a ghost icon button sits flush with the corner. */
+  .vd-alert > [slot='end'] {
+    flex: none;
+    max-inline-size: 100%;
+    align-self: center;
+  }
+
+  .vd-alert > .vd-button[slot='end'][data-icon-only] {
+    align-self: flex-start;
+    margin-block: calc(var(--vd-space-1) * -1);
+    margin-inline-end: calc(var(--vd-space-2) * -1);
+  }
+
+  /* Built-in dismiss sits flush with the end edge like a consumer close button. */
+  .vd-alert > .vd-alert__dismiss {
+    align-self: flex-start;
+    margin-block: calc(var(--vd-space-1) * -1);
+    margin-inline-end: calc(var(--vd-space-2) * -1);
+  }
+
+  /* ------------------------------------------------------------- banner */
+
+  /* Full-width strip: edge to edge, separated from the page below by one rule. Title and text
+     share a line when there is room. */
+  .vd-alert[data-layout='banner'] {
+    --vd-alert-radius: 0;
+    --vd-alert-padding: var(--vd-space-2) clamp(var(--vd-space-4), 3vw, var(--vd-space-8));
+
+    align-items: center;
+    border-width: 0;
+    border-block-end-width: var(--vd-border-width);
+  }
+  .vd-alert[data-layout='banner'] > .vd-alert__content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--vd-space-2);
+  }
+  .vd-alert[data-layout='banner'] > .vd-alert__icon {
+    align-self: center;
+  }
+  .vd-alert[data-layout='banner'] > .vd-alert__dismiss {
+    align-self: center;
+    margin-block: 0;
+  }
+
+  /* Narrow banners: text keeps the first row beside the close button; actions drop below the
+     text instead of squeezing it into a one-word column. */
+  .vd-alert[data-layout='banner'] {
+    container-type: inline-size;
+  }
+  @container (width < 36rem) {
+    .vd-alert[data-layout='banner'] {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+    }
+    .vd-alert[data-layout='banner']:has(> .vd-alert__icon) {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+    }
+    .vd-alert[data-layout='banner'] > .vd-alert__icon {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: start;
+    }
+    .vd-alert[data-layout='banner'] > .vd-alert__content {
+      grid-column: -3;
+      grid-row: 1;
+    }
+    .vd-alert[data-layout='banner'] > .vd-alert__dismiss {
+      grid-column: -2;
+      grid-row: 1;
+      align-self: start;
+    }
+    .vd-alert[data-layout='banner'] > [slot='end']:not(.vd-alert__dismiss) {
+      grid-column: -3 / -1;
+      grid-row: 2;
+      justify-self: start;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .vd-alert {
+      border-color: CanvasText;
+    }
+  }
+}

@@ -1,0 +1,57 @@
+/* Minimal modern reset. Low priority: lives in vd.reset, the first layer. */
+@layer vd.reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+  }
+
+  html {
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+  }
+
+  body {
+    min-block-size: 100dvh;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-inline-size: 100%;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  /* Author `display` rules must not un-hide [hidden] content (tab panels, etc.). */
+  [hidden]:not([hidden='until-found']) {
+    display: none !important;
+  }
+
+  :target {
+    scroll-margin-block: var(--vd-space-16);
+  }
+}

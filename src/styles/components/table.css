@@ -1,0 +1,195 @@
+/* Table (native) - spec: specs/table.md */
+@layer vd.components {
+  .vd-table {
+    --vd-table-font-size: var(--vd-text-sm);
+    --vd-table-cell-padding-block: var(--vd-space-3);
+    --vd-table-cell-padding-inline: var(--vd-space-4);
+    --vd-table-border: var(--vd-color-border);
+    --vd-table-header-fg: var(--vd-color-text-muted);
+    --vd-table-header-bg: var(--vd-color-surface);
+    --vd-table-row-hover: var(--vd-color-fill);
+    --vd-table-row-selected: var(--vd-color-action-subtle);
+
+    inline-size: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: var(--vd-table-font-size);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .vd-table[data-size='sm'] {
+    --vd-table-cell-padding-block: var(--vd-space-2);
+    --vd-table-cell-padding-inline: var(--vd-space-3);
+  }
+
+  .vd-table caption {
+    padding-block-end: var(--vd-space-3);
+    color: var(--vd-color-text-muted);
+    text-align: start;
+  }
+
+  .vd-table :is(th, td) {
+    padding: var(--vd-table-cell-padding-block) var(--vd-table-cell-padding-inline);
+    border-block-end: var(--vd-border-width) solid var(--vd-table-border);
+    text-align: start;
+    vertical-align: middle;
+  }
+
+  /* Header: mono eyebrow labels. */
+  .vd-table thead th {
+    color: var(--vd-table-header-fg);
+    font-family: var(--vd-font-mono);
+    font-size: var(--vd-text-xs);
+    font-weight: var(--vd-weight-medium);
+    letter-spacing: var(--vd-tracking-caps);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Row headers (`<th scope="row">`) read as the strongest cell of the row. */
+  .vd-table tbody th {
+    font-weight: var(--vd-weight-semibold);
+  }
+
+  .vd-table tbody tr:last-child > :is(th, td) {
+    border-block-end: 0;
+  }
+
+  .vd-table :is(th, td)[data-numeric] {
+    text-align: end;
+  }
+
+  /* Checkbox (or other control) columns stay as narrow as their content. */
+  .vd-table :is(th, td):has(> .vd-checkbox:only-child) {
+    inline-size: 1%;
+    padding-inline-end: 0;
+  }
+
+  .vd-table tbody tr {
+    transition: var(--vd-transition-colors);
+  }
+
+  @media (hover: hover) {
+    .vd-table tbody tr:not(:has(> .vd-table__empty)):hover {
+      background-color: var(--vd-table-row-hover);
+    }
+  }
+
+  .vd-table tbody tr[data-selected],
+  .vd-table tbody tr[data-selected]:hover {
+    background-color: var(--vd-table-row-selected);
+  }
+
+  /* ---------------------------------------------------------------- sort */
+
+  .vd-table__sort {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--vd-space-1);
+    margin-inline: calc(var(--vd-space-1) * -1);
+    padding: var(--vd-space-0-5) var(--vd-space-1);
+    border: 0;
+    border-radius: var(--vd-radius-xs);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    cursor: pointer;
+    transition: var(--vd-transition-colors);
+  }
+
+  /* Numeric columns align to the end: the icon goes first so the labels line up with values. */
+  [data-numeric] > .vd-table__sort {
+    flex-direction: row-reverse;
+  }
+
+  .vd-table__sort:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: 0;
+  }
+
+  .vd-table__sort-icon {
+    --vd-icon-size: calc(var(--vd-space-3) + var(--vd-space-0-5));
+
+    opacity: 0;
+    transition: opacity var(--vd-duration-fast) var(--vd-ease-out);
+  }
+
+  @media (hover: hover) {
+    .vd-table__sort:hover {
+      color: var(--vd-color-text);
+    }
+
+    .vd-table__sort:hover .vd-table__sort-icon {
+      opacity: 0.6;
+    }
+  }
+
+  .vd-table__sort:focus-visible .vd-table__sort-icon {
+    opacity: 0.6;
+  }
+
+  th[data-sorted] {
+    color: var(--vd-color-text);
+  }
+
+  th[data-sorted] .vd-table__sort-icon {
+    opacity: 1;
+    color: var(--vd-color-text-accent);
+  }
+
+  /* --------------------------------------------------------------- empty */
+
+  .vd-table__empty {
+    padding-block: var(--vd-space-12);
+    color: var(--vd-color-text-muted);
+    text-align: center;
+  }
+
+  /* -------------------------------------------------------------- scroll */
+
+  .vd-table-scroll {
+    max-inline-size: 100%;
+    overflow: auto;
+    overscroll-behavior-inline: contain;
+    border-radius: inherit;
+  }
+
+  .vd-table-scroll:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: calc(var(--vd-focus-ring-width) * -1);
+  }
+
+  .vd-table[data-sticky-header] thead th {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 1;
+    background-color: var(--vd-table-header-bg);
+  }
+
+  /* A card holding only a table: edge-to-edge rows, header matches the card surface. */
+  .vd-card:has(> :is(.vd-table-scroll, .vd-table):only-child) {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .vd-card .vd-table {
+    --vd-table-header-bg: var(--vd-card-bg);
+  }
+
+  .vd-card:has(> :is(.vd-table-scroll, .vd-table):only-child) .vd-table :is(th, td):first-child {
+    padding-inline-start: var(--vd-card-padding);
+  }
+
+  .vd-card:has(> :is(.vd-table-scroll, .vd-table):only-child) .vd-table :is(th, td):last-child {
+    padding-inline-end: var(--vd-card-padding);
+  }
+
+  @media (forced-colors: active) {
+    .vd-table tbody tr[data-selected] {
+      outline: var(--vd-border-width) solid Highlight;
+      outline-offset: calc(var(--vd-border-width) * -1);
+    }
+  }
+}

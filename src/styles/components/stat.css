@@ -1,0 +1,62 @@
+/* Stat - spec: specs/stat.md */
+@layer vd.components {
+  .vd-stat {
+    --vd-stat-gap: var(--vd-space-2);
+    --vd-stat-label: var(--vd-color-text-muted);
+    --vd-stat-value-size: var(--vd-text-3xl);
+    --vd-stat-caption: var(--vd-color-text-subtle);
+
+    display: grid;
+    gap: var(--vd-stat-gap);
+    min-inline-size: 0;
+  }
+  .vd-stat[data-size='sm'] {
+    --vd-stat-gap: var(--vd-space-1);
+    --vd-stat-value-size: var(--vd-text-xl);
+  }
+
+  .vd-stat__list {
+    display: grid;
+    gap: var(--vd-stat-gap);
+    margin: 0;
+  }
+  .vd-stat__list > * {
+    margin: 0;
+  }
+  .vd-stat__label {
+    color: var(--vd-stat-label);
+    font-size: var(--vd-text-sm);
+    font-weight: var(--vd-weight-medium);
+    overflow-wrap: anywhere;
+  }
+  /* Values are wrapped in <bdi>: "₴ 48 920" keeps its order in RTL while the block keeps the
+     page's alignment. */
+  /* Large standalone figures keep proportional digits (tabular "121" looks loose at display
+     size); the delta sits in a badge and stays tabular. */
+  .vd-stat__delta-value {
+    font-variant-numeric: tabular-nums;
+  }
+  .vd-stat__value {
+    font-size: var(--vd-stat-value-size);
+    font-weight: var(--vd-weight-extrabold);
+    letter-spacing: var(--vd-tracking-tighter);
+    line-height: var(--vd-leading-tight);
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+  }
+  .vd-stat__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--vd-space-1) var(--vd-space-2);
+    color: var(--vd-stat-caption);
+    font-size: var(--vd-text-xs);
+  }
+  .vd-stat__skeleton-value {
+    inline-size: 70%;
+    block-size: calc(var(--vd-stat-value-size) * var(--vd-leading-tight));
+  }
+  .vd-stat__skeleton-meta {
+    inline-size: 85%;
+  }
+}

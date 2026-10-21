@@ -1,0 +1,364 @@
+/*
+ * Vadem primitive tokens.
+ * Raw scales only. Components never read these directly - they go through semantic.css.
+ */
+@layer vd.tokens {
+  :root {
+    /* ---------------------------------------------------------------- hue knobs */
+    /* The whole library re-themes from this one value. */
+    --vd-hue-accent: 285;
+    --vd-chroma-accent: 0.2;
+    --vd-chroma-neutral: 0.012;
+
+    --vd-hue-success: 150;
+    --vd-hue-warning: 75;
+    --vd-hue-danger: 25;
+    --vd-hue-info: 240;
+    --vd-chroma-success: 0.16;
+    --vd-chroma-warning: 0.16;
+    --vd-chroma-danger: 0.18;
+    --vd-chroma-info: 0.14;
+
+    /* ---------------------------------------------------- shared ramp curve */
+    /* Lightness and relative chroma per step. Every chromatic ramp uses this
+       curve, so accent and statuses read as one family. */
+    --vd-l-50: 0.97;
+    --vd-l-100: 0.935;
+    --vd-l-200: 0.875;
+    --vd-l-300: 0.8;
+    --vd-l-400: 0.72;
+    --vd-l-500: 0.64;
+    --vd-l-600: 0.54;
+    --vd-l-700: 0.49;
+    --vd-l-800: 0.41;
+    --vd-l-900: 0.33;
+    --vd-l-950: 0.26;
+
+    --vd-c-50: 0.08;
+    --vd-c-100: 0.18;
+    --vd-c-200: 0.36;
+    --vd-c-300: 0.58;
+    --vd-c-400: 0.82;
+    --vd-c-500: 1;
+    --vd-c-600: 0.95;
+    --vd-c-700: 0.85;
+    --vd-c-800: 0.7;
+    --vd-c-900: 0.55;
+    --vd-c-950: 0.45;
+
+    /* ------------------------------------------------------------- spacing */
+    /* 4px base. */
+    --vd-space-0: 0;
+    --vd-space-0-5: 0.125rem;
+    --vd-space-1: 0.25rem;
+    --vd-space-1-5: 0.375rem;
+    --vd-space-2: 0.5rem;
+    --vd-space-3: 0.75rem;
+    --vd-space-4: 1rem;
+    --vd-space-5: 1.25rem;
+    --vd-space-6: 1.5rem;
+    --vd-space-8: 2rem;
+    --vd-space-10: 2.5rem;
+    --vd-space-12: 3rem;
+    --vd-space-16: 4rem;
+    --vd-space-20: 5rem;
+    --vd-space-24: 6rem;
+
+    /* ---------------------------------------------------------- typography */
+    --vd-font-sans:
+      'Manrope', 'Manrope Fallback', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --vd-font-mono:
+      'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, 'SF Mono', Menlo, Consolas,
+      monospace;
+
+    /* Modular scale, ratio 1.25, base 1rem. Steps from xl up are fluid. */
+    --vd-text-xs: 0.75rem;
+    --vd-text-sm: 0.875rem;
+    --vd-text-md: 1rem;
+    --vd-text-lg: 1.25rem;
+    --vd-text-xl: clamp(1.375rem, 1.25rem + 0.4vw, 1.5625rem);
+    --vd-text-2xl: clamp(1.625rem, 1.35rem + 0.9vw, 1.953rem);
+    --vd-text-3xl: clamp(1.875rem, 1.4rem + 1.6vw, 2.441rem);
+    --vd-text-4xl: clamp(2.25rem, 1.5rem + 2.6vw, 3.052rem);
+
+    --vd-leading-tight: 1.1;
+    --vd-leading-snug: 1.25;
+    --vd-leading-normal: 1.5;
+    --vd-leading-relaxed: 1.65;
+
+    /* Manrope runs wide: tighten large sizes, open up small caps. */
+    --vd-tracking-tighter: -0.03em;
+    --vd-tracking-tight: -0.02em;
+    --vd-tracking-normal: 0;
+    --vd-tracking-caps: 0.06em;
+
+    --vd-weight-regular: 400;
+    --vd-weight-medium: 500;
+    --vd-weight-semibold: 600;
+    --vd-weight-bold: 700;
+    --vd-weight-extrabold: 800;
+
+    /* ------------------------------------------------------------- radius */
+    --vd-radius-xs: 4px;
+    --vd-radius-sm: 6px;
+    --vd-radius-md: 8px;
+    --vd-radius-lg: 12px;
+    --vd-radius-xl: 16px;
+    --vd-radius-2xl: 24px;
+    --vd-radius-full: 9999px;
+
+    /* -------------------------------------------------------------- borders */
+    --vd-border-width: 1px;
+
+    /* -------------------------------------------------------------- motion */
+    --vd-duration-fast: 100ms;
+    --vd-duration-base: 200ms;
+    --vd-duration-slow: 300ms;
+    /* Continuous indicators (spinners) - not affected by reduced motion zeroing. */
+    --vd-duration-spin: 800ms;
+    --vd-duration-shimmer: 1600ms;
+
+    --vd-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --vd-ease-in: cubic-bezier(0.5, 0, 0.75, 0);
+    --vd-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    /* Damped spring, ~4% overshoot. Fallback first for engines without linear(). */
+    --vd-ease-spring: cubic-bezier(0.2, 0.9, 0.3, 1.05);
+    --vd-ease-spring: linear(
+      0,
+      0.124 5%,
+      0.37 10%,
+      0.616 15%,
+      0.807 20%,
+      0.933 25%,
+      1.002 30%,
+      1.032 35%,
+      1.038 40%,
+      1.033 45%,
+      1.023 50%,
+      1.014 55%,
+      1.007 60%,
+      1.002 65%,
+      1
+    );
+
+    /* ------------------------------------------------------------- density */
+    /* 1 = default. Overridden by [data-density]. */
+    --vd-density: 1;
+  }
+
+  /*
+   * Derived primitives. Declared on every scope element so overriding a knob
+   * (hue, density) on a subtree recomputes them there.
+   */
+  :where(:root, [data-theme], [data-density]) {
+    --vd-hue-neutral: var(--vd-hue-accent);
+
+    /* neutral ramp: tinted with the neutral hue */
+    --vd-neutral-0: oklch(0.993 calc(var(--vd-chroma-neutral) * 0.2) var(--vd-hue-neutral));
+    --vd-neutral-50: oklch(0.975 calc(var(--vd-chroma-neutral) * 0.35) var(--vd-hue-neutral));
+    --vd-neutral-100: oklch(0.955 calc(var(--vd-chroma-neutral) * 0.5) var(--vd-hue-neutral));
+    --vd-neutral-150: oklch(0.925 calc(var(--vd-chroma-neutral) * 0.6) var(--vd-hue-neutral));
+    --vd-neutral-200: oklch(0.89 calc(var(--vd-chroma-neutral) * 0.7) var(--vd-hue-neutral));
+    --vd-neutral-300: oklch(0.82 var(--vd-chroma-neutral) var(--vd-hue-neutral));
+    --vd-neutral-400: oklch(0.71 var(--vd-chroma-neutral) var(--vd-hue-neutral));
+    --vd-neutral-500: oklch(0.6 var(--vd-chroma-neutral) var(--vd-hue-neutral));
+    --vd-neutral-550: oklch(0.55 var(--vd-chroma-neutral) var(--vd-hue-neutral));
+    --vd-neutral-600: oklch(0.5 var(--vd-chroma-neutral) var(--vd-hue-neutral));
+    --vd-neutral-700: oklch(0.4 var(--vd-chroma-neutral) var(--vd-hue-neutral));
+    --vd-neutral-800: oklch(0.31 var(--vd-chroma-neutral) var(--vd-hue-neutral));
+    --vd-neutral-850: oklch(0.265 var(--vd-chroma-neutral) var(--vd-hue-neutral));
+    --vd-neutral-900: oklch(0.23 var(--vd-chroma-neutral) var(--vd-hue-neutral));
+    --vd-neutral-925: oklch(0.205 var(--vd-chroma-neutral) var(--vd-hue-neutral));
+    --vd-neutral-950: oklch(0.185 var(--vd-chroma-neutral) var(--vd-hue-neutral));
+    --vd-neutral-975: oklch(0.165 var(--vd-chroma-neutral) var(--vd-hue-neutral));
+    --vd-neutral-1000: oklch(0.145 var(--vd-chroma-neutral) var(--vd-hue-neutral));
+
+    /* accent */
+    --vd-accent-50: oklch(
+      var(--vd-l-50) calc(var(--vd-chroma-accent) * var(--vd-c-50)) var(--vd-hue-accent)
+    );
+    --vd-accent-100: oklch(
+      var(--vd-l-100) calc(var(--vd-chroma-accent) * var(--vd-c-100)) var(--vd-hue-accent)
+    );
+    --vd-accent-200: oklch(
+      var(--vd-l-200) calc(var(--vd-chroma-accent) * var(--vd-c-200)) var(--vd-hue-accent)
+    );
+    --vd-accent-300: oklch(
+      var(--vd-l-300) calc(var(--vd-chroma-accent) * var(--vd-c-300)) var(--vd-hue-accent)
+    );
+    --vd-accent-400: oklch(
+      var(--vd-l-400) calc(var(--vd-chroma-accent) * var(--vd-c-400)) var(--vd-hue-accent)
+    );
+    --vd-accent-500: oklch(
+      var(--vd-l-500) calc(var(--vd-chroma-accent) * var(--vd-c-500)) var(--vd-hue-accent)
+    );
+    --vd-accent-600: oklch(
+      var(--vd-l-600) calc(var(--vd-chroma-accent) * var(--vd-c-600)) var(--vd-hue-accent)
+    );
+    --vd-accent-700: oklch(
+      var(--vd-l-700) calc(var(--vd-chroma-accent) * var(--vd-c-700)) var(--vd-hue-accent)
+    );
+    --vd-accent-800: oklch(
+      var(--vd-l-800) calc(var(--vd-chroma-accent) * var(--vd-c-800)) var(--vd-hue-accent)
+    );
+    --vd-accent-900: oklch(
+      var(--vd-l-900) calc(var(--vd-chroma-accent) * var(--vd-c-900)) var(--vd-hue-accent)
+    );
+    --vd-accent-950: oklch(
+      var(--vd-l-950) calc(var(--vd-chroma-accent) * var(--vd-c-950)) var(--vd-hue-accent)
+    );
+
+    /* success */
+    --vd-success-50: oklch(
+      var(--vd-l-50) calc(var(--vd-chroma-success) * var(--vd-c-50)) var(--vd-hue-success)
+    );
+    --vd-success-100: oklch(
+      var(--vd-l-100) calc(var(--vd-chroma-success) * var(--vd-c-100)) var(--vd-hue-success)
+    );
+    --vd-success-200: oklch(
+      var(--vd-l-200) calc(var(--vd-chroma-success) * var(--vd-c-200)) var(--vd-hue-success)
+    );
+    --vd-success-300: oklch(
+      var(--vd-l-300) calc(var(--vd-chroma-success) * var(--vd-c-300)) var(--vd-hue-success)
+    );
+    --vd-success-400: oklch(
+      var(--vd-l-400) calc(var(--vd-chroma-success) * var(--vd-c-400)) var(--vd-hue-success)
+    );
+    --vd-success-500: oklch(
+      var(--vd-l-500) calc(var(--vd-chroma-success) * var(--vd-c-500)) var(--vd-hue-success)
+    );
+    --vd-success-600: oklch(
+      var(--vd-l-600) calc(var(--vd-chroma-success) * var(--vd-c-600)) var(--vd-hue-success)
+    );
+    --vd-success-700: oklch(
+      var(--vd-l-700) calc(var(--vd-chroma-success) * var(--vd-c-700)) var(--vd-hue-success)
+    );
+    --vd-success-800: oklch(
+      var(--vd-l-800) calc(var(--vd-chroma-success) * var(--vd-c-800)) var(--vd-hue-success)
+    );
+    --vd-success-900: oklch(
+      var(--vd-l-900) calc(var(--vd-chroma-success) * var(--vd-c-900)) var(--vd-hue-success)
+    );
+    --vd-success-950: oklch(
+      var(--vd-l-950) calc(var(--vd-chroma-success) * var(--vd-c-950)) var(--vd-hue-success)
+    );
+
+    /* warning */
+    --vd-warning-50: oklch(
+      var(--vd-l-50) calc(var(--vd-chroma-warning) * var(--vd-c-50)) var(--vd-hue-warning)
+    );
+    --vd-warning-100: oklch(
+      var(--vd-l-100) calc(var(--vd-chroma-warning) * var(--vd-c-100)) var(--vd-hue-warning)
+    );
+    --vd-warning-200: oklch(
+      var(--vd-l-200) calc(var(--vd-chroma-warning) * var(--vd-c-200)) var(--vd-hue-warning)
+    );
+    --vd-warning-300: oklch(
+      var(--vd-l-300) calc(var(--vd-chroma-warning) * var(--vd-c-300)) var(--vd-hue-warning)
+    );
+    --vd-warning-400: oklch(
+      var(--vd-l-400) calc(var(--vd-chroma-warning) * var(--vd-c-400)) var(--vd-hue-warning)
+    );
+    --vd-warning-500: oklch(
+      var(--vd-l-500) calc(var(--vd-chroma-warning) * var(--vd-c-500)) var(--vd-hue-warning)
+    );
+    --vd-warning-600: oklch(
+      var(--vd-l-600) calc(var(--vd-chroma-warning) * var(--vd-c-600)) var(--vd-hue-warning)
+    );
+    --vd-warning-700: oklch(
+      var(--vd-l-700) calc(var(--vd-chroma-warning) * var(--vd-c-700)) var(--vd-hue-warning)
+    );
+    --vd-warning-800: oklch(
+      var(--vd-l-800) calc(var(--vd-chroma-warning) * var(--vd-c-800)) var(--vd-hue-warning)
+    );
+    --vd-warning-900: oklch(
+      var(--vd-l-900) calc(var(--vd-chroma-warning) * var(--vd-c-900)) var(--vd-hue-warning)
+    );
+    --vd-warning-950: oklch(
+      var(--vd-l-950) calc(var(--vd-chroma-warning) * var(--vd-c-950)) var(--vd-hue-warning)
+    );
+
+    /* danger */
+    --vd-danger-50: oklch(
+      var(--vd-l-50) calc(var(--vd-chroma-danger) * var(--vd-c-50)) var(--vd-hue-danger)
+    );
+    --vd-danger-100: oklch(
+      var(--vd-l-100) calc(var(--vd-chroma-danger) * var(--vd-c-100)) var(--vd-hue-danger)
+    );
+    --vd-danger-200: oklch(
+      var(--vd-l-200) calc(var(--vd-chroma-danger) * var(--vd-c-200)) var(--vd-hue-danger)
+    );
+    --vd-danger-300: oklch(
+      var(--vd-l-300) calc(var(--vd-chroma-danger) * var(--vd-c-300)) var(--vd-hue-danger)
+    );
+    --vd-danger-400: oklch(
+      var(--vd-l-400) calc(var(--vd-chroma-danger) * var(--vd-c-400)) var(--vd-hue-danger)
+    );
+    --vd-danger-500: oklch(
+      var(--vd-l-500) calc(var(--vd-chroma-danger) * var(--vd-c-500)) var(--vd-hue-danger)
+    );
+    --vd-danger-600: oklch(
+      var(--vd-l-600) calc(var(--vd-chroma-danger) * var(--vd-c-600)) var(--vd-hue-danger)
+    );
+    --vd-danger-700: oklch(
+      var(--vd-l-700) calc(var(--vd-chroma-danger) * var(--vd-c-700)) var(--vd-hue-danger)
+    );
+    --vd-danger-800: oklch(
+      var(--vd-l-800) calc(var(--vd-chroma-danger) * var(--vd-c-800)) var(--vd-hue-danger)
+    );
+    --vd-danger-900: oklch(
+      var(--vd-l-900) calc(var(--vd-chroma-danger) * var(--vd-c-900)) var(--vd-hue-danger)
+    );
+    --vd-danger-950: oklch(
+      var(--vd-l-950) calc(var(--vd-chroma-danger) * var(--vd-c-950)) var(--vd-hue-danger)
+    );
+
+    /* info */
+    --vd-info-50: oklch(
+      var(--vd-l-50) calc(var(--vd-chroma-info) * var(--vd-c-50)) var(--vd-hue-info)
+    );
+    --vd-info-100: oklch(
+      var(--vd-l-100) calc(var(--vd-chroma-info) * var(--vd-c-100)) var(--vd-hue-info)
+    );
+    --vd-info-200: oklch(
+      var(--vd-l-200) calc(var(--vd-chroma-info) * var(--vd-c-200)) var(--vd-hue-info)
+    );
+    --vd-info-300: oklch(
+      var(--vd-l-300) calc(var(--vd-chroma-info) * var(--vd-c-300)) var(--vd-hue-info)
+    );
+    --vd-info-400: oklch(
+      var(--vd-l-400) calc(var(--vd-chroma-info) * var(--vd-c-400)) var(--vd-hue-info)
+    );
+    --vd-info-500: oklch(
+      var(--vd-l-500) calc(var(--vd-chroma-info) * var(--vd-c-500)) var(--vd-hue-info)
+    );
+    --vd-info-600: oklch(
+      var(--vd-l-600) calc(var(--vd-chroma-info) * var(--vd-c-600)) var(--vd-hue-info)
+    );
+    --vd-info-700: oklch(
+      var(--vd-l-700) calc(var(--vd-chroma-info) * var(--vd-c-700)) var(--vd-hue-info)
+    );
+    --vd-info-800: oklch(
+      var(--vd-l-800) calc(var(--vd-chroma-info) * var(--vd-c-800)) var(--vd-hue-info)
+    );
+    --vd-info-900: oklch(
+      var(--vd-l-900) calc(var(--vd-chroma-info) * var(--vd-c-900)) var(--vd-hue-info)
+    );
+    --vd-info-950: oklch(
+      var(--vd-l-950) calc(var(--vd-chroma-info) * var(--vd-c-950)) var(--vd-hue-info)
+    );
+
+    /* density-derived control sizes */
+    --vd-control-height-sm: calc(2rem * var(--vd-density));
+    --vd-control-height-md: calc(2.5rem * var(--vd-density));
+    --vd-control-height-lg: calc(3rem * var(--vd-density));
+  }
+
+  [data-density='compact'] {
+    --vd-density: 0.875;
+  }
+
+  [data-density='comfortable'] {
+    --vd-density: 1.125;
+  }
+}

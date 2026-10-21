@@ -1,0 +1,244 @@
+/* Dashboard screen. Consumer CSS: Vadem tokens only. */
+
+:host {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  gap: var(--vd-space-8);
+}
+
+.dash-muted {
+  color: var(--vd-color-text-muted);
+  font-size: var(--vd-text-sm);
+}
+
+/* ---------------------------------------------------------------- head */
+
+.dash-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--vd-space-6);
+}
+
+.dash-head__text {
+  min-inline-size: 0;
+  display: grid;
+  gap: var(--vd-space-2);
+}
+
+.dash-head h1 {
+  font-size: var(--vd-text-3xl);
+}
+
+.dash-head__actions {
+  display: flex;
+  flex-wrap: wrap;
+  min-inline-size: 0;
+  gap: var(--vd-space-2);
+}
+
+/* ---------------------------------------------------------------- KPIs */
+
+.dash-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: var(--vd-space-4);
+}
+
+.dash-kpi {
+  gap: var(--vd-space-2);
+  min-block-size: 8.5rem;
+}
+
+/* --------------------------------------------------- chart + activity */
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: var(--vd-space-4);
+}
+
+@container (width < 52rem) {
+  .dash-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.dash-feed {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--vd-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dash-feed li {
+  display: flex;
+  gap: var(--vd-space-3);
+  font-size: var(--vd-text-sm);
+  line-height: var(--vd-leading-snug);
+}
+
+.dash-feed p {
+  min-inline-size: 0;
+  color: var(--vd-color-text-muted);
+}
+
+.dash-feed strong {
+  color: var(--vd-color-text);
+  font-weight: var(--vd-weight-semibold);
+}
+
+.dash-feed__time {
+  display: block;
+  margin-block-start: var(--vd-space-0-5);
+  color: var(--vd-color-text-subtle);
+  font-size: var(--vd-text-xs);
+}
+
+.dash-feed__icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  inline-size: var(--vd-space-8);
+  block-size: var(--vd-space-8);
+  border-radius: var(--vd-radius-full);
+  background: var(--vd-color-fill);
+  color: var(--vd-color-text-muted);
+}
+
+.dash-feed__icon[data-tone='accent'] {
+  background: var(--vd-color-action-subtle);
+  color: var(--vd-color-text-accent);
+}
+
+.dash-feed__icon[data-tone='success'] {
+  background: var(--vd-color-success-subtle);
+  color: var(--vd-color-success-text);
+}
+
+.dash-feed__icon[data-tone='danger'] {
+  background: var(--vd-color-danger-subtle);
+  color: var(--vd-color-danger-text);
+}
+
+/* ------------------------------------------------------------ sections */
+
+.dash-section {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--vd-space-4);
+  scroll-margin-block-start: var(--vd-space-20);
+}
+
+#activity {
+  scroll-margin-block-start: var(--vd-space-20);
+}
+
+.dash-section__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--vd-space-4);
+}
+
+.dash-section__head h2 {
+  font-size: var(--vd-text-xl);
+}
+
+/* --------------------------------------------------------------- table */
+/* vdTable does the table; only cell content is styled here. */
+
+.dash-nowrap {
+  white-space: nowrap;
+}
+
+.dash-time {
+  color: var(--vd-color-text-muted);
+  white-space: nowrap;
+}
+
+.dash-table__actions {
+  inline-size: 1%;
+  text-align: end;
+}
+
+.dash-branch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--vd-space-1);
+  font-family: var(--vd-font-mono);
+  font-size: var(--vd-text-xs);
+  white-space: nowrap;
+}
+
+.dash-branch .vd-icon {
+  color: var(--vd-color-text-subtle);
+}
+
+.dash-commit {
+  display: block;
+  max-inline-size: 22rem;
+  overflow: hidden;
+  color: var(--vd-color-text-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dash-author {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--vd-space-2);
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------ projects */
+
+.dash-projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: var(--vd-space-4);
+  margin: 0;
+  padding: 0;
+}
+
+.dash-project-meta {
+  gap: var(--vd-space-1-5);
+}
+
+/* -------------------------------------------------------------- phones */
+
+@container (width < 36rem) {
+  .dash-head__actions {
+    inline-size: 100%;
+  }
+
+  .dash-period {
+    flex: 1 1 16rem;
+    min-inline-size: 0;
+  }
+}
+
+/* -------------------------------------------------------- details drawer */
+
+.dash-dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: var(--vd-space-3) var(--vd-space-6);
+  margin: 0;
+  font-size: var(--vd-text-sm);
+}
+
+.dash-dl dt {
+  color: var(--vd-color-text-muted);
+}
+
+.dash-dl dd {
+  margin: 0;
+}

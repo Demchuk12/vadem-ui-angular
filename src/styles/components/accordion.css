@@ -1,0 +1,130 @@
+/* Accordion (native details) - spec: specs/accordion.md */
+@layer vd.components {
+  .vd-accordion {
+    align-self: start;
+    --vd-accordion-radius: var(--vd-radius-surface);
+    --vd-accordion-border: var(--vd-color-border);
+    --vd-accordion-bg: var(--vd-color-surface);
+
+    display: grid;
+    overflow: hidden;
+    border: var(--vd-border-width) solid var(--vd-accordion-border);
+    border-radius: var(--vd-accordion-radius);
+    background-color: var(--vd-accordion-bg);
+    box-shadow: var(--vd-highlight-top);
+  }
+
+  .vd-accordion__item {
+    --vd-accordion-padding: var(--vd-space-4) var(--vd-space-5);
+  }
+
+  .vd-accordion__item + .vd-accordion__item {
+    border-block-start: var(--vd-border-width) solid var(--vd-color-border);
+  }
+
+  /* A standalone item (no group) draws its own box. */
+  .vd-accordion__item:not(.vd-accordion > *) {
+    /* In grid/flex rows, keep the box to its content instead of stretching. */
+    align-self: start;
+    border: var(--vd-border-width) solid var(--vd-color-border);
+    border-radius: var(--vd-radius-surface);
+    background-color: var(--vd-color-surface);
+    overflow: hidden;
+  }
+
+  .vd-accordion__item > summary {
+    display: flex;
+    align-items: center;
+    gap: var(--vd-space-3);
+    padding: var(--vd-accordion-padding);
+    color: var(--vd-color-text);
+    font-weight: var(--vd-weight-semibold);
+    line-height: var(--vd-leading-snug);
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+    transition: var(--vd-transition-colors);
+  }
+
+  .vd-accordion__item > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Chevron at the inline end, rotates when open. */
+  .vd-accordion__item > summary::after {
+    content: '';
+    flex: none;
+    inline-size: var(--vd-space-4);
+    block-size: var(--vd-space-4);
+    margin-inline-start: auto;
+    background-color: var(--vd-color-text-subtle);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+    transition: rotate var(--vd-duration-base) var(--vd-ease-out);
+  }
+
+  .vd-accordion__item[open] > summary::after {
+    rotate: 180deg;
+  }
+
+  @media (hover: hover) {
+    .vd-accordion__item > summary:hover {
+      background-color: var(--vd-color-fill);
+    }
+  }
+
+  .vd-accordion__item > summary:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: calc(var(--vd-focus-ring-width) * -1);
+  }
+
+  .vd-accordion__item > summary > .vd-icon {
+    color: var(--vd-color-text-muted);
+  }
+
+  /* Content: everything after the summary. */
+  .vd-accordion__item > :not(summary) {
+    margin: 0;
+    padding-inline: var(--vd-space-5);
+    color: var(--vd-color-text-muted);
+    font-size: var(--vd-text-sm);
+    line-height: var(--vd-leading-relaxed);
+  }
+
+  .vd-accordion__item > :not(summary):last-child {
+    padding-block-end: var(--vd-space-5);
+  }
+
+  /* Smooth open/close where the platform can animate to `auto` (progressive enhancement). */
+  @supports (interpolate-size: allow-keywords) {
+    @media (prefers-reduced-motion: no-preference) {
+      .vd-accordion__item {
+        interpolate-size: allow-keywords;
+      }
+
+      .vd-accordion__item::details-content {
+        block-size: 0;
+        overflow: clip;
+        transition:
+          block-size var(--vd-duration-slow) var(--vd-ease-out),
+          content-visibility var(--vd-duration-slow) allow-discrete;
+      }
+
+      .vd-accordion__item[open]::details-content {
+        block-size: auto;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vd-accordion__item > summary::after {
+      transition: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .vd-accordion__item > summary::after {
+      background-color: CanvasText;
+    }
+  }
+}

@@ -1,0 +1,107 @@
+/* Switch - spec: specs/switch.md */
+@layer vd.components {
+  .vd-switch {
+    --vd-switch-width: 2.25rem;
+    --vd-switch-height: 1.25rem;
+    --vd-switch-padding: var(--vd-space-0-5);
+    --vd-switch-thumb: calc(
+      var(--vd-switch-height) - var(--vd-switch-padding) * 2 - var(--vd-border-width) * 2
+    );
+    --vd-switch-travel: calc(var(--vd-switch-width) - var(--vd-switch-height));
+    --vd-switch-track: var(--vd-color-border-control);
+    --vd-switch-track-hover: var(--vd-color-border-control-hover);
+    --vd-switch-track-on: var(--vd-color-action);
+    --vd-switch-track-on-hover: var(--vd-color-action-hover);
+    --vd-switch-thumb-color: var(--vd-neutral-0);
+    --vd-switch-direction: 1;
+
+    appearance: none;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    flex: none;
+    inline-size: var(--vd-switch-width);
+    block-size: var(--vd-switch-height);
+    margin: 0;
+    padding: var(--vd-switch-padding);
+    border: var(--vd-border-width) solid transparent;
+    border-radius: var(--vd-radius-full);
+    background-color: var(--vd-switch-track);
+    vertical-align: middle;
+    cursor: pointer;
+    transition:
+      var(--vd-transition-colors),
+      scale var(--vd-duration-fast) var(--vd-ease-out);
+  }
+
+  .vd-switch:dir(rtl) {
+    --vd-switch-direction: -1;
+  }
+
+  .vd-switch::before {
+    content: '';
+    inline-size: var(--vd-switch-thumb);
+    block-size: var(--vd-switch-thumb);
+    border-radius: var(--vd-radius-full);
+    background-color: var(--vd-switch-thumb-color);
+    box-shadow: var(--vd-shadow-sm);
+    transition: translate var(--vd-duration-base) var(--vd-ease-spring);
+  }
+
+  .vd-switch:checked {
+    --vd-switch-track: var(--vd-switch-track-on);
+    --vd-switch-track-hover: var(--vd-switch-track-on-hover);
+
+    box-shadow: var(--vd-highlight-top);
+  }
+
+  .vd-switch:checked::before {
+    translate: calc(var(--vd-switch-travel) * var(--vd-switch-direction)) 0;
+  }
+
+  @media (hover: hover) {
+    .vd-switch:not(:disabled):hover,
+    .vd-choice:has(> .vd-switch:not(:disabled)):hover > .vd-switch {
+      background-color: var(--vd-switch-track-hover);
+    }
+  }
+
+  .vd-switch:not(:disabled):active {
+    scale: var(--vd-press-scale);
+  }
+
+  .vd-switch:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+
+  .vd-switch[data-invalid] {
+    border-color: var(--vd-color-danger);
+  }
+
+  .vd-switch:disabled {
+    opacity: var(--vd-opacity-disabled);
+    cursor: not-allowed;
+  }
+
+  @media (forced-colors: active) {
+    .vd-switch {
+      forced-color-adjust: none;
+      border-color: ButtonText;
+      background-color: Canvas;
+    }
+
+    .vd-switch::before {
+      background-color: ButtonText;
+    }
+
+    .vd-switch:checked {
+      border-color: Highlight;
+      background-color: Highlight;
+    }
+
+    .vd-switch:checked::before {
+      background-color: HighlightText;
+    }
+  }
+}

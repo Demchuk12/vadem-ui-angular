@@ -1,0 +1,103 @@
+@if (bare()) {
+  <router-outlet />
+} @else {
+  <a class="demo-skip" href="#main">Skip to content</a>
+
+  <header class="demo-header">
+    <a class="demo-brand" routerLink="/">
+      <!-- Lockup files are the source of truth (brand/logo); one per background. -->
+      <img
+        class="demo-brand__logo demo-on-dark"
+        src="brand/vadem-logo-dark.svg"
+        alt="Vadem"
+        width="104"
+        height="23"
+      />
+      <img
+        class="demo-brand__logo demo-on-light"
+        src="brand/vadem-logo-light.svg"
+        alt="Vadem"
+        width="104"
+        height="23"
+      />
+      <span class="vd-eyebrow">ui · 0.0.1</span>
+    </a>
+
+    <div class="demo-controls">
+      <div class="demo-segmented" role="radiogroup" aria-label="Theme">
+        @for (t of themes; track t.value) {
+          <button
+            type="button"
+            role="radio"
+            [attr.aria-checked]="prefs.theme() === t.value"
+            (click)="prefs.theme.set(t.value)"
+            [title]="t.label"
+          >
+            <vd-icon [name]="t.icon" />
+            <span class="vd-visually-hidden">{{ t.label }}</span>
+          </button>
+        }
+      </div>
+
+      <label class="demo-field demo-field--hue">
+        <span class="vd-eyebrow demo-field__label">Hue</span>
+        <input
+          type="range"
+          min="0"
+          max="360"
+          step="1"
+          [value]="prefs.hue()"
+          (input)="onHue($event)"
+          class="demo-hue"
+        />
+        <output class="vd-tabular">{{ prefs.hue() }}</output>
+      </label>
+
+      <label class="demo-field demo-field--density">
+        <span class="vd-eyebrow demo-field__label">Density</span>
+        <select class="demo-select" (change)="onDensity($event)">
+          @for (d of densities; track d) {
+            <option [value]="d" [selected]="prefs.density() === d">{{ d }}</option>
+          }
+        </select>
+      </label>
+
+      <button
+        type="button"
+        class="demo-chip"
+        (click)="toggleDir()"
+        [attr.aria-pressed]="prefs.dir() === 'rtl'"
+      >
+        {{ prefs.dir() === 'rtl' ? 'RTL' : 'LTR' }}
+      </button>
+    </div>
+  </header>
+
+  <div class="demo-layout">
+    <nav class="demo-nav" aria-label="Gallery">
+      @for (group of nav; track group.label) {
+        <p class="vd-eyebrow demo-nav__label">{{ group.label }}</p>
+        <ul>
+          @for (item of group.items; track item.path) {
+            <li>
+              <a
+                [routerLink]="item.path"
+                routerLinkActive="is-active"
+                ariaCurrentWhenActive="page"
+                >{{ item.label }}</a
+              >
+            </li>
+          }
+        </ul>
+      }
+    </nav>
+
+    <main id="main" class="demo-main" tabindex="-1">
+      <router-outlet />
+    </main>
+  </div>
+}
+
+@defer (on immediate) {
+  <vd-toaster label="Сповіщення" closeLabel="Закрити" />
+}

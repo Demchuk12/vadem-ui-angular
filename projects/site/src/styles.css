@@ -1,0 +1,23 @@
+/* Site globals. Library CSS is layered, so these unlayered rules win where they overlap. */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-block-start: var(--vd-space-20);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--vd-color-bg);
+  color: var(--vd-color-text);
+}
+
+/* Brand mark has one file per theme. */
+:root[data-theme='light'] .site-on-dark,
+:root[data-theme='dark'] .site-on-light {
+  display: none;
+}

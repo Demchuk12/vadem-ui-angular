@@ -1,0 +1,38 @@
+@layer vd.components {
+  .vd-icon {
+    --vd-icon-size: 1.25em;
+
+    display: inline-flex;
+    flex: none;
+    inline-size: var(--vd-icon-size);
+    block-size: var(--vd-icon-size);
+    vertical-align: middle;
+    color: inherit;
+  }
+
+  .vd-icon__svg {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .vd-icon[data-directional]:dir(rtl) {
+    transform: scaleX(-1);
+  }
+
+  .vd-icon[data-name='loader'] .vd-icon__svg {
+    animation: vd-icon-spin var(--vd-duration-spin) linear infinite;
+  }
+
+  /* Reduced motion stops the spin (brief); the static loader glyph still reads as loading. */
+  @media (prefers-reduced-motion: reduce) {
+    .vd-icon[data-name='loader'] .vd-icon__svg {
+      animation: none;
+    }
+  }
+
+  @keyframes vd-icon-spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+}

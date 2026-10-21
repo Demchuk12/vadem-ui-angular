@@ -1,0 +1,41 @@
+@layer vd.components {
+  .vd-character-count {
+    --vd-character-count-fg: var(--vd-color-text-muted);
+    --vd-character-count-danger: var(--vd-color-danger-text);
+    --vd-character-count-font-size: var(--vd-text-sm);
+    --vd-character-count-gap: var(--vd-space-2);
+
+    display: block;
+    min-inline-size: 0;
+    color: var(--vd-character-count-fg);
+    font-size: var(--vd-character-count-font-size);
+    line-height: var(--vd-leading-normal);
+    overflow-wrap: anywhere;
+  }
+  .vd-character-count__content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: start;
+    gap: var(--vd-space-1) var(--vd-character-count-gap);
+  }
+  .vd-character-count__used {
+    font-variant-numeric: tabular-nums;
+  }
+  .vd-character-count__message {
+    display: flex;
+    align-items: start;
+    gap: var(--vd-character-count-gap);
+    min-inline-size: 0;
+  }
+  .vd-character-count__message > span {
+    min-inline-size: 0;
+  }
+  .vd-character-count__message > .vd-icon {
+    flex: none;
+    block-size: 1lh;
+  }
+  .vd-character-count[data-state='over'] {
+    color: var(--vd-character-count-danger);
+  }
+}

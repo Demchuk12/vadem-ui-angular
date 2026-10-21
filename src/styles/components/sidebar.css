@@ -1,0 +1,105 @@
+/* Sidebar - spec: specs/sidebar.md */
+@layer vd.components {
+  .vd-sidebar-layout {
+    --vd-sidebar-width: 16rem;
+    --vd-sidebar-padding: var(--vd-space-3);
+    --vd-sidebar-gap: var(--vd-space-6);
+    --vd-sidebar-rail-width: calc(
+      var(--vd-control-height-md) + var(--vd-sidebar-padding) * 2 +
+        (var(--vd-focus-ring-width) + var(--vd-focus-ring-offset)) * 2
+    );
+    --vd-sidebar-bg: var(--vd-color-bg);
+    --vd-sidebar-border: var(--vd-color-border);
+    /* Viewport-height shell by default; set a length to embed the layout in a bounded box. */
+    --vd-sidebar-block-size: 100dvh;
+
+    display: grid;
+    grid-template-columns: var(--vd-sidebar-width) minmax(0, 1fr);
+    min-block-size: var(--vd-sidebar-block-size);
+  }
+  .vd-sidebar-layout[data-collapsed] {
+    grid-template-columns: var(--vd-sidebar-rail-width) minmax(0, 1fr);
+  }
+  .vd-sidebar-layout[data-mode='drawer'] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vd-sidebar-layout__body {
+    min-inline-size: 0;
+  }
+
+  .vd-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vd-sidebar-gap);
+    min-inline-size: 0;
+  }
+  .vd-sidebar-layout > .vd-sidebar {
+    position: sticky;
+    inset-block-start: 0;
+    max-block-size: var(--vd-sidebar-block-size);
+    padding: var(--vd-sidebar-padding);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-inline-end: var(--vd-border-width) solid var(--vd-sidebar-border);
+    background: var(--vd-sidebar-bg);
+  }
+
+  /* ------------------------------------------------------------ rail */
+
+  .vd-sidebar-layout[data-collapsed] > .vd-sidebar {
+    overflow-x: hidden;
+  }
+  /* An opt-out flag must beat any consumer display value, which is unlayered and would win;
+     a layered !important outranks unlayered declarations (as the UA does for [hidden]). */
+  .vd-sidebar-layout[data-collapsed] > .vd-sidebar [data-rail='hidden'] {
+    display: none !important;
+  }
+  /* Names stay in the accessibility tree; only the icon remains visible. */
+  .vd-sidebar-layout[data-collapsed] .vd-navigation-link > :not([slot='start']),
+  .vd-sidebar-layout[data-collapsed] .vd-navigation-label {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .vd-sidebar-layout[data-collapsed] .vd-navigation-link {
+    position: relative;
+    grid-template-columns: auto;
+    justify-content: center;
+  }
+  .vd-sidebar-layout[data-collapsed] .vd-navigation-link > [slot='start'] {
+    display: inline-flex;
+    grid-column: 1;
+  }
+  .vd-sidebar-layout[data-collapsed] .vd-navigation-list section + section {
+    padding-block-start: var(--vd-navigation-list-group-gap);
+    border-block-start: var(--vd-border-width) solid var(--vd-sidebar-border);
+  }
+  .vd-sidebar-layout[data-collapsed] .vd-navigation-list {
+    --vd-navigation-list-group-gap: var(--vd-space-3);
+  }
+
+  /* ---------------------------------------------------------- drawer */
+
+  /* The only place the breakpoint lives; the layout reads this flag (media can't read tokens). */
+  @media (width < 64rem) {
+    .vd-sidebar-layout {
+      --vd-sidebar-drawer: 1;
+    }
+    /* Before the script switches modes (and under SSR), never show the docked copy. */
+    .vd-sidebar-layout > .vd-sidebar {
+      display: none;
+    }
+    .vd-sidebar-layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  @media (forced-colors: active) {
+    .vd-sidebar-layout > .vd-sidebar {
+      border-inline-end-color: CanvasText;
+    }
+  }
+}

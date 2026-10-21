@@ -1,0 +1,42 @@
+/* Kbd - spec: specs/kbd.md. Key caps reuse the base `kbd` style. */
+@layer vd.components {
+  .vd-kbd {
+    --vd-kbd-gap: var(--vd-space-1);
+    --vd-kbd-step-gap: var(--vd-space-2);
+    --vd-kbd-plus-color: var(--vd-color-text-subtle);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--vd-kbd-gap);
+    /* Reset the base key cap on the outer combination element. */
+    min-inline-size: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: inherit;
+    line-height: inherit;
+    /* Shortcuts read left to right in every direction. */
+    direction: ltr;
+    unicode-bidi: isolate;
+    /* Long combinations wrap between keys at narrow widths; a key cap never splits. */
+    flex-wrap: wrap;
+    max-inline-size: 100%;
+    vertical-align: baseline;
+  }
+  .vd-kbd > kbd {
+    white-space: nowrap;
+  }
+  .vd-kbd[data-platform='apple'] {
+    --vd-kbd-gap: var(--vd-space-0-5);
+  }
+  .vd-kbd[data-platform='apple'] .vd-kbd__plus {
+    display: none;
+  }
+  .vd-kbd__plus {
+    color: var(--vd-kbd-plus-color);
+    font-size: var(--vd-text-xs);
+  }
+  .vd-kbd__then {
+    inline-size: calc(var(--vd-kbd-step-gap) - var(--vd-kbd-gap));
+  }
+}

@@ -1,0 +1,216 @@
+/* Login screen. Consumer CSS: Vadem tokens only. */
+
+.login {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-block-size: 100dvh;
+}
+
+.login__main {
+  display: flex;
+  flex-direction: column;
+  padding: var(--vd-space-6) var(--vd-space-8);
+}
+
+.login__back {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: var(--vd-space-2);
+  color: var(--vd-color-text-muted);
+  font-size: var(--vd-text-sm);
+  text-decoration: none;
+}
+
+.login__back:hover {
+  color: var(--vd-color-text);
+}
+
+.login__panel {
+  display: grid;
+  gap: var(--vd-space-5);
+  inline-size: 100%;
+  max-inline-size: 24rem;
+  margin: auto;
+  padding-block: var(--vd-space-12);
+}
+
+.login__brand {
+  justify-self: start;
+  border-radius: var(--vd-radius-md);
+}
+
+.login__mark {
+  block-size: var(--vd-space-10);
+  inline-size: auto;
+}
+
+.login__head {
+  display: grid;
+  gap: var(--vd-space-2);
+  margin-block-end: var(--vd-space-2);
+}
+
+.login__head h1 {
+  font-size: var(--vd-text-3xl);
+}
+
+.login__head p {
+  color: var(--vd-color-text-muted);
+}
+
+.login__wide {
+  inline-size: 100%;
+}
+
+.login__divider {
+  display: flex;
+  align-items: center;
+  gap: var(--vd-space-3);
+  color: var(--vd-color-text-muted);
+  font-family: var(--vd-font-mono);
+  font-size: var(--vd-text-xs);
+  letter-spacing: var(--vd-tracking-caps);
+  text-transform: uppercase;
+}
+
+.login__divider::before,
+.login__divider::after {
+  content: '';
+  flex: 1;
+  border-block-start: var(--vd-border-width) solid var(--vd-color-border);
+}
+
+.login__form {
+  display: grid;
+  gap: var(--vd-space-5);
+}
+
+.login__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--vd-space-3);
+  font-size: var(--vd-text-sm);
+}
+
+.login__foot {
+  color: var(--vd-color-text-muted);
+  font-size: var(--vd-text-sm);
+  text-align: center;
+}
+
+.login__hint {
+  padding: var(--vd-space-3);
+  border: var(--vd-border-width) dashed var(--vd-color-border);
+  border-radius: var(--vd-radius-md);
+  color: var(--vd-color-text-muted);
+  font-size: var(--vd-text-xs);
+}
+
+/* --------------------------------------------------------- aside panel */
+
+.login__aside {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--vd-space-10);
+  margin: var(--vd-space-3);
+  padding: var(--vd-space-12);
+  overflow: hidden;
+  border: var(--vd-border-width) solid var(--vd-color-border);
+  border-radius: var(--vd-radius-2xl);
+  background: var(--vd-color-surface);
+  box-shadow: var(--vd-highlight-top);
+  isolation: isolate;
+}
+
+.login__glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(
+      60% 50% at 70% 25%,
+      color-mix(in oklch, var(--vd-accent-500) 45%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      50% 40% at 20% 70%,
+      color-mix(in oklch, var(--vd-accent-700) 35%, transparent),
+      transparent 70%
+    );
+}
+
+/* Faint dot grid over the glow. */
+.login__glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    var(--vd-color-border-strong) var(--vd-border-width),
+    transparent var(--vd-border-width)
+  );
+  background-size: var(--vd-space-6) var(--vd-space-6);
+  mask-image: linear-gradient(to bottom, black, transparent 75%);
+}
+
+.login__quote {
+  display: grid;
+  gap: var(--vd-space-4);
+  max-inline-size: 30rem;
+}
+
+.login__quote-text {
+  font-size: var(--vd-text-2xl);
+  font-weight: var(--vd-weight-bold);
+  letter-spacing: var(--vd-tracking-tight);
+  line-height: var(--vd-leading-snug);
+  text-wrap: balance;
+}
+
+.login__quote-author {
+  color: var(--vd-color-text-muted);
+  font-size: var(--vd-text-sm);
+}
+
+.login__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--vd-space-4);
+  margin: 0;
+  padding: var(--vd-space-6) 0 0;
+  border-block-start: var(--vd-border-width) solid var(--vd-color-border);
+  list-style: none;
+  color: var(--vd-color-text-muted);
+  font-size: var(--vd-text-sm);
+}
+
+.login__stats span {
+  display: block;
+  color: var(--vd-color-text);
+  font-size: var(--vd-text-xl);
+  font-weight: var(--vd-weight-extrabold);
+}
+
+@media (width < 64rem) {
+  .login {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .login__aside {
+    display: none;
+  }
+}
+
+@media (width < 40rem) {
+  .login__main {
+    padding: var(--vd-space-4);
+  }
+
+  .login__panel {
+    padding-block: var(--vd-space-8);
+  }
+}

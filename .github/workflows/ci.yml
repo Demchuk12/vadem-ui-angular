@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Lint, unit tests, builds
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build:ui
+      - run: npx ng build demo
+      - run: npm run build:site
+
+  e2e:
+    name: Browser tests (axe, keyboard, layout)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    # Same image as local visual baselines, so fonts and rendering match.
+    container: mcr.microsoft.com/playwright:v1.63.0-noble
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run e2e
+        env:
+          CI: 'true'
+          HOME: /root
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+  visual:
+    name: Visual regression
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    # Must match the image used by `npm run visual` locally (tools/visual.sh).
+    container: mcr.microsoft.com/playwright:v1.63.0-noble
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright test -c playwright.visual.config.ts
+        env:
+          CI: 'true'
+          HOME: /root
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: visual-diff
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

@@ -1,0 +1,42 @@
+@layer vd.components {
+  .vd-active-filters {
+    --vd-active-filters-gap: var(--vd-space-2);
+    --vd-active-filters-muted: var(--vd-color-text-muted);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    gap: var(--vd-active-filters-gap);
+    min-inline-size: 0;
+  }
+  .vd-active-filters:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+  .vd-active-filters__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    gap: var(--vd-active-filters-gap);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+  .vd-active-filters__item {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+  .vd-active-filters__remove.vd-button {
+    max-inline-size: 100%;
+    text-align: start;
+  }
+  .vd-active-filters__text {
+    overflow-wrap: anywhere;
+  }
+  .vd-active-filters__message {
+    margin: 0;
+    color: var(--vd-active-filters-muted);
+    overflow-wrap: anywhere;
+  }
+}

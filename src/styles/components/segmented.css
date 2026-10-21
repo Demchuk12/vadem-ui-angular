@@ -1,0 +1,136 @@
+/* Segmented control - spec: specs/segmented.md */
+/* Same look as the pill tabs: concentric radii, raised selected segment. */
+@layer vd.components {
+  .vd-segmented {
+    --vd-segmented-padding: var(--vd-space-1);
+    --vd-segmented-radius: var(--vd-radius-lg);
+    --vd-segmented-bg: var(--vd-color-fill);
+    --vd-segmented-border: var(--vd-color-border);
+    --vd-segment-height: var(--vd-control-height-sm);
+    --vd-segment-padding-inline: var(--vd-space-3);
+    --vd-segment-font-size: var(--vd-text-sm);
+    --vd-segment-fg: var(--vd-color-text-muted);
+    --vd-segment-fg-hover: var(--vd-color-text);
+    --vd-segment-fg-checked: var(--vd-color-text);
+    --vd-segment-bg-checked: var(--vd-color-surface-raised);
+
+    display: inline-flex;
+    flex-wrap: wrap;
+    min-inline-size: 0;
+    gap: var(--vd-space-0-5);
+    max-inline-size: 100%;
+    padding: var(--vd-segmented-padding);
+    border: var(--vd-border-width) solid var(--vd-segmented-border);
+    border-radius: var(--vd-segmented-radius);
+    background-color: var(--vd-segmented-bg);
+    vertical-align: middle;
+  }
+
+  .vd-segmented[data-size='sm'] {
+    --vd-segmented-padding: var(--vd-space-0-5);
+    --vd-segmented-radius: var(--vd-radius-md);
+    --vd-segment-height: calc(var(--vd-control-height-sm) - var(--vd-space-2));
+    --vd-segment-padding-inline: var(--vd-space-2);
+    --vd-segment-font-size: var(--vd-text-xs);
+  }
+
+  .vd-segmented[data-disabled] {
+    opacity: var(--vd-opacity-disabled);
+  }
+
+  /* --------------------------------------------------------------- segment */
+
+  .vd-segment {
+    position: relative;
+    display: inline-flex;
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: center;
+    gap: var(--vd-space-2);
+    min-inline-size: min(var(--vd-segment-height), 100%);
+    min-block-size: var(--vd-segment-height);
+    padding-inline: var(--vd-segment-padding-inline);
+    border-radius: calc(var(--vd-segmented-radius) - var(--vd-segmented-padding));
+    color: var(--vd-segment-fg);
+    font-size: var(--vd-segment-font-size);
+    font-weight: var(--vd-weight-semibold);
+    line-height: var(--vd-leading-snug);
+    white-space: nowrap;
+    transition:
+      var(--vd-transition-colors),
+      box-shadow var(--vd-duration-fast) var(--vd-ease-out);
+  }
+
+  /* The radio covers the whole segment: it is the hit area and the focus target. */
+  .vd-segment__input {
+    appearance: none;
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    border-radius: inherit;
+    cursor: pointer;
+  }
+
+  .vd-segment__input:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+
+  /* Too little room: segments shrink and long labels truncate instead of overflowing. */
+  .vd-segment__label {
+    display: block;
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+  }
+
+  /* Block label (ellipsis needs it): icons sit inline with the text. */
+  .vd-segment .vd-icon {
+    --vd-icon-size: var(--vd-space-4);
+
+    display: inline-flex;
+    vertical-align: -0.2em;
+  }
+
+  .vd-segment:not([data-icon-only]) .vd-icon {
+    margin-inline-end: var(--vd-space-1-5);
+  }
+
+  @media (hover: hover) {
+    .vd-segment:not([data-checked], [data-disabled]):hover {
+      color: var(--vd-segment-fg-hover);
+    }
+  }
+
+  .vd-segment[data-checked] {
+    background-color: var(--vd-segment-bg-checked);
+    box-shadow: var(--vd-highlight-top), var(--vd-shadow-sm);
+    color: var(--vd-segment-fg-checked);
+  }
+
+  /* A disabled group is already dimmed as a whole; only single segments get the disabled text. */
+  .vd-segmented:not([data-disabled]) .vd-segment[data-disabled] {
+    color: var(--vd-color-text-disabled);
+  }
+
+  .vd-segment[data-disabled] .vd-segment__input {
+    cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .vd-segment:active:not([data-disabled]) .vd-segment__label {
+      scale: var(--vd-press-scale);
+    }
+
+    .vd-segment__label {
+      transition: scale var(--vd-duration-fast) var(--vd-ease-out);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .vd-segment[data-checked] {
+      outline: var(--vd-border-width) solid Highlight;
+    }
+  }
+}

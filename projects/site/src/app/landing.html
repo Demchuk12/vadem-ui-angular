@@ -1,0 +1,190 @@
+<a class="site-skip" href="#main">{{ t().skip }}</a>
+
+<header class="site-header">
+  <a class="site-brand" [routerLink]="lang() === 'en' ? '/' : '/uk'">
+    <img
+      class="site-brand__mark site-on-dark"
+      src="brand/vadem-mark-dark.svg"
+      alt=""
+      width="25"
+      height="24"
+    />
+    <img
+      class="site-brand__mark site-on-light"
+      src="brand/vadem-mark-light.svg"
+      alt=""
+      width="25"
+      height="24"
+    />
+    <span>Vadem</span>
+  </a>
+  <nav class="site-nav" [attr.aria-label]="t().nav.label">
+    <a href="#components">{{ t().nav.components }}</a>
+    <a href="#usage">{{ t().nav.usage }}</a>
+    <a href="#roadmap">{{ t().nav.roadmap }}</a>
+  </nav>
+  <div class="site-header__actions">
+    <a
+      vdButton
+      variant="ghost"
+      size="sm"
+      [routerLink]="otherLangLink()"
+      [attr.hreflang]="otherLang()"
+      [attr.lang]="otherLang()"
+      >{{ t().nav.langSwitch }}</a
+    >
+    <button
+      vdButton
+      variant="ghost"
+      size="sm"
+      iconOnly
+      [attr.aria-label]="theme() === 'dark' ? t().nav.theme.dark : t().nav.theme.light"
+      (click)="toggleTheme()"
+    >
+      <vd-icon [name]="theme() === 'dark' ? 'moon' : 'sun'" />
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <section class="site-hero" aria-labelledby="hero-title">
+    <div class="site-hero__copy">
+      <span vdBadge>{{ t().hero.status }}</span>
+      <h1 id="hero-title">{{ t().hero.title }}</h1>
+      <p class="site-hero__lead">{{ t().hero.lead }}</p>
+      <div class="site-hero__actions">
+        <a vdButton variant="primary" size="lg" href="#components">{{ t().hero.primary }}</a>
+        <a vdButton variant="secondary" size="lg" href="#usage">{{ t().hero.secondary }}</a>
+      </div>
+    </div>
+
+    <figure class="site-specimen" [attr.aria-label]="t().specimen.label">
+      <article vdCard class="site-specimen__card">
+        <header class="site-specimen__head">
+          <h2>{{ t().specimen.title }}</h2>
+          <span vdBadge variant="success" dot>{{ t().specimen.status }}</span>
+        </header>
+        <div class="site-specimen__field">
+          <span id="specimen-region">{{ t().specimen.region }}</span>
+          <vd-segmented [(value)]="region" aria-labelledby="specimen-region">
+            <vd-segment value="eu">{{ t().specimen.regions.eu }}</vd-segment>
+            <vd-segment value="us">{{ t().specimen.regions.us }}</vd-segment>
+            <vd-segment value="asia">{{ t().specimen.regions.asia }}</vd-segment>
+          </vd-segmented>
+        </div>
+        <label vdChoice>
+          <input
+            type="checkbox"
+            vdSwitch
+            [checked]="previews()"
+            (change)="previews.set($any($event.target).checked)"
+          />
+          {{ t().specimen.previews }}
+        </label>
+        <footer class="site-specimen__actions">
+          <button vdButton variant="ghost">{{ t().specimen.cancel }}</button>
+          <button vdButton variant="primary">{{ t().specimen.deploy }}</button>
+        </footer>
+      </article>
+
+      <figcaption class="site-hue">
+        <label class="site-hue__label" for="site-hue">
+          {{ t().specimen.hue }}
+          <output class="site-hue__value" for="site-hue">{{ hue() }}°</output>
+        </label>
+        <input
+          id="site-hue"
+          type="range"
+          vdSlider
+          min="0"
+          max="359"
+          [value]="hue()"
+          aria-describedby="site-hue-hint"
+          (input)="setHue($event)"
+        />
+        <p id="site-hue-hint" class="site-hue__hint">{{ t().specimen.hueHint }}</p>
+      </figcaption>
+    </figure>
+  </section>
+
+  <section class="site-section" aria-labelledby="principles-title">
+    <h2 id="principles-title" class="site-section__title">{{ t().principles.title }}</h2>
+    <dl class="site-principles">
+      @for (item of t().principles.items; track item.claim) {
+        <div class="site-principles__row">
+          <dt>{{ item.claim }}</dt>
+          <dd>{{ item.proof }}</dd>
+        </div>
+      }
+    </dl>
+  </section>
+
+  <section id="usage" class="site-section" aria-labelledby="usage-title">
+    <div class="site-section__intro">
+      <h2 id="usage-title" class="site-section__title">{{ t().usage.title }}</h2>
+      <p>{{ t().usage.lead }}</p>
+    </div>
+    <div class="site-code">
+      <figure class="site-code__pane">
+        <figcaption>
+          <span class="site-code__file" lang="en">deploy-settings.html</span
+          >{{ t().usage.codeLabel }}
+        </figcaption>
+        <pre
+          tabindex="0"
+        ><code>@for (line of templateLines; track $index) {<span class="site-code__line">@for (tok of line; track $index) {<span [attr.data-token]="tok.kind">{{ tok.text }}</span>}</span>}</code></pre>
+      </figure>
+      <figure class="site-code__pane">
+        <figcaption>
+          <span class="site-code__file" lang="en">DOM</span>{{ t().usage.domLabel }}
+        </figcaption>
+        <pre
+          tabindex="0"
+        ><code>@for (line of domLines; track $index) {<span class="site-code__line">@for (tok of line; track $index) {<span [attr.data-token]="tok.kind">{{ tok.text }}</span>}</span>}</code></pre>
+      </figure>
+    </div>
+  </section>
+
+  <section id="components" class="site-section" aria-labelledby="components-title">
+    <div class="site-section__intro">
+      <h2 id="components-title" class="site-section__title">
+        {{ t().catalog.title }} <span class="site-count">{{ componentCount }}</span>
+      </h2>
+      <p>{{ t().catalog.lead }}</p>
+    </div>
+    <div class="site-catalog">
+      @for (group of groups(); track group.key) {
+        <section class="site-catalog__group" [attr.aria-labelledby]="'group-' + group.key">
+          <h3 [id]="'group-' + group.key">{{ group.title }}</h3>
+          <ul role="list">
+            @for (item of group.items; track item.route) {
+              <li>
+                <a [href]="galleryLink(item.route)" lang="en">{{ item.name }}</a>
+              </li>
+            }
+          </ul>
+        </section>
+      }
+    </div>
+    <a vdButton variant="secondary" [href]="galleryUrl">{{ t().catalog.open }}</a>
+  </section>
+
+  <section id="roadmap" class="site-section" aria-labelledby="roadmap-title">
+    <h2 id="roadmap-title" class="site-section__title">{{ t().roadmap.title }}</h2>
+    <ol class="site-roadmap" role="list">
+      @for (step of t().roadmap.steps; track step.title; let first = $first) {
+        <li class="site-roadmap__step" [attr.data-current]="first ? '' : null">
+          <span class="site-roadmap__state">{{ step.state }}</span>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.text }}</p>
+        </li>
+      }
+    </ol>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>{{ t().footer.made }}</p>
+  <p>{{ t().footer.fonts }}</p>
+  <a [href]="galleryUrl">{{ t().footer.gallery }}</a>
+</footer>

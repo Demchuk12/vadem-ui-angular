@@ -1,0 +1,452 @@
+/*
+ * Demo-only styles. Unlayered on purpose: this is "consumer" CSS and must win over the vd layer.
+ * Uses Vadem tokens only, like any app built on the library would.
+ */
+
+body {
+  background-color: var(--vd-color-bg);
+}
+
+/* ------------------------------------------------------------------ shell */
+
+.demo-skip {
+  position: absolute;
+  inset-inline-start: var(--vd-space-4);
+  inset-block-start: var(--vd-space-2);
+  z-index: 10;
+  padding: var(--vd-space-2) var(--vd-space-3);
+  border-radius: var(--vd-radius-control);
+  background: var(--vd-color-surface-overlay);
+  translate: 0 -200%;
+}
+
+.demo-skip:focus-visible {
+  translate: 0 0;
+}
+
+.demo-header {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--vd-space-3) var(--vd-space-6);
+  padding: var(--vd-space-3) var(--vd-space-6);
+  border-block-end: var(--vd-border-width) solid var(--vd-color-border);
+  background-color: var(--vd-color-bg);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .demo-header {
+    background-color: var(--vd-color-surface-glass);
+    backdrop-filter: var(--vd-backdrop-glass);
+  }
+}
+
+.demo-brand {
+  display: inline-flex;
+  flex-wrap: wrap;
+  min-inline-size: 0;
+  align-items: center;
+  gap: var(--vd-space-3);
+  color: inherit;
+  text-decoration: none;
+}
+
+.demo-brand__logo {
+  display: block;
+  block-size: var(--vd-space-6);
+  inline-size: auto;
+  max-inline-size: 100%;
+}
+
+/* Brand files come in a dark-bg and a light-bg version: show the one matching the theme.
+   Global on purpose: component styles can't see data-theme on <html> through encapsulation. */
+.demo-on-light,
+[data-theme='light'] .demo-on-dark {
+  display: none;
+}
+
+[data-theme='light'] .demo-on-light {
+  display: block;
+}
+
+@media (prefers-color-scheme: light) {
+  [data-theme='auto'] .demo-on-dark {
+    display: none;
+  }
+
+  [data-theme='auto'] .demo-on-light {
+    display: block;
+  }
+}
+
+.demo-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--vd-space-4);
+}
+
+.demo-field {
+  display: inline-flex;
+  flex-wrap: wrap;
+  min-inline-size: 0;
+  align-items: center;
+  gap: var(--vd-space-2);
+}
+
+.demo-field output {
+  min-inline-size: 3ch;
+  font-family: var(--vd-font-mono);
+  font-size: var(--vd-text-sm);
+  color: var(--vd-color-text-muted);
+}
+
+.demo-hue {
+  inline-size: 8rem;
+}
+
+.demo-segmented {
+  display: inline-flex;
+  padding: var(--vd-space-0-5);
+  border: var(--vd-border-width) solid var(--vd-color-border);
+  border-radius: var(--vd-radius-control);
+  background: var(--vd-color-fill);
+}
+
+/* Concentric radius: inner = outer - padding. */
+.demo-segmented button {
+  display: inline-grid;
+  place-items: center;
+  inline-size: calc(var(--vd-control-height-sm) - var(--vd-space-1));
+  block-size: calc(var(--vd-control-height-sm) - var(--vd-space-1));
+  border: 0;
+  border-radius: calc(var(--vd-radius-control) - var(--vd-space-0-5));
+  background: transparent;
+  color: var(--vd-color-text-muted);
+  cursor: pointer;
+  transition: var(--vd-transition-colors);
+}
+
+.demo-segmented button:hover {
+  color: var(--vd-color-text);
+}
+
+.demo-segmented button[aria-checked='true'] {
+  background: var(--vd-color-surface-raised);
+  color: var(--vd-color-text);
+  box-shadow: var(--vd-highlight-top), var(--vd-shadow-sm);
+}
+
+.demo-select,
+.demo-chip {
+  block-size: var(--vd-control-height-sm);
+  padding-inline: var(--vd-space-3);
+  border: var(--vd-border-width) solid var(--vd-color-border-strong);
+  border-radius: var(--vd-radius-control);
+  background: var(--vd-color-fill);
+  font-size: var(--vd-text-sm);
+  cursor: pointer;
+}
+
+.demo-chip {
+  font-family: var(--vd-font-mono);
+  font-size: var(--vd-text-xs);
+  letter-spacing: var(--vd-tracking-caps);
+  transition: var(--vd-transition-colors);
+}
+
+.demo-chip:hover,
+.demo-select:hover {
+  background: var(--vd-color-fill-hover);
+}
+
+.demo-chip:active {
+  scale: var(--vd-press-scale);
+}
+
+.demo-layout {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  min-block-size: calc(100dvh - var(--vd-space-16));
+}
+
+.demo-nav {
+  position: sticky;
+  inset-block-start: 0;
+  align-self: start;
+  max-block-size: 100dvh;
+  min-inline-size: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: var(--vd-space-8) var(--vd-space-4);
+}
+
+.demo-nav__label {
+  padding-inline: var(--vd-space-3);
+  margin-block-end: var(--vd-space-2);
+}
+
+.demo-nav ul + .demo-nav__label {
+  margin-block-start: var(--vd-space-6);
+}
+
+.demo-nav ul {
+  display: grid;
+  gap: var(--vd-space-0-5);
+  padding: 0;
+  list-style: none;
+}
+
+.demo-nav a {
+  display: block;
+  padding: var(--vd-space-1-5) var(--vd-space-3);
+  border-radius: var(--vd-radius-control);
+  color: var(--vd-color-text-muted);
+  font-size: var(--vd-text-sm);
+  font-weight: var(--vd-weight-medium);
+  text-decoration: none;
+  transition: var(--vd-transition-colors);
+}
+
+.demo-nav a:hover {
+  color: var(--vd-color-text);
+  background: var(--vd-color-fill);
+}
+
+.demo-nav a.is-active {
+  color: var(--vd-color-text);
+  background: var(--vd-color-fill-hover);
+}
+
+.demo-main {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  container-type: inline-size;
+  padding: var(--vd-space-12) var(--vd-space-10) var(--vd-space-24);
+  max-inline-size: 72rem;
+}
+
+.demo-main:focus {
+  outline: none;
+}
+
+/* ---------------------------------------------------------------- phones */
+
+@media (width < 48rem) {
+  /* Header controls wrap according to their content, including enlarged text. */
+  .demo-header {
+    position: static;
+    gap: var(--vd-space-3);
+    padding: var(--vd-space-3) var(--vd-space-4);
+  }
+
+  .demo-controls {
+    display: contents;
+  }
+
+  .demo-brand {
+    flex: 1 1 auto;
+  }
+
+  .demo-segmented {
+    margin-inline-start: auto;
+  }
+
+  .demo-field--hue {
+    flex: 1 0 100%;
+  }
+
+  .demo-field--hue .demo-hue {
+    flex: 1;
+    inline-size: auto;
+    min-inline-size: 0;
+  }
+
+  .demo-field--density {
+    flex: 1 1 12rem;
+  }
+
+  .demo-field--density .demo-select {
+    flex: 1 1 8rem;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+
+  .demo-chip {
+    margin-inline-start: auto;
+  }
+
+  .demo-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Nav: one sticky, horizontally scrolling strip. */
+  .demo-nav {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 4;
+    display: flex;
+    gap: var(--vd-space-1);
+    padding: var(--vd-space-2) var(--vd-space-4);
+    overflow-x: auto;
+    max-block-size: none;
+    overscroll-behavior-block: auto;
+    border-block-end: var(--vd-border-width) solid var(--vd-color-border);
+    background-color: var(--vd-color-bg);
+  }
+
+  @supports (backdrop-filter: blur(1px)) {
+    .demo-nav {
+      background-color: var(--vd-color-surface-glass);
+      backdrop-filter: var(--vd-backdrop-glass);
+    }
+  }
+
+  .demo-nav__label {
+    display: none;
+  }
+
+  .demo-nav ul {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--vd-space-1);
+  }
+
+  .demo-nav ul + .demo-nav__label + ul {
+    padding-inline-start: var(--vd-space-2);
+    border-inline-start: var(--vd-border-width) solid var(--vd-color-border);
+  }
+
+  .demo-nav a {
+    white-space: nowrap;
+  }
+
+  .demo-main {
+    padding: var(--vd-space-8) var(--vd-space-4) var(--vd-space-16);
+  }
+}
+
+/* Action rows: on phones buttons share each line evenly instead of a ragged staircase. */
+@media (width < 30rem) {
+  .demo-row > .vd-button:not([data-icon-only]),
+  .demo-row > a.vd-button {
+    flex: 1 1 auto;
+  }
+}
+
+/* ------------------------------------------------------------- page bits */
+
+.demo-page-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--vd-space-3);
+  margin-block-end: var(--vd-space-12);
+  max-inline-size: 44rem;
+}
+
+.demo-page-head p:not(.vd-eyebrow) {
+  font-size: var(--vd-text-lg);
+  color: var(--vd-color-text-muted);
+}
+
+.demo-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--vd-space-6);
+  margin-block-end: var(--vd-space-16);
+  min-inline-size: 0;
+}
+
+.demo-section__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--vd-space-1);
+}
+
+.demo-section__head h2 {
+  font-size: var(--vd-text-xl);
+}
+
+.demo-section__head p:not(.vd-eyebrow) {
+  max-inline-size: 60ch;
+  color: var(--vd-color-text-muted);
+}
+
+.demo-token {
+  font-family: var(--vd-font-mono);
+  font-size: var(--vd-text-xs);
+  color: var(--vd-color-text-muted);
+}
+
+.demo-panel {
+  min-inline-size: 0;
+  padding: var(--vd-space-6);
+  border: var(--vd-border-width) solid var(--vd-color-border);
+  border-radius: var(--vd-radius-surface);
+  background: var(--vd-color-surface);
+  box-shadow: var(--vd-highlight-top);
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--demo-min, 12rem)), 1fr));
+  gap: var(--vd-space-4);
+}
+
+.demo-grid > * {
+  min-inline-size: 0;
+}
+
+.demo-row {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  flex-wrap: wrap;
+}
+
+.demo-stack {
+  grid-template-columns: minmax(0, 1fr);
+  min-inline-size: 0;
+}
+
+/* These overrides follow the shared rules so the smaller spacing actually wins. */
+@media (width < 48rem) {
+  .demo-panel {
+    padding: var(--vd-space-4);
+  }
+
+  .demo-page-head {
+    margin-block-end: var(--vd-space-10);
+  }
+
+  .demo-section {
+    margin-block-end: var(--vd-space-12);
+  }
+}
+
+.demo-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--vd-space-2);
+  block-size: var(--vd-control-height-sm);
+  padding-inline: var(--vd-space-3);
+  border: var(--vd-border-width) solid var(--vd-color-border-strong);
+  border-radius: var(--vd-radius-control);
+  background: var(--vd-color-fill);
+  font-size: var(--vd-text-sm);
+  font-weight: var(--vd-weight-semibold);
+  cursor: pointer;
+  transition:
+    var(--vd-transition-colors),
+    scale var(--vd-duration-fast) var(--vd-ease-out);
+}
+
+.demo-button:hover {
+  background: var(--vd-color-fill-hover);
+}
+
+.demo-button:active {
+  scale: var(--vd-press-scale);
+}

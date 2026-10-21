@@ -1,0 +1,24 @@
+@layer vd.components {
+  .vd-expandable-text {
+    --vd-expandable-text-gap: var(--vd-space-2);
+    --vd-expandable-text-fg: var(--vd-color-text);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--vd-expandable-text-gap);
+    min-inline-size: 0;
+    color: var(--vd-expandable-text-fg);
+  }
+  .vd-expandable-text__text {
+    margin: 0;
+    max-inline-size: 100%;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .vd-expandable-text__rest[hidden] {
+    display: none;
+  }
+  .vd-expandable-text__toggle {
+    max-inline-size: 100%;
+  }
+}

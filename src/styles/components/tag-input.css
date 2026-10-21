@@ -1,0 +1,138 @@
+@layer vd.components {
+  .vd-tag-input {
+    --vd-tag-input-radius: var(--vd-radius-md);
+    --vd-tag-input-gap: var(--vd-space-1);
+    --vd-tag-input-padding: var(--vd-space-1-5);
+    --vd-tag-input-tag-bg: var(--vd-color-fill);
+    --vd-tag-input-tag-fg: var(--vd-color-text);
+    --vd-tag-input-tag-border: var(--vd-color-border);
+    --vd-tag-input-tag-radius: max(
+      var(--vd-radius-xs),
+      calc(var(--vd-tag-input-radius) - var(--vd-space-1))
+    );
+    --vd-tag-input-remove-size: var(--vd-space-6);
+    --vd-tag-input-input-width: calc(var(--vd-control-height-lg) * 2);
+    display: block;
+    min-inline-size: 0;
+  }
+  .vd-tag-input[data-size='sm'] {
+    --vd-tag-input-radius: var(--vd-radius-sm);
+  }
+  .vd-tag-input[data-size='lg'] {
+    --vd-tag-input-radius: var(--vd-radius-lg);
+  }
+  .vd-tag-input__field {
+    flex-wrap: wrap;
+    gap: var(--vd-tag-input-gap);
+    padding-block: var(--vd-tag-input-padding);
+  }
+  .vd-tag-input__tags {
+    display: flex;
+    flex: 1 1 100%;
+    flex-wrap: wrap;
+    gap: var(--vd-tag-input-gap);
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .vd-tag-input__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--vd-tag-input-gap);
+    max-inline-size: 100%;
+    padding-inline-start: var(--vd-space-2);
+    border: var(--vd-border-width) solid var(--vd-tag-input-tag-border);
+    border-radius: var(--vd-tag-input-tag-radius);
+    background: var(--vd-tag-input-tag-bg);
+    color: var(--vd-tag-input-tag-fg);
+    font-size: var(--vd-text-sm);
+    line-height: var(--vd-leading-snug);
+  }
+  .vd-tag-input__label {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+  .vd-tag-input__remove {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--vd-tag-input-remove-size);
+    block-size: var(--vd-tag-input-remove-size);
+    padding: 0;
+    border: 0;
+    border-radius: var(--vd-tag-input-tag-radius);
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: var(--vd-transition-colors);
+  }
+  .vd-tag-input__remove vd-icon {
+    --vd-icon-size: var(--vd-space-3);
+  }
+  .vd-tag-input__remove:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: calc(var(--vd-border-width) * -1);
+  }
+  .vd-tag-input__remove:disabled {
+    opacity: var(--vd-opacity-disabled);
+    cursor: not-allowed;
+  }
+  @media (hover: hover) {
+    .vd-tag-input__remove:not(:disabled):hover {
+      background: var(--vd-color-fill-hover);
+    }
+  }
+  .vd-tag-input__field:has(:focus-visible) {
+    outline: var(--vd-focus-ring-width) solid var(--vd-input-ring);
+    outline-offset: calc(var(--vd-border-width) * -1);
+  }
+  .vd-tag-input__field > .vd-input {
+    flex: 1 1 var(--vd-tag-input-input-width);
+    inline-size: 0;
+    min-inline-size: min(100%, var(--vd-tag-input-input-width));
+    min-block-size: calc(var(--vd-input-height) - var(--vd-space-1) - var(--vd-border-width) * 2);
+    padding-block: 0;
+  }
+  .vd-tag-input__field > .vd-tag-input__add {
+    --vd-button-height: calc(
+      var(--vd-input-height) - var(--vd-space-1) - var(--vd-border-width) * 2
+    );
+    margin-inline: 0;
+    max-inline-size: 100%;
+    padding-inline: var(--vd-space-2);
+  }
+  .vd-tag-input[data-disabled] > .vd-tag-input__field {
+    opacity: 1;
+    --vd-input-bg: var(--vd-color-field-readonly);
+  }
+  .vd-tag-input[data-disabled] .vd-tag-input__input {
+    opacity: var(--vd-opacity-disabled);
+  }
+  .vd-tag-input__feedback {
+    margin: 0;
+    color: var(--vd-color-text-muted);
+    font-size: var(--vd-text-sm);
+    overflow-wrap: anywhere;
+  }
+  .vd-tag-input__feedback:not(:empty) {
+    margin-block-start: var(--vd-space-2);
+  }
+  @media (forced-colors: active) {
+    .vd-tag-input__field,
+    .vd-tag-input__tag {
+      border-color: CanvasText;
+    }
+    .vd-tag-input__remove {
+      border: var(--vd-border-width) solid ButtonText;
+    }
+    .vd-tag-input__remove:disabled {
+      color: GrayText;
+      border-color: GrayText;
+    }
+    .vd-tag-input__remove:focus-visible,
+    .vd-tag-input__field:has(:focus-visible) {
+      outline-color: Highlight;
+    }
+  }
+}

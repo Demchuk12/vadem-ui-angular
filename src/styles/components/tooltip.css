@@ -1,0 +1,93 @@
+/* Tooltip - spec: specs/tooltip.md */
+@layer vd.components {
+  .vd-tooltip {
+    --vd-tooltip-bg: var(--vd-color-surface-strong);
+    --vd-tooltip-fg: var(--vd-color-text-on-strong);
+    --vd-tooltip-offset: var(--vd-space-2);
+    --vd-tooltip-shift: var(--vd-space-1);
+    --vd-tooltip-max-width: 18rem;
+    /* Where it slides in from: a little away from the anchor. */
+    --vd-tooltip-from: 0 var(--vd-tooltip-shift);
+
+    /* Geometry on the base rule (never on :popover-open) - see DECISIONS D45. */
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    position-area: block-start;
+    margin-block-end: var(--vd-tooltip-offset);
+    position-try-fallbacks: flip-block;
+    max-inline-size: min(var(--vd-tooltip-max-width), 100vw - var(--vd-space-4) * 2);
+    padding: var(--vd-space-1-5) var(--vd-space-2);
+    border: var(--vd-border-width) solid var(--vd-color-border);
+    border-radius: var(--vd-radius-sm);
+    background-color: var(--vd-tooltip-bg);
+    box-shadow: var(--vd-shadow-md);
+    color: var(--vd-tooltip-fg);
+    font-family: var(--vd-font-sans);
+    font-size: var(--vd-text-xs);
+    font-weight: var(--vd-weight-medium);
+    line-height: var(--vd-leading-snug);
+    text-align: center;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+
+    opacity: 0;
+    translate: var(--vd-tooltip-from);
+    transition:
+      opacity var(--vd-duration-fast) var(--vd-ease-out),
+      translate var(--vd-duration-base) var(--vd-ease-out),
+      display var(--vd-duration-fast) allow-discrete,
+      overlay var(--vd-duration-fast) allow-discrete;
+  }
+
+  .vd-tooltip[data-placement='bottom'] {
+    position-area: block-end;
+    margin-block: var(--vd-tooltip-offset) 0;
+    --vd-tooltip-from: 0 calc(var(--vd-tooltip-shift) * -1);
+  }
+
+  .vd-tooltip[data-placement='start'] {
+    position-area: inline-start;
+    margin: 0;
+    margin-inline-end: var(--vd-tooltip-offset);
+    position-try-fallbacks: flip-inline;
+    --vd-tooltip-from: var(--vd-tooltip-shift) 0;
+  }
+
+  .vd-tooltip[data-placement='end'] {
+    position-area: inline-end;
+    margin: 0;
+    margin-inline-start: var(--vd-tooltip-offset);
+    position-try-fallbacks: flip-inline;
+    --vd-tooltip-from: calc(var(--vd-tooltip-shift) * -1) 0;
+  }
+
+  .vd-tooltip:popover-open {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  @starting-style {
+    .vd-tooltip:popover-open {
+      opacity: 0;
+      translate: var(--vd-tooltip-from);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .vd-tooltip {
+      border-color: CanvasText;
+    }
+  }
+}
+
+/* RTL: start/end sides swap, so the slide-in direction does too. */
+@layer vd.components {
+  .vd-tooltip[data-placement='start']:dir(rtl) {
+    --vd-tooltip-from: calc(var(--vd-tooltip-shift) * -1) 0;
+  }
+
+  .vd-tooltip[data-placement='end']:dir(rtl) {
+    --vd-tooltip-from: var(--vd-tooltip-shift) 0;
+  }
+}

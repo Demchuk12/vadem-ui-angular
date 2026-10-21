@@ -1,0 +1,334 @@
+/* Dialog - spec: specs/dialog.md */
+@layer vd.components {
+  .vd-dialog {
+    --vd-dialog-width: 32rem;
+    --vd-dialog-padding: var(--vd-space-6);
+    --vd-dialog-gap: var(--vd-space-5);
+    --vd-dialog-radius: var(--vd-radius-overlay);
+    --vd-dialog-bg: var(--vd-color-surface-overlay);
+    --vd-dialog-margin: var(--vd-space-4);
+
+    inline-size: min(var(--vd-dialog-width), 100% - var(--vd-dialog-margin) * 2);
+    max-inline-size: none;
+    max-block-size: calc(100dvh - var(--vd-dialog-margin) * 2);
+    /* Own the geometry instead of relying on UA :modal styles: they drop the moment close()
+       runs, which made the dialog jump during its exit transition. Resets also zero margins. */
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    padding: 0;
+    border: var(--vd-border-width) solid var(--vd-color-border-strong);
+    border-radius: var(--vd-dialog-radius);
+    background-color: var(--vd-dialog-bg);
+    box-shadow: var(--vd-highlight-top), var(--vd-shadow-lg);
+    color: var(--vd-color-text);
+    overflow: hidden;
+    overscroll-behavior: contain;
+    /* Layout lives on the base rule, not on [open]: during the exit transition [open] is
+       already gone while display is still flex, and a row direction made the dialog jump. */
+    flex-direction: column;
+
+    /* Exit state (and the state the entry animates from). */
+    opacity: 0;
+    scale: 0.96;
+    translate: 0 var(--vd-space-2);
+    transition:
+      opacity var(--vd-duration-base) var(--vd-ease-out),
+      scale var(--vd-duration-slow) var(--vd-ease-spring),
+      translate var(--vd-duration-slow) var(--vd-ease-spring),
+      display var(--vd-duration-base) allow-discrete,
+      overlay var(--vd-duration-base) allow-discrete;
+  }
+
+  .vd-dialog[data-size='sm'] {
+    --vd-dialog-width: 24rem;
+  }
+
+  .vd-dialog[data-size='lg'] {
+    --vd-dialog-width: 44rem;
+  }
+
+  .vd-dialog[open] {
+    display: flex;
+    opacity: 1;
+    scale: 1;
+    translate: 0 0;
+  }
+
+  @starting-style {
+    .vd-dialog[open] {
+      opacity: 0;
+      scale: 0.96;
+      translate: 0 var(--vd-space-2);
+    }
+  }
+
+  .vd-dialog::backdrop {
+    background-color: var(--vd-color-backdrop);
+    opacity: 0;
+    transition:
+      opacity var(--vd-duration-base) var(--vd-ease-out),
+      display var(--vd-duration-base) allow-discrete,
+      overlay var(--vd-duration-base) allow-discrete;
+  }
+
+  .vd-dialog[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .vd-dialog[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  @supports (backdrop-filter: blur(1px)) {
+    .vd-dialog::backdrop {
+      backdrop-filter: blur(var(--vd-space-1));
+    }
+  }
+
+  /* Page doesn't scroll behind a modal. No layout shift as long as the root reserves its
+     scrollbar gutter permanently (base.css does); toggling the gutter here would jump the page. */
+  :root:has(.vd-dialog[open]:modal) {
+    overflow: hidden;
+  }
+
+  /* A form wrapping the parts (the usual submit pattern) doesn't add a layout box. */
+  .vd-dialog > form {
+    display: contents;
+  }
+
+  /* ---------------------------------------------------------------- parts */
+
+  .vd-dialog__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--vd-space-1) var(--vd-space-3);
+    padding: var(--vd-dialog-padding) var(--vd-dialog-padding) 0;
+  }
+
+  .vd-dialog__header > :not(.vd-dialog__title, .vd-dialog__description) {
+    order: 1;
+    flex: none;
+    /* Optical: icon buttons in the corner sit closer to the edge. */
+    margin-block-start: calc(var(--vd-space-1) * -1);
+    margin-inline-end: calc(var(--vd-space-2) * -1);
+  }
+
+  .vd-dialog__title {
+    flex: 1 1 12rem;
+    margin: 0;
+    font-size: var(--vd-text-xl);
+    font-weight: var(--vd-weight-bold);
+    line-height: var(--vd-leading-snug);
+    letter-spacing: var(--vd-tracking-tight);
+    text-wrap: balance;
+  }
+
+  .vd-dialog__description {
+    order: 2;
+    flex: 1 0 100%;
+    margin: 0;
+    color: var(--vd-color-text-muted);
+    font-size: var(--vd-text-sm);
+    text-wrap: pretty;
+  }
+
+  .vd-dialog__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vd-space-4);
+    min-block-size: 0;
+    padding: var(--vd-dialog-gap) var(--vd-dialog-padding);
+    overflow-y: auto;
+  }
+
+  .vd-dialog__header + .vd-dialog__footer {
+    margin-block-start: var(--vd-dialog-gap);
+  }
+
+  .vd-dialog__footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--vd-space-2);
+    padding: var(--vd-space-4) var(--vd-dialog-padding);
+    border-block-start: var(--vd-border-width) solid var(--vd-color-border);
+    background-color: color-mix(in oklch, var(--vd-color-surface-sunken) 40%, transparent);
+  }
+
+  /* ------------------------------------------------------------- drawer */
+  /* placement="start|end": full height, attached to that inline edge, slides in from it.
+     Same parts and behavior as the dialog; below the sheet breakpoint it is a bottom sheet. */
+  @media (width >= 40rem) {
+    .vd-dialog[data-placement] {
+      /* +1 slides toward the inline end, -1 toward the start; mirrored in RTL. */
+      --vd-drawer-from: 1;
+      --vd-dialog-width: 28rem;
+
+      /* Reach over the reserved scrollbar gutter (measured on open) to the real viewport edge.
+         Physical sides on purpose: the gutter is physical, its side depends on the engine. */
+      left: calc(var(--vd-viewport-gutter-left, 0px) * -1);
+      right: calc(var(--vd-viewport-gutter-right, 0px) * -1);
+      inline-size: min(var(--vd-dialog-width), 100% - var(--vd-space-12));
+      block-size: 100dvh;
+      max-block-size: none;
+      margin-block: 0;
+      margin-inline: auto 0;
+      border-block: 0;
+      border-inline-end: 0;
+      border-start-end-radius: 0;
+      border-end-end-radius: 0;
+      opacity: 1;
+      scale: 1;
+      translate: calc(100% * var(--vd-drawer-from)) 0;
+      /* Ease-out, no spring: an overshoot would pull the panel off its edge. */
+      transition:
+        translate var(--vd-duration-slow) var(--vd-ease-out),
+        display var(--vd-duration-slow) allow-discrete,
+        overlay var(--vd-duration-slow) allow-discrete;
+    }
+
+    .vd-dialog[data-placement='start'] {
+      --vd-drawer-from: -1;
+
+      margin-inline: 0 auto;
+      border-inline-start: 0;
+      border-inline-end: var(--vd-border-width) solid var(--vd-color-border-strong);
+      border-start-end-radius: var(--vd-dialog-radius);
+      border-end-end-radius: var(--vd-dialog-radius);
+      border-start-start-radius: 0;
+      border-end-start-radius: 0;
+    }
+
+    .vd-dialog[data-placement]:dir(rtl) {
+      --vd-drawer-from: -1;
+    }
+
+    .vd-dialog[data-placement='start']:dir(rtl) {
+      --vd-drawer-from: 1;
+    }
+
+    .vd-dialog[data-placement][data-size='sm'] {
+      --vd-dialog-width: 22rem;
+    }
+
+    .vd-dialog[data-placement][data-size='lg'] {
+      --vd-dialog-width: 40rem;
+    }
+
+    .vd-dialog[data-placement][open] {
+      translate: 0 0;
+    }
+
+    @starting-style {
+      .vd-dialog[data-placement][open] {
+        opacity: 1;
+        scale: 1;
+        translate: calc(100% * var(--vd-drawer-from)) 0;
+      }
+    }
+
+    .vd-dialog[data-placement]::backdrop {
+      transition-duration: var(--vd-duration-slow);
+    }
+
+    /* The body takes the height so the footer sits at the bottom edge. */
+    .vd-dialog[data-placement] .vd-dialog__body {
+      flex: 1;
+    }
+  }
+
+  /* ------------------------------------------------------- bottom sheet */
+  /* Phones: the dialog becomes a sheet attached to the bottom edge and slides up. Plain ease-out
+     (no spring): an overshoot would lift the sheet off the edge for a few frames.
+     40rem is the sheet breakpoint (media queries can't read custom properties). */
+  @media (width < 40rem) {
+    .vd-dialog {
+      /* Read by the swipe controller: the single source of truth for "is a sheet". */
+      --vd-dialog-sheet: 1;
+      --vd-dialog-padding: var(--vd-space-5);
+
+      inline-size: 100%;
+      max-block-size: calc(100dvh - var(--vd-space-10));
+      margin: auto 0 0;
+      border-block-end: 0;
+      border-end-start-radius: 0;
+      border-end-end-radius: 0;
+      opacity: 1;
+      scale: 1;
+      translate: 0 100%;
+      transition:
+        translate var(--vd-duration-slow) var(--vd-ease-out),
+        display var(--vd-duration-slow) allow-discrete,
+        overlay var(--vd-duration-slow) allow-discrete;
+    }
+
+    .vd-dialog[open] {
+      translate: 0 var(--vd-sheet-offset, 0px);
+    }
+
+    @starting-style {
+      .vd-dialog[open] {
+        opacity: 1;
+        scale: 1;
+        translate: 0 100%;
+      }
+    }
+
+    .vd-dialog::backdrop {
+      transition-duration: var(--vd-duration-slow);
+    }
+
+    /* Backdrop fades as the sheet is dragged down (where ::backdrop inherits from the dialog). */
+    .vd-dialog[open]::backdrop {
+      opacity: calc(1 - var(--vd-sheet-progress, 0) * 0.8);
+    }
+
+    /* While the finger drives the sheet, nothing animates. */
+    .vd-dialog[data-dragging],
+    .vd-dialog[data-dragging]::backdrop {
+      transition: none;
+    }
+
+    /* Grab handle: only when the sheet can be swiped away. The header is the drag zone. */
+    .vd-dialog[data-dismissible] > .vd-dialog__header,
+    .vd-dialog[data-dismissible] > form > .vd-dialog__header {
+      padding-block-start: calc(var(--vd-dialog-padding) + var(--vd-space-2));
+      touch-action: none;
+      cursor: grab;
+    }
+
+    .vd-dialog[data-dismissible] > .vd-dialog__header::before,
+    .vd-dialog[data-dismissible] > form > .vd-dialog__header::before {
+      content: '';
+      position: absolute;
+      inset-block-start: var(--vd-space-2);
+      inset-inline: 0;
+      inline-size: var(--vd-space-10);
+      block-size: var(--vd-space-1);
+      margin-inline: auto;
+      border-radius: var(--vd-radius-full);
+      background-color: var(--vd-color-border-strong);
+    }
+
+    .vd-dialog[data-dragging] > .vd-dialog__header,
+    .vd-dialog[data-dragging] > form > .vd-dialog__header {
+      cursor: grabbing;
+    }
+
+    .vd-dialog__footer {
+      flex-direction: column-reverse;
+      align-items: stretch;
+      padding-block-end: max(var(--vd-space-4), env(safe-area-inset-bottom));
+    }
+  }
+
+  @media (forced-colors: active) {
+    .vd-dialog {
+      border-color: CanvasText;
+    }
+  }
+}
