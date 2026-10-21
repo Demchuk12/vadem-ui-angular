@@ -7,7 +7,7 @@ import {
   input,
 } from '@angular/core';
 import { VD_LOCALE, vdTexts } from '@vadem/ui/locale';
-import { areaPath, linePath, linearScale, type VdPoint } from './core/chart-math';
+import { vdAreaPath, vdLinePath, vdLinearScale, type VdPoint } from './core/chart-math';
 import type { VdChartFormat } from './chart-frame';
 
 /** Fixed drawing box; the SVG scales to its container without distorting strokes. */
@@ -68,15 +68,15 @@ export class VdSparkline {
     if (!nums.length) return [];
     const min = Math.min(...nums);
     const max = Math.max(...nums);
-    const y = linearScale(min === max ? [min - 1, max + 1] : [min, max], [H - INSET, INSET]);
+    const y = vdLinearScale(min === max ? [min - 1, max + 1] : [min, max], [H - INSET, INSET]);
     const n = values.length;
     return values.map((v, i) =>
       v === null || !Number.isFinite(v) ? null : [n > 1 ? (i * W) / (n - 1) : W / 2, y(v)],
     );
   });
 
-  protected readonly line = computed(() => linePath(this.points()));
-  protected readonly area = computed(() => areaPath(this.points(), H));
+  protected readonly line = computed(() => vdLinePath(this.points()));
+  protected readonly area = computed(() => vdAreaPath(this.points(), H));
   protected readonly last = computed(() => [...this.points()].reverse().find((p) => p) ?? null);
 
   protected readonly summary = computed(() => {

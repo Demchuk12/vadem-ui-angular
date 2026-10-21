@@ -28,6 +28,7 @@ jobs:
       - run: npm test
       - run: npm run build:ui
       - run: npm run check:package
+      - run: npm run check:api
       - run: npm run check:examples
       - run: npx ng build demo
       - run: npm run build:site

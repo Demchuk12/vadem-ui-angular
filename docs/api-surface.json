@@ -1,0 +1,2148 @@
+{
+  "@vadem/ui/accordion": {
+    "exports": [
+      "VD_ACCORDION",
+      "VdAccordion",
+      "VdAccordionItem"
+    ],
+    "classes": {
+      "VdAccordion": {
+        "kind": "directive",
+        "selector": "[vdAccordion]",
+        "inputs": [
+          "exclusive"
+        ],
+        "outputs": []
+      },
+      "VdAccordionItem": {
+        "kind": "directive",
+        "selector": "details[vdAccordionItem]",
+        "inputs": [
+          "open"
+        ],
+        "outputs": [
+          "openChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/active-filters": {
+    "exports": [
+      "VdActiveFilter (type)",
+      "VdActiveFilters"
+    ],
+    "classes": {
+      "VdActiveFilters": {
+        "kind": "component",
+        "selector": "vd-active-filters",
+        "inputs": [
+          "clearText",
+          "disabled",
+          "emptyText",
+          "filters",
+          "invalidText",
+          "label",
+          "removeLabel"
+        ],
+        "outputs": [
+          "clearAll",
+          "filterRemove"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/alert-dialog": {
+    "exports": [
+      "VdAlertDialog",
+      "VdAlertDialogAction (type)"
+    ],
+    "classes": {
+      "VdAlertDialog": {
+        "kind": "component",
+        "selector": "vd-alert-dialog",
+        "inputs": [
+          "action",
+          "cancelLabel",
+          "confirmLabel",
+          "description",
+          "errorText",
+          "open",
+          "pendingText",
+          "title",
+          "variant"
+        ],
+        "outputs": [
+          "actionFailed",
+          "canceled",
+          "confirmed",
+          "openChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/alert": {
+    "exports": [
+      "VD_ALERT",
+      "VdAlert",
+      "VdAlertLayout (type)",
+      "VdAlertTitle",
+      "VdAlertVariant (type)"
+    ],
+    "classes": {
+      "VdAlert": {
+        "kind": "component",
+        "selector": "[vdAlert]",
+        "inputs": [
+          "dismissible",
+          "dismissLabel",
+          "icon",
+          "layout",
+          "variant"
+        ],
+        "outputs": [
+          "dismiss"
+        ]
+      },
+      "VdAlertTitle": {
+        "kind": "directive",
+        "selector": "[vdAlertTitle]",
+        "inputs": [],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/autocomplete": {
+    "exports": [
+      "VD_AUTOCOMPLETE",
+      "VdAutocomplete",
+      "VdAutocompleteInput",
+      "VdAutocompleteOption (type)"
+    ],
+    "classes": {
+      "VdAutocomplete": {
+        "kind": "component",
+        "selector": "vd-autocomplete",
+        "inputs": [
+          "emptyText",
+          "errorText",
+          "highlightQuery",
+          "label",
+          "loading",
+          "loadingText",
+          "options",
+          "resultsText"
+        ],
+        "outputs": [
+          "optionSelected"
+        ]
+      },
+      "VdAutocompleteInput": {
+        "kind": "directive",
+        "selector": "input[vdAutocomplete]",
+        "inputs": [
+          "vdAutocomplete"
+        ],
+        "outputs": [
+          "queryChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/avatar": {
+    "exports": [
+      "VdAvatar",
+      "VdAvatarGroup",
+      "VdAvatarSize (type)",
+      "vdInitials"
+    ],
+    "classes": {
+      "VdAvatar": {
+        "kind": "component",
+        "selector": "vd-avatar",
+        "inputs": [
+          "decorative",
+          "initials",
+          "name",
+          "size",
+          "src"
+        ],
+        "outputs": []
+      },
+      "VdAvatarGroup": {
+        "kind": "directive",
+        "selector": "[vdAvatarGroup]",
+        "inputs": [],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/badge": {
+    "exports": [
+      "VdBadge",
+      "VdBadgeVariant (type)"
+    ],
+    "classes": {
+      "VdBadge": {
+        "kind": "directive",
+        "selector": "[vdBadge]",
+        "inputs": [
+          "dot",
+          "variant"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/breadcrumbs": {
+    "exports": [
+      "VdBreadcrumbs"
+    ],
+    "classes": {
+      "VdBreadcrumbs": {
+        "kind": "directive",
+        "selector": "nav[vdBreadcrumbs]",
+        "inputs": [
+          "label"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/button": {
+    "exports": [
+      "VdButton",
+      "VdButtonSize (type)",
+      "VdButtonVariant (type)"
+    ],
+    "classes": {
+      "VdButton": {
+        "kind": "component",
+        "selector": "button[vdButton], a[vdButton]",
+        "inputs": [
+          "disabled",
+          "iconOnly",
+          "loading",
+          "size",
+          "type",
+          "variant"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/calendar": {
+    "exports": [
+      "vdAddDays",
+      "vdAddMonths",
+      "VdCalendar",
+      "VdCalendarDay (type)",
+      "vdCalendarKey",
+      "vdClampDate",
+      "vdDateOrder",
+      "VdDatePicker",
+      "vdFirstDayOfWeek",
+      "vdFormatDate",
+      "vdFormatShort",
+      "VdIsoDate (type)",
+      "vdMonthGrid",
+      "vdParseDate",
+      "vdParseIso",
+      "vdToday",
+      "vdToIso",
+      "vdWeekdayNames"
+    ],
+    "classes": {
+      "VdCalendar": {
+        "kind": "component",
+        "selector": "vd-calendar",
+        "inputs": [
+          "dateDisabled",
+          "firstDayOfWeek",
+          "locale",
+          "max",
+          "min",
+          "nextLabel",
+          "previousLabel",
+          "rangeEnd",
+          "rangeStart",
+          "selectionMode",
+          "value"
+        ],
+        "outputs": [
+          "dateSelected",
+          "valueChange"
+        ]
+      },
+      "VdDatePicker": {
+        "kind": "component",
+        "selector": "vd-date-picker",
+        "inputs": [
+          "ariaLabel",
+          "dateDisabled",
+          "dialogLabel",
+          "disabled",
+          "firstDayOfWeek",
+          "invalid",
+          "locale",
+          "max",
+          "min",
+          "nextLabel",
+          "openLabel",
+          "placeholder",
+          "previousLabel",
+          "required",
+          "value"
+        ],
+        "outputs": [
+          "valueChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/card": {
+    "exports": [
+      "VD_CARD",
+      "VdCard",
+      "VdCardDescription",
+      "VdCardFooter",
+      "VdCardHeader",
+      "VdCardLink",
+      "VdCardTitle",
+      "VdCardVariant (type)"
+    ],
+    "classes": {
+      "VdCard": {
+        "kind": "directive",
+        "selector": "[vdCard]",
+        "inputs": [
+          "interactive",
+          "variant"
+        ],
+        "outputs": []
+      },
+      "VdCardDescription": {
+        "kind": "directive",
+        "selector": "[vdCardDescription]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdCardFooter": {
+        "kind": "directive",
+        "selector": "[vdCardFooter]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdCardHeader": {
+        "kind": "directive",
+        "selector": "[vdCardHeader]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdCardLink": {
+        "kind": "directive",
+        "selector": "a[vdCardLink]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdCardTitle": {
+        "kind": "directive",
+        "selector": "[vdCardTitle]",
+        "inputs": [],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/character-count": {
+    "exports": [
+      "VdCharacterCount"
+    ],
+    "classes": {
+      "VdCharacterCount": {
+        "kind": "component",
+        "selector": "vd-character-count",
+        "inputs": [
+          "controlId",
+          "countText",
+          "descriptionId",
+          "limitText",
+          "maxLength",
+          "overText",
+          "remainingText",
+          "value"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/chart": {
+    "exports": [
+      "vdAreaPath",
+      "VdBand (type)",
+      "vdBands",
+      "VdBarChart",
+      "VdBarOrientation (type)",
+      "vdBarPath",
+      "VdChartFormat (type)",
+      "VdChartFrame",
+      "VdChartKind (type)",
+      "VdChartSeries (type)",
+      "vdExtent",
+      "vdLinearScale",
+      "VdLinearScale (type)",
+      "VdLineChart",
+      "vdLinePath",
+      "vdNearestIndex",
+      "vdNiceTicks",
+      "VdPoint (type)",
+      "VdSparkline",
+      "vdStack",
+      "VdStackSegment (type)"
+    ],
+    "classes": {
+      "VdBarChart": {
+        "kind": "component",
+        "selector": "vd-bar-chart",
+        "inputs": [
+          "highlight",
+          "orientation",
+          "stacked"
+        ],
+        "outputs": []
+      },
+      "VdChartFrame": {
+        "kind": "component",
+        "selector": "vd-chart-frame",
+        "inputs": [
+          "active",
+          "categories",
+          "categoryLabel",
+          "description",
+          "format",
+          "kind",
+          "loading",
+          "series",
+          "tableLabel",
+          "title",
+          "tooltipX",
+          "tooltipY"
+        ],
+        "outputs": [
+          "pointerLeave"
+        ]
+      },
+      "VdLineChart": {
+        "kind": "component",
+        "selector": "vd-line-chart",
+        "inputs": [
+          "area"
+        ],
+        "outputs": []
+      },
+      "VdSparkline": {
+        "kind": "component",
+        "selector": "vd-sparkline",
+        "inputs": [
+          "format",
+          "label",
+          "trendSummary",
+          "values"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/checkbox": {
+    "exports": [
+      "VdCheckbox"
+    ],
+    "classes": {
+      "VdCheckbox": {
+        "kind": "directive",
+        "selector": "input[type=checkbox][vdCheckbox]",
+        "inputs": [
+          "indeterminate"
+        ],
+        "outputs": [
+          "indeterminateChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/color-picker": {
+    "exports": [
+      "VdColorPicker",
+      "VdColorPickerSize (type)",
+      "VdColorSwatch (type)"
+    ],
+    "classes": {
+      "VdColorPicker": {
+        "kind": "component",
+        "selector": "vd-color-picker",
+        "inputs": [
+          "applyLabel",
+          "ariaLabel",
+          "ariaLabelledby",
+          "disabled",
+          "errorLabel",
+          "hexLabel",
+          "invalid",
+          "paletteLabel",
+          "pickerLabel",
+          "placeholder",
+          "readonly",
+          "required",
+          "size",
+          "swatches",
+          "touched",
+          "value"
+        ],
+        "outputs": [
+          "touch",
+          "valueChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/command": {
+    "exports": [
+      "VD_COMMAND",
+      "VdCommand",
+      "VdCommandDescription",
+      "VdCommandItem",
+      "VdCommandShortcut"
+    ],
+    "classes": {
+      "VdCommand": {
+        "kind": "component",
+        "selector": "vd-command",
+        "inputs": [
+          "autofocus",
+          "disabled",
+          "emptyText",
+          "label",
+          "loading",
+          "loadingText",
+          "placeholder",
+          "query"
+        ],
+        "outputs": [
+          "dismissed",
+          "queryChange",
+          "selected"
+        ]
+      },
+      "VdCommandDescription": {
+        "kind": "directive",
+        "selector": "[vdCommandDescription]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdCommandItem": {
+        "kind": "component",
+        "selector": "vd-command-item",
+        "inputs": [
+          "disabled",
+          "keywords",
+          "label",
+          "value"
+        ],
+        "outputs": [
+          "selected"
+        ]
+      },
+      "VdCommandShortcut": {
+        "kind": "directive",
+        "selector": "[vdCommandShortcut]",
+        "inputs": [],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/copy-button": {
+    "exports": [
+      "VdCopyButton"
+    ],
+    "classes": {
+      "VdCopyButton": {
+        "kind": "component",
+        "selector": "vd-copy-button",
+        "inputs": [
+          "copiedLabel",
+          "copyingLabel",
+          "disabled",
+          "errorLabel",
+          "errorMessage",
+          "iconOnly",
+          "label",
+          "size",
+          "value",
+          "variant"
+        ],
+        "outputs": [
+          "copied",
+          "copyFailed"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/date-range-picker": {
+    "exports": [
+      "VdDateRange (type)",
+      "VdDateRangePicker",
+      "VdDateRangePickerSize (type)"
+    ],
+    "classes": {
+      "VdDateRangePicker": {
+        "kind": "component",
+        "selector": "vd-date-range-picker",
+        "inputs": [
+          "disabled",
+          "endInstruction",
+          "endLabel",
+          "errorLabel",
+          "firstDayOfWeek",
+          "groupLabel",
+          "invalid",
+          "locale",
+          "maxDate",
+          "minDate",
+          "nextLabel",
+          "openLabel",
+          "pickerLabel",
+          "previousLabel",
+          "readonly",
+          "required",
+          "size",
+          "startInstruction",
+          "startLabel",
+          "touched",
+          "value"
+        ],
+        "outputs": [
+          "touch",
+          "valueChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/description-list": {
+    "exports": [
+      "VdDescriptionList",
+      "VdDescriptionListLayout (type)"
+    ],
+    "classes": {
+      "VdDescriptionList": {
+        "kind": "directive",
+        "selector": "dl[vdDescriptionList]",
+        "inputs": [
+          "layout"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/dialog": {
+    "exports": [
+      "VD_DIALOG",
+      "VD_SHEET_DISMISS_DISTANCE",
+      "VD_SHEET_DISMISS_VELOCITY",
+      "VD_SHEET_DRAG_THRESHOLD",
+      "VdDialog",
+      "VdDialogBody",
+      "VdDialogClose",
+      "VdDialogController",
+      "VdDialogControllerOptions (type)",
+      "VdDialogDescription",
+      "VdDialogFooter",
+      "VdDialogHeader",
+      "VdDialogPlacement (type)",
+      "VdDialogSize (type)",
+      "VdDialogTitle",
+      "vdIsOutside",
+      "VdSheetDrag",
+      "VdSheetDragOptions (type)",
+      "vdSheetShouldDismiss",
+      "vdViewportGutters"
+    ],
+    "classes": {
+      "VdDialog": {
+        "kind": "directive",
+        "selector": "dialog[vdDialog]",
+        "inputs": [
+          "dismissible",
+          "open",
+          "placement",
+          "size"
+        ],
+        "outputs": [
+          "closed",
+          "openChange"
+        ]
+      },
+      "VdDialogBody": {
+        "kind": "directive",
+        "selector": "[vdDialogBody]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdDialogClose": {
+        "kind": "directive",
+        "selector": "button[vdDialogClose]",
+        "inputs": [
+          "vdDialogClose"
+        ],
+        "outputs": []
+      },
+      "VdDialogDescription": {
+        "kind": "directive",
+        "selector": "[vdDialogDescription]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdDialogFooter": {
+        "kind": "directive",
+        "selector": "[vdDialogFooter]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdDialogHeader": {
+        "kind": "directive",
+        "selector": "[vdDialogHeader]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdDialogTitle": {
+        "kind": "directive",
+        "selector": "[vdDialogTitle]",
+        "inputs": [],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/dropzone": {
+    "exports": [
+      "vdAcceptsFile",
+      "vdCheckFiles",
+      "VdDropzone",
+      "VdFileCheck (type)",
+      "VdFileRejection (type)",
+      "VdRejectedFile (type)"
+    ],
+    "classes": {
+      "VdDropzone": {
+        "kind": "directive",
+        "selector": "label[vdDropzone]",
+        "inputs": [
+          "maxSize"
+        ],
+        "outputs": [
+          "filesRejected",
+          "filesSelected"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/editable-text": {
+    "exports": [
+      "VdEditableText",
+      "VdEditableTextSave (type)"
+    ],
+    "classes": {
+      "VdEditableText": {
+        "kind": "component",
+        "selector": "vd-editable-text",
+        "inputs": [
+          "cancelLabel",
+          "disabled",
+          "editLabel",
+          "emptyText",
+          "hint",
+          "label",
+          "maxLength",
+          "required",
+          "requiredText",
+          "save",
+          "savedText",
+          "saveErrorText",
+          "saveLabel",
+          "savingText",
+          "tooLongText",
+          "value"
+        ],
+        "outputs": [
+          "saveFailed",
+          "valueChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/empty-state": {
+    "exports": [
+      "VD_EMPTY_STATE",
+      "VdEmptyState",
+      "VdEmptyStateDescription",
+      "VdEmptyStateSize (type)",
+      "VdEmptyStateTitle"
+    ],
+    "classes": {
+      "VdEmptyState": {
+        "kind": "component",
+        "selector": "[vdEmptyState]",
+        "inputs": [
+          "icon",
+          "size"
+        ],
+        "outputs": []
+      },
+      "VdEmptyStateDescription": {
+        "kind": "directive",
+        "selector": "[vdEmptyStateDescription]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdEmptyStateTitle": {
+        "kind": "directive",
+        "selector": "[vdEmptyStateTitle]",
+        "inputs": [],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/expandable-text": {
+    "exports": [
+      "VdExpandableText"
+    ],
+    "classes": {
+      "VdExpandableText": {
+        "kind": "component",
+        "selector": "vd-expandable-text",
+        "inputs": [
+          "collapseLabel",
+          "expanded",
+          "expandLabel",
+          "previewLength",
+          "text"
+        ],
+        "outputs": [
+          "expandedChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/field": {
+    "exports": [
+      "VD_FIELD",
+      "VdChoice",
+      "VdField",
+      "VdFieldContext (type)",
+      "VdFieldControl (type)",
+      "VdFieldControlBase",
+      "VdFieldset",
+      "VdFieldsetOrientation (type)",
+      "vdNgControlState",
+      "VdNgControlState (type)",
+      "vdUniqueId"
+    ],
+    "classes": {
+      "VdChoice": {
+        "kind": "directive",
+        "selector": "label[vdChoice]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdField": {
+        "kind": "component",
+        "selector": "vd-field",
+        "inputs": [
+          "descriptionIds",
+          "error",
+          "hint",
+          "label"
+        ],
+        "outputs": []
+      },
+      "VdFieldControlBase": {
+        "kind": "directive",
+        "selector": "never",
+        "inputs": [
+          "id",
+          "invalid",
+          "required",
+          "touched"
+        ],
+        "outputs": []
+      },
+      "VdFieldset": {
+        "kind": "component",
+        "selector": "fieldset[vdFieldset]",
+        "inputs": [
+          "error",
+          "hint",
+          "legend",
+          "orientation"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/file-preview": {
+    "exports": [
+      "VdFilePreview"
+    ],
+    "classes": {
+      "VdFilePreview": {
+        "kind": "component",
+        "selector": "vd-file-preview",
+        "inputs": [
+          "alt",
+          "closeLabel",
+          "downloadLabel",
+          "emptyText",
+          "errorText",
+          "file",
+          "loadingText",
+          "name",
+          "open",
+          "pdfText",
+          "titleText",
+          "unsupportedText"
+        ],
+        "outputs": [
+          "openChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/file-size": {
+    "exports": [
+      "VdFileSizeOptions (type)",
+      "VdFileSizePipe",
+      "VdFileSizeSystem (type)",
+      "vdFormatFileSize"
+    ],
+    "classes": {}
+  },
+  "@vadem/ui/form-error-summary": {
+    "exports": [
+      "VdFormError (type)",
+      "VdFormErrorSummary"
+    ],
+    "classes": {
+      "VdFormErrorSummary": {
+        "kind": "component",
+        "selector": "vd-form-error-summary",
+        "inputs": [
+          "description",
+          "errors",
+          "title"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/icon": {
+    "exports": [
+      "VD_ICON_NAMES",
+      "VdIcon",
+      "VdIconName (type)"
+    ],
+    "classes": {
+      "VdIcon": {
+        "kind": "component",
+        "selector": "vd-icon",
+        "inputs": [
+          "label",
+          "name"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/input": {
+    "exports": [
+      "VdInput",
+      "VdInputGroup",
+      "VdInputSize (type)"
+    ],
+    "classes": {
+      "VdInput": {
+        "kind": "directive",
+        "selector": "input[vdInput], textarea[vdInput]",
+        "inputs": [
+          "size"
+        ],
+        "outputs": []
+      },
+      "VdInputGroup": {
+        "kind": "component",
+        "selector": "vd-input-group",
+        "inputs": [],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/kbd": {
+    "exports": [
+      "vdDetectPlatform",
+      "VdKbd",
+      "vdParseShortcut",
+      "VdPlatform (type)",
+      "vdShortcutAria",
+      "VdShortcutKey (type)"
+    ],
+    "classes": {
+      "VdKbd": {
+        "kind": "component",
+        "selector": "vd-kbd",
+        "inputs": [
+          "keys",
+          "platform",
+          "thenLabel"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/keyboard": {
+    "exports": [
+      "VdDirection (type)",
+      "vdIsActivationKey",
+      "VdListKeyOptions (type)",
+      "vdListTarget",
+      "vdMatchesQuery",
+      "vdNormalize",
+      "VdOrientation (type)",
+      "VdRovingOptions (type)",
+      "vdRovingTarget",
+      "VdTypeahead"
+    ],
+    "classes": {}
+  },
+  "@vadem/ui/locale": {
+    "exports": [
+      "provideVdLocale",
+      "VD_LOCALE",
+      "VdLocale (type)",
+      "vdLocaleEn",
+      "vdLocaleProvider",
+      "vdLocaleUk",
+      "vdPlural",
+      "vdTexts"
+    ],
+    "classes": {}
+  },
+  "@vadem/ui/menu": {
+    "exports": [
+      "VD_MENU",
+      "VdContextMenu",
+      "VdMenu",
+      "VdMenuController",
+      "VdMenuControllerOptions (type)",
+      "VdMenuItem",
+      "VdMenuItemVariant (type)",
+      "VdMenuLabel",
+      "VdMenuSeparator",
+      "VdMenuTrigger"
+    ],
+    "classes": {
+      "VdContextMenu": {
+        "kind": "directive",
+        "selector": "[vdContextMenu]",
+        "inputs": [
+          "label",
+          "vdContextMenu"
+        ],
+        "outputs": [
+          "opened"
+        ]
+      },
+      "VdMenu": {
+        "kind": "directive",
+        "selector": "[vdMenu]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdMenuItem": {
+        "kind": "directive",
+        "selector": "button[vdMenuItem], a[vdMenuItem]",
+        "inputs": [
+          "disabled",
+          "variant"
+        ],
+        "outputs": []
+      },
+      "VdMenuLabel": {
+        "kind": "directive",
+        "selector": "[vdMenuLabel]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdMenuSeparator": {
+        "kind": "directive",
+        "selector": "[vdMenuSeparator]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdMenuTrigger": {
+        "kind": "directive",
+        "selector": "button[vdMenuTrigger]",
+        "inputs": [
+          "vdMenuTrigger"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/navigation-list": {
+    "exports": [
+      "VD_NAVIGATION_LIST",
+      "VdNavigationLabel",
+      "VdNavigationLink",
+      "VdNavigationList"
+    ],
+    "classes": {
+      "VdNavigationLabel": {
+        "kind": "directive",
+        "selector": "[vdNavigationLabel]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdNavigationLink": {
+        "kind": "directive",
+        "selector": "a[vdNavigationLink]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdNavigationList": {
+        "kind": "directive",
+        "selector": "nav[vdNavigationList]",
+        "inputs": [
+          "label"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/number-input": {
+    "exports": [
+      "VD_NUMBER_INPUT",
+      "VdNumberInput",
+      "VdNumberInputGroup"
+    ],
+    "classes": {
+      "VdNumberInput": {
+        "kind": "directive",
+        "selector": "input[type=number][vdNumberInput]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdNumberInputGroup": {
+        "kind": "component",
+        "selector": "vd-number-input",
+        "inputs": [
+          "decreaseLabel",
+          "increaseLabel"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/otp-input": {
+    "exports": [
+      "VdOtpInput"
+    ],
+    "classes": {
+      "VdOtpInput": {
+        "kind": "directive",
+        "selector": "input[vdOtpInput]",
+        "inputs": [
+          "length"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/pagination": {
+    "exports": [
+      "VdPageItem (type)",
+      "vdPageRange",
+      "VdPagination",
+      "VdPaginationSize (type)"
+    ],
+    "classes": {
+      "VdPagination": {
+        "kind": "component",
+        "selector": "vd-pagination",
+        "inputs": [
+          "compact",
+          "label",
+          "nextLabel",
+          "page",
+          "pageCount",
+          "pageLabel",
+          "previousLabel",
+          "siblings",
+          "size"
+        ],
+        "outputs": [
+          "pageChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/password-input": {
+    "exports": [
+      "VD_PASSWORD_INPUT",
+      "VdPasswordInput",
+      "VdPasswordInputGroup"
+    ],
+    "classes": {
+      "VdPasswordInput": {
+        "kind": "directive",
+        "selector": "input[vdPasswordInput]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdPasswordInputGroup": {
+        "kind": "component",
+        "selector": "vd-password-input",
+        "inputs": [
+          "revealLabel"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/popover": {
+    "exports": [
+      "VD_POPOVER",
+      "VdPopover",
+      "VdPopoverPlacement (type)",
+      "VdPopoverTrigger"
+    ],
+    "classes": {
+      "VdPopover": {
+        "kind": "directive",
+        "selector": "[vdPopover]",
+        "inputs": [
+          "placement"
+        ],
+        "outputs": []
+      },
+      "VdPopoverTrigger": {
+        "kind": "directive",
+        "selector": "button[vdPopoverTrigger]",
+        "inputs": [
+          "vdPopoverTrigger"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/progress": {
+    "exports": [
+      "VdMeter",
+      "VdProgress",
+      "VdProgressRing",
+      "VdProgressRingSize (type)",
+      "VdProgressSize (type)",
+      "VdProgressVariant (type)"
+    ],
+    "classes": {
+      "VdMeter": {
+        "kind": "directive",
+        "selector": "meter[vdMeter]",
+        "inputs": [
+          "size"
+        ],
+        "outputs": []
+      },
+      "VdProgress": {
+        "kind": "directive",
+        "selector": "progress[vdProgress]",
+        "inputs": [
+          "size",
+          "variant"
+        ],
+        "outputs": []
+      },
+      "VdProgressRing": {
+        "kind": "component",
+        "selector": "vd-progress-ring",
+        "inputs": [
+          "label",
+          "max",
+          "showValue",
+          "size",
+          "value",
+          "variant"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/radio": {
+    "exports": [
+      "VdRadio"
+    ],
+    "classes": {
+      "VdRadio": {
+        "kind": "directive",
+        "selector": "input[type=radio][vdRadio]",
+        "inputs": [],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/range-slider": {
+    "exports": [
+      "VdRangeSlider",
+      "VdRangeValue (type)"
+    ],
+    "classes": {
+      "VdRangeSlider": {
+        "kind": "component",
+        "selector": "vd-range-slider",
+        "inputs": [
+          "disabled",
+          "invalid",
+          "label",
+          "lowerLabel",
+          "maxValue",
+          "minValue",
+          "readonly",
+          "required",
+          "step",
+          "touched",
+          "upperLabel",
+          "value",
+          "valueText"
+        ],
+        "outputs": [
+          "touch",
+          "valueChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/rating": {
+    "exports": [
+      "VdRating",
+      "VdRatingSize (type)"
+    ],
+    "classes": {
+      "VdRating": {
+        "kind": "component",
+        "selector": "vd-rating",
+        "inputs": [
+          "disabled",
+          "invalid",
+          "label",
+          "readonly",
+          "required",
+          "size",
+          "starLabel",
+          "touched",
+          "value"
+        ],
+        "outputs": [
+          "touch",
+          "valueChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/relative-time": {
+    "exports": [
+      "vdFormatRelativeTime",
+      "VdRelativeTime",
+      "VdRelativeTimeOptions (type)",
+      "VdRelativeTimePipe"
+    ],
+    "classes": {
+      "VdRelativeTime": {
+        "kind": "component",
+        "selector": "time[vdRelativeTime]",
+        "inputs": [
+          "justNowText",
+          "locale",
+          "now",
+          "unknownText",
+          "vdRelativeTime"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/reorder-list": {
+    "exports": [
+      "VdReorderList",
+      "VdReorderListChange (type)",
+      "VdReorderListItem (type)"
+    ],
+    "classes": {
+      "VdReorderList": {
+        "kind": "component",
+        "selector": "vd-reorder-list",
+        "inputs": [
+          "canceledText",
+          "disabled",
+          "downText",
+          "emptyText",
+          "instructions",
+          "invalidText",
+          "items",
+          "label",
+          "movedText",
+          "upText"
+        ],
+        "outputs": [
+          "itemsChange",
+          "reordered"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/scroll-area": {
+    "exports": [
+      "VdScrollArea"
+    ],
+    "classes": {
+      "VdScrollArea": {
+        "kind": "directive",
+        "selector": "[vdScrollArea]",
+        "inputs": [
+          "label"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/search-input": {
+    "exports": [
+      "VD_SEARCH_INPUT",
+      "VdSearchInput",
+      "VdSearchInputGroup"
+    ],
+    "classes": {
+      "VdSearchInput": {
+        "kind": "directive",
+        "selector": "input[type=search][vdSearchInput]",
+        "inputs": [],
+        "outputs": [
+          "cleared"
+        ]
+      },
+      "VdSearchInputGroup": {
+        "kind": "component",
+        "selector": "vd-search-input",
+        "inputs": [
+          "clearLabel",
+          "loading",
+          "loadingLabel"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/segmented": {
+    "exports": [
+      "VdSegment",
+      "VdSegmented",
+      "VdSegmentedSize (type)"
+    ],
+    "classes": {
+      "VdSegment": {
+        "kind": "component",
+        "selector": "vd-segment",
+        "inputs": [
+          "ariaLabel",
+          "disabled",
+          "value"
+        ],
+        "outputs": []
+      },
+      "VdSegmented": {
+        "kind": "component",
+        "selector": "vd-segmented",
+        "inputs": [
+          "disabled",
+          "size",
+          "value"
+        ],
+        "outputs": [
+          "valueChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/select": {
+    "exports": [
+      "VdCombobox",
+      "VdMultiSelect",
+      "VdOption",
+      "VdSelect",
+      "VdSelectSize (type)"
+    ],
+    "classes": {
+      "VdCombobox": {
+        "kind": "component",
+        "selector": "vd-combobox",
+        "inputs": [
+          "value"
+        ],
+        "outputs": [
+          "valueChange"
+        ]
+      },
+      "VdMultiSelect": {
+        "kind": "component",
+        "selector": "vd-multi-select",
+        "inputs": [
+          "removeLabel",
+          "selectionLabel",
+          "value"
+        ],
+        "outputs": [
+          "valueChange"
+        ]
+      },
+      "VdOption": {
+        "kind": "component",
+        "selector": "vd-option",
+        "inputs": [
+          "disabled",
+          "label",
+          "value"
+        ],
+        "outputs": []
+      },
+      "VdSelect": {
+        "kind": "component",
+        "selector": "vd-select",
+        "inputs": [
+          "value"
+        ],
+        "outputs": [
+          "valueChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/sidebar": {
+    "exports": [
+      "VD_SIDEBAR",
+      "VdSidebar",
+      "VdSidebarLayout",
+      "VdSidebarMode (type)",
+      "VdSidebarToggle"
+    ],
+    "classes": {
+      "VdSidebar": {
+        "kind": "directive",
+        "selector": "ng-template[vdSidebar]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdSidebarLayout": {
+        "kind": "component",
+        "selector": "vd-sidebar-layout",
+        "inputs": [
+          "closeLabel",
+          "collapsed",
+          "label"
+        ],
+        "outputs": [
+          "collapsedChange"
+        ]
+      },
+      "VdSidebarToggle": {
+        "kind": "directive",
+        "selector": "button[vdSidebarToggle]",
+        "inputs": [],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/skeleton": {
+    "exports": [
+      "VdSkeleton",
+      "VdSkeletonShape (type)",
+      "VdSkeletonSize (type)"
+    ],
+    "classes": {
+      "VdSkeleton": {
+        "kind": "directive",
+        "selector": "[vdSkeleton]",
+        "inputs": [
+          "animated",
+          "shape",
+          "size"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/slider": {
+    "exports": [
+      "VdSlider",
+      "vdSliderFill"
+    ],
+    "classes": {
+      "VdSlider": {
+        "kind": "directive",
+        "selector": "input[type=range][vdSlider]",
+        "inputs": [],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/splitter": {
+    "exports": [
+      "VD_SPLITTER",
+      "VdSplitter",
+      "VdSplitterHandle",
+      "VdSplitterPane"
+    ],
+    "classes": {
+      "VdSplitter": {
+        "kind": "directive",
+        "selector": "[vdSplitter]",
+        "inputs": [
+          "disabled",
+          "max",
+          "min",
+          "orientation",
+          "step",
+          "value"
+        ],
+        "outputs": [
+          "valueChange"
+        ]
+      },
+      "VdSplitterHandle": {
+        "kind": "directive",
+        "selector": "[vdSplitterHandle]",
+        "inputs": [
+          "label"
+        ],
+        "outputs": []
+      },
+      "VdSplitterPane": {
+        "kind": "directive",
+        "selector": "[vdSplitterPane]",
+        "inputs": [
+          "id"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/stat": {
+    "exports": [
+      "VdStat",
+      "VdStatSentiment (type)",
+      "VdStatSize (type)",
+      "VdStatTrend (type)"
+    ],
+    "classes": {
+      "VdStat": {
+        "kind": "component",
+        "selector": "vd-stat",
+        "inputs": [
+          "caption",
+          "decreaseLabel",
+          "delta",
+          "increaseLabel",
+          "label",
+          "loading",
+          "sentiment",
+          "size",
+          "trend",
+          "unchangedLabel",
+          "value"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/stepper": {
+    "exports": [
+      "VD_STEPPER",
+      "VdStep",
+      "VdStepDescription",
+      "VdStepper",
+      "VdStepperOrientation (type)",
+      "VdStepTitle"
+    ],
+    "classes": {
+      "VdStep": {
+        "kind": "component",
+        "selector": "button[vdStep]",
+        "inputs": [
+          "completed",
+          "disabled",
+          "invalid",
+          "value"
+        ],
+        "outputs": []
+      },
+      "VdStepDescription": {
+        "kind": "directive",
+        "selector": "[vdStepDescription]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdStepper": {
+        "kind": "directive",
+        "selector": "nav[vdStepper]",
+        "inputs": [
+          "completedLabel",
+          "disabled",
+          "errorLabel",
+          "label",
+          "orientation",
+          "value"
+        ],
+        "outputs": [
+          "valueChange"
+        ]
+      },
+      "VdStepTitle": {
+        "kind": "directive",
+        "selector": "[vdStepTitle]",
+        "inputs": [],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/switch": {
+    "exports": [
+      "VdSwitch"
+    ],
+    "classes": {
+      "VdSwitch": {
+        "kind": "directive",
+        "selector": "input[type=checkbox][vdSwitch]",
+        "inputs": [],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/table": {
+    "exports": [
+      "VD_TABLE",
+      "VdDataTable",
+      "vdNextSort",
+      "VdRow",
+      "VdSort (type)",
+      "VdSortDirection (type)",
+      "VdSortHeader",
+      "VdSortOptions (type)",
+      "vdSortRows",
+      "VdTable",
+      "VdTableColumn",
+      "VdTableColumnDefinition (type)",
+      "VdTableEmpty",
+      "VdTableRowId (type)",
+      "VdTableScroll",
+      "VdTableSize (type)"
+    ],
+    "classes": {
+      "VdDataTable": {
+        "kind": "directive",
+        "selector": "[vdDataTable]",
+        "inputs": [
+          "columnOffset",
+          "columns",
+          "hiddenColumns",
+          "rowIds",
+          "selected"
+        ],
+        "outputs": [
+          "hiddenColumnsChange",
+          "selectedChange"
+        ]
+      },
+      "VdRow": {
+        "kind": "directive",
+        "selector": "tr[vdRow]",
+        "inputs": [
+          "selected"
+        ],
+        "outputs": []
+      },
+      "VdSortHeader": {
+        "kind": "component",
+        "selector": "th[vdSortHeader]",
+        "inputs": [
+          "vdSortHeader"
+        ],
+        "outputs": []
+      },
+      "VdTable": {
+        "kind": "directive",
+        "selector": "table[vdTable]",
+        "inputs": [
+          "size",
+          "sort",
+          "stickyHeader"
+        ],
+        "outputs": [
+          "sortChange"
+        ]
+      },
+      "VdTableColumn": {
+        "kind": "directive",
+        "selector": "th[vdTableColumn], td[vdTableColumn]",
+        "inputs": [
+          "vdTableColumn"
+        ],
+        "outputs": []
+      },
+      "VdTableEmpty": {
+        "kind": "directive",
+        "selector": "td[vdTableEmpty]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdTableScroll": {
+        "kind": "directive",
+        "selector": "[vdTableScroll]",
+        "inputs": [],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/tabs": {
+    "exports": [
+      "VD_TABS",
+      "VdDirection (type)",
+      "vdIsActivationKey",
+      "VdOrientation (type)",
+      "VdRovingOptions (type)",
+      "vdRovingTarget",
+      "VdTab",
+      "VdTabList",
+      "VdTabPanel",
+      "VdTabs",
+      "VdTabsActivation (type)",
+      "VdTabsVariant (type)"
+    ],
+    "classes": {
+      "VdTab": {
+        "kind": "directive",
+        "selector": "button[vdTab]",
+        "inputs": [
+          "disabled",
+          "value"
+        ],
+        "outputs": []
+      },
+      "VdTabList": {
+        "kind": "directive",
+        "selector": "[vdTabList]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdTabPanel": {
+        "kind": "directive",
+        "selector": "[vdTabPanel]",
+        "inputs": [
+          "value"
+        ],
+        "outputs": []
+      },
+      "VdTabs": {
+        "kind": "component",
+        "selector": "vd-tabs",
+        "inputs": [
+          "activation",
+          "orientation",
+          "value",
+          "variant"
+        ],
+        "outputs": [
+          "valueChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/tag-input": {
+    "exports": [
+      "VdTagInput",
+      "VdTagInputSize (type)"
+    ],
+    "classes": {
+      "VdTagInput": {
+        "kind": "component",
+        "selector": "vd-tag-input",
+        "inputs": [
+          "addedMessage",
+          "addLabel",
+          "ariaLabel",
+          "ariaLabelledby",
+          "disabled",
+          "duplicateMessage",
+          "invalid",
+          "placeholder",
+          "readonly",
+          "removedMessage",
+          "removeLabel",
+          "required",
+          "size",
+          "tagsLabel",
+          "touched",
+          "value"
+        ],
+        "outputs": [
+          "touch",
+          "valueChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/text-highlight": {
+    "exports": [
+      "VdTextHighlight"
+    ],
+    "classes": {
+      "VdTextHighlight": {
+        "kind": "component",
+        "selector": "vd-text-highlight",
+        "inputs": [
+          "query",
+          "text"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/time-input": {
+    "exports": [
+      "VdTimeInput"
+    ],
+    "classes": {
+      "VdTimeInput": {
+        "kind": "directive",
+        "selector": "input[type=time][vdTimeInput]",
+        "inputs": [
+          "emptyLabel",
+          "hoursLabel",
+          "minutesLabel",
+          "pickerLabel"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/timeline": {
+    "exports": [
+      "VD_TIMELINE",
+      "VdTimeline",
+      "VdTimelineDescription",
+      "VdTimelineItem",
+      "VdTimelineStatus (type)",
+      "VdTimelineTime",
+      "VdTimelineTitle"
+    ],
+    "classes": {
+      "VdTimeline": {
+        "kind": "directive",
+        "selector": "ol[vdTimeline]",
+        "inputs": [
+          "label"
+        ],
+        "outputs": []
+      },
+      "VdTimelineDescription": {
+        "kind": "directive",
+        "selector": "[vdTimelineDescription]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdTimelineItem": {
+        "kind": "component",
+        "selector": "li[vdTimelineItem]",
+        "inputs": [
+          "status",
+          "statusLabel"
+        ],
+        "outputs": []
+      },
+      "VdTimelineTime": {
+        "kind": "directive",
+        "selector": "time[vdTimelineTime]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdTimelineTitle": {
+        "kind": "directive",
+        "selector": "[vdTimelineTitle]",
+        "inputs": [],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/toast": {
+    "exports": [
+      "VD_TOAST_DEFAULTS",
+      "VdToast (type)",
+      "VdToastAction (type)",
+      "VdToaster",
+      "VdToasterOutlet",
+      "VdToastInput (type)",
+      "VdToastStore",
+      "VdToastStoreOptions (type)",
+      "VdToastVariant (type)"
+    ],
+    "classes": {
+      "VdToasterOutlet": {
+        "kind": "component",
+        "selector": "vd-toaster",
+        "inputs": [
+          "closeLabel",
+          "label"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/toolbar": {
+    "exports": [
+      "VD_TOOLBAR",
+      "VdToolbar",
+      "VdToolbarGroup",
+      "VdToolbarItem",
+      "VdToolbarSeparator"
+    ],
+    "classes": {
+      "VdToolbar": {
+        "kind": "directive",
+        "selector": "[vdToolbar]",
+        "inputs": [
+          "label",
+          "orientation"
+        ],
+        "outputs": []
+      },
+      "VdToolbarGroup": {
+        "kind": "directive",
+        "selector": "[vdToolbarGroup]",
+        "inputs": [
+          "hidden",
+          "label"
+        ],
+        "outputs": []
+      },
+      "VdToolbarItem": {
+        "kind": "directive",
+        "selector": "button[vdButton][vdToolbarItem]",
+        "inputs": [
+          "hidden"
+        ],
+        "outputs": []
+      },
+      "VdToolbarSeparator": {
+        "kind": "directive",
+        "selector": "[vdToolbarSeparator]",
+        "inputs": [],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/tooltip": {
+    "exports": [
+      "VD_TOOLTIP_DEFAULTS",
+      "vdResetTooltipWarmth",
+      "VdTooltip",
+      "VdTooltipController",
+      "VdTooltipControllerOptions (type)",
+      "VdTooltipPlacement (type)"
+    ],
+    "classes": {
+      "VdTooltip": {
+        "kind": "directive",
+        "selector": "[vdTooltip]",
+        "inputs": [
+          "vdTooltip",
+          "vdTooltipDelay",
+          "vdTooltipPlacement"
+        ],
+        "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/tree": {
+    "exports": [
+      "VD_TREE",
+      "VdTree",
+      "VdTreeGroup",
+      "VdTreeItem"
+    ],
+    "classes": {
+      "VdTree": {
+        "kind": "directive",
+        "selector": "ul[vdTree]",
+        "inputs": [
+          "disabled",
+          "label",
+          "value"
+        ],
+        "outputs": [
+          "valueChange"
+        ]
+      },
+      "VdTreeGroup": {
+        "kind": "directive",
+        "selector": "ul[vdTreeGroup]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdTreeItem": {
+        "kind": "component",
+        "selector": "li[vdTreeItem]",
+        "inputs": [
+          "disabled",
+          "expanded",
+          "label",
+          "value"
+        ],
+        "outputs": [
+          "expandedChange"
+        ]
+      }
+    }
+  },
+  "@vadem/ui/upload-list": {
+    "exports": [
+      "VdUploadFile (type)",
+      "VdUploadList",
+      "VdUploadListLabels (type)",
+      "VdUploadStatus (type)"
+    ],
+    "classes": {
+      "VdUploadList": {
+        "kind": "component",
+        "selector": "ul[vdUploadList]",
+        "inputs": [
+          "disabled",
+          "files",
+          "label",
+          "labels"
+        ],
+        "outputs": [
+          "fileCancel",
+          "fileRemove",
+          "fileRetry"
+        ]
+      }
+    }
+  },
+  "@vadem/ui": {
+    "exports": [
+      "VD_VERSION"
+    ],
+    "classes": {}
+  }
+}

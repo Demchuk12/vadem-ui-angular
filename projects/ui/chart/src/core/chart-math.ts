@@ -15,7 +15,7 @@ export interface VdLinearScale {
   (value: number): number;
 }
 
-export function linearScale(
+export function vdLinearScale(
   domain: readonly [number, number],
   range: readonly [number, number],
 ): VdLinearScale {
@@ -27,7 +27,7 @@ export function linearScale(
 }
 
 /** Round numbers for an axis: 1, 2, 2.5 or 5 times a power of ten. Always includes zero. */
-export function niceTicks(min: number, max: number, target = 5): number[] {
+export function vdNiceTicks(min: number, max: number, target = 5): number[] {
   const lo = Math.min(0, min);
   const hi = Math.max(0, max);
   if (lo === hi) return [0, 1];
@@ -51,7 +51,7 @@ export interface VdBand {
 }
 
 /** Evenly spaced bands across `range` for `count` categories. */
-export function bands(count: number, range: readonly [number, number]): VdBand[] {
+export function vdBands(count: number, range: readonly [number, number]): VdBand[] {
   const [r0, r1] = range;
   const step = count > 0 ? (r1 - r0) / count : 0;
   return Array.from({ length: count }, (_, i) => ({
@@ -62,7 +62,7 @@ export function bands(count: number, range: readonly [number, number]): VdBand[]
 }
 
 /** Index of the band nearest to `position` (pointer or keyboard), clamped. */
-export function nearestIndex(position: number, count: number, range: readonly [number, number]) {
+export function vdNearestIndex(position: number, count: number, range: readonly [number, number]) {
   if (count <= 0) return -1;
   const [r0, r1] = range;
   const t = (position - r0) / (r1 - r0 || 1);
@@ -75,7 +75,7 @@ export interface VdStackSegment {
 }
 
 /** Stacks positive values upward and negative values downward from zero, per category. */
-export function stack(series: readonly VdChartSeries[], count: number): VdStackSegment[][] {
+export function vdStack(series: readonly VdChartSeries[], count: number): VdStackSegment[][] {
   const up = new Array<number>(count).fill(0);
   const down = new Array<number>(count).fill(0);
   return series.map((s) =>
@@ -94,11 +94,11 @@ export function stack(series: readonly VdChartSeries[], count: number): VdStackS
 }
 
 /** [min, max] over all values (stacked totals when `stacked`). */
-export function extent(series: readonly VdChartSeries[], count: number, stacked: boolean) {
+export function vdExtent(series: readonly VdChartSeries[], count: number, stacked: boolean) {
   let min = 0;
   let max = 0;
   if (stacked) {
-    for (const segments of stack(series, count))
+    for (const segments of vdStack(series, count))
       for (const seg of segments) {
         min = Math.min(min, seg.to);
         max = Math.max(max, seg.to);
@@ -120,7 +120,7 @@ const r = (n: number) => Math.round(n * 100) / 100;
  * A bar from `base` to `end` along the value axis, `thickness` wide, centred at `center` on the
  * category axis. The data end is rounded (`radius`), the baseline end square.
  */
-export function barPath(
+export function vdBarPath(
   center: number,
   thickness: number,
   base: number,
@@ -161,7 +161,7 @@ export function barPath(
 export type VdPoint = readonly [x: number, y: number] | null;
 
 /** Polyline through points; a `null` starts a new segment (missing data is a gap). */
-export function linePath(points: readonly VdPoint[]): string {
+export function vdLinePath(points: readonly VdPoint[]): string {
   let d = '';
   let pen = false;
   for (const p of points) {
@@ -176,7 +176,7 @@ export function linePath(points: readonly VdPoint[]): string {
 }
 
 /** Closed area between each continuous run of points and the baseline. */
-export function areaPath(points: readonly VdPoint[], baseline: number): string {
+export function vdAreaPath(points: readonly VdPoint[], baseline: number): string {
   const runs: (readonly [number, number])[][] = [[]];
   for (const p of points) {
     if (p) runs[runs.length - 1].push(p);

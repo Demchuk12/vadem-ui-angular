@@ -27,6 +27,15 @@ Unexported implementation files are private. Exported helpers need the same cont
 as components; placing their source in a `core/` directory does not make an exported symbol
 private. Do not import source files or generated `fesm2022`/`types` paths directly.
 
+## API snapshot
+
+`docs/api-surface.json` records every entry point's exports and each exported component or
+directive's selector, inputs (`!` = required) and outputs, read from the built types. CI and the
+publish workflow run `npm run check:api` after `build:ui` and fail on any difference. After an
+intentional change run `npm run update:api`, review the diff, and describe it in `CHANGELOG.md`
+(a removed or renamed entry is breaking after 1.0). It does not cover CSS hooks, tokens, locale
+keys or behavior; those stay governed by the specs.
+
 ## Version changes
 
 Before 1.0, API changes may occur between minor releases. Keep release notes explicit and

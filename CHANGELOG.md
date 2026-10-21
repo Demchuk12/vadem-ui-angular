@@ -4,10 +4,20 @@
 
 ### Added
 
+- Public API snapshot (`docs/api-surface.json`) with `npm run check:api` / `update:api`, run in CI
+  and before publishing.
 - Members demo screen (`screens/members`): a complete admin workflow made only of library
   components. List with search, sort and pages; create/edit in a modal form with validation and a
   server conflict; confirmed delete that survives a failure; loading, error and empty feedback;
   toasts. Browser tests cover the whole flow.
+
+### Breaking (pre-1.0)
+
+- `@vadem/ui/chart` core helpers now carry the library prefix, like `vdSortRows` and
+  `vdPageRange`: `linearScale` -> `vdLinearScale`, `niceTicks` -> `vdNiceTicks`,
+  `bands` -> `vdBands`, `nearestIndex` -> `vdNearestIndex`, `stack` -> `vdStack`,
+  `extent` -> `vdExtent`, `barPath` -> `vdBarPath`, `linePath` -> `vdLinePath`,
+  `areaPath` -> `vdAreaPath`.
 
 ### Fixed
 

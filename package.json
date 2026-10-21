@@ -18,6 +18,8 @@
     "visual": "sh tools/visual.sh",
     "check:examples": "ngc -p docs/examples/tsconfig.json",
     "check:package": "node tools/check-package.mjs",
+    "check:api": "node tools/check-api.mjs",
+    "update:api": "node tools/check-api.mjs --update",
     "check:consumer": "node tools/check-consumer.mjs",
     "build:pages": "node tools/build-pages.mjs",
     "check:pages": "node tools/check-pages.mjs"

@@ -6,7 +6,7 @@ import {
   computed,
   input,
 } from '@angular/core';
-import { bands, barPath, extent, stack } from './core/chart-math';
+import { vdBands, vdBarPath, vdExtent, vdStack } from './core/chart-math';
 import { VdChartBase } from './chart-base';
 import { VdChartFrame } from './chart-frame';
 
@@ -166,7 +166,7 @@ export class VdBarChart extends VdChartBase {
 
   protected readonly stackedValues = () => this.stacked();
   protected extentOf() {
-    return extent(this.series(), this.count(), this.stacked());
+    return vdExtent(this.series(), this.count(), this.stacked());
   }
 
   private readonly vertical = computed(() => this.orientation() === 'vertical');
@@ -192,7 +192,7 @@ export class VdBarChart extends VdChartBase {
     return this.vertical() ? [b.x0, b.x1] : [b.y0, b.y1];
   });
 
-  private readonly bandList = computed(() => bands(this.count(), this.categoryRange()));
+  private readonly bandList = computed(() => vdBands(this.count(), this.categoryRange()));
 
   protected readonly marks = computed<Mark[]>(() => {
     const series = this.series();
@@ -203,7 +203,7 @@ export class VdBarChart extends VdChartBase {
     const orient = this.orientation();
     const marks: Mark[] = [];
     if (this.stacked()) {
-      const segments = stack(series, this.count());
+      const segments = vdStack(series, this.count());
       // Rounded only on the outermost segment of each direction.
       const outer = this.bandList().map((_, c) => {
         let top = -1;
@@ -226,7 +226,7 @@ export class VdBarChart extends VdChartBase {
           const dir = Math.sign(to - from);
           const end = rounded ? to : to - dir * GAP;
           marks.push({
-            d: barPath(band.center, thickness, from, end, rounded ? RADIUS : 0, orient),
+            d: vdBarPath(band.center, thickness, from, end, rounded ? RADIUS : 0, orient),
             series: i,
             category: c,
           });
@@ -242,7 +242,7 @@ export class VdBarChart extends VdChartBase {
         if (v === null || v === undefined || !Number.isFinite(v)) return;
         const center = band.center - group / 2 + thickness / 2 + i * (thickness + GAP);
         marks.push({
-          d: barPath(center, thickness, zero, scale(v), RADIUS, orient),
+          d: vdBarPath(center, thickness, zero, scale(v), RADIUS, orient),
           series: i,
           category: c,
         });

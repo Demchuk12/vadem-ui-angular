@@ -1727,3 +1727,16 @@ backend that can fail once. It needed no library changes. Observed limits for la
 still dismiss the edit dialog while a save is pending (consumer's concern; set `dismissible`
 false while saving if needed), and the server error is shown as an inline Alert, not tied to a
 single Field. Not a substitute for use in a real project (plan Step 6).
+
+### D130 — API freeze review decisions (2026-10-21)
+
+Reviewed with the owner before the 1.0 freeze. Icons: keep the vendored Lucide subset (ISC, notice
+shipped); an own icon set is a separate project and does not block 1.0. Mono eyebrow labels stay as
+the fifth signature move. Reduced motion: the code is already fully static (spinner stops, the
+indeterminate bar and ring switch to static looks, skeleton shimmer is off), which satisfies the
+brief and supersedes the "spinners slow down" clause of D15; `e2e/robustness.spec.ts` enforces it.
+The review found unprefixed exports in `@vadem/ui/chart` (generic names such as `stack`, `extent`,
+`bands`); they are renamed with the `vd` prefix (pre-1.0 breaking, no known consumers). A public
+API snapshot with a CI check (`tools/check-api.mjs`, no new dependency; it uses the `typescript`
+package already present) now guards selectors, inputs, outputs and exports. `VdFieldControlBase`
+stays exported: `specs/field.md` documents it for authors of custom controls.

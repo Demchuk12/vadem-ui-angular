@@ -120,6 +120,6 @@ color-border-strong; `--vd-chart-area-opacity` 0.12; `--vd-sparkline-ink` → co
 
 ## Adapter notes
 
-Core (`core/chart-math.ts`, no Angular): `linearScale`, `niceTicks`, `bands`, `nearestIndex`,
-`stack`, `extent`, `barPath`, `linePath`, `areaPath`. Angular: `@vadem/ui/chart` exports
+Core (`core/chart-math.ts`, no Angular): `vdLinearScale`, `vdNiceTicks`, `vdBands`, `vdNearestIndex`,
+`vdStack`, `vdExtent`, `vdBarPath`, `vdLinePath`, `vdAreaPath`. Angular: `@vadem/ui/chart` exports
 `VdBarChart`, `VdLineChart`, `VdSparkline` and the frame.

@@ -2,7 +2,10 @@
 
 Vadem UI is an early-release Angular component library. Component APIs may change before
 1.0. The examples below use the published package; developing Vadem itself is covered in
-the root README. Framework-independent contracts live in `specs/`.
+the root README. Framework-independent contracts live in `specs/` (one per component: anatomy,
+props, states, keyboard, ARIA, tokens, and what your application still owns). The exact import
+paths, selectors, inputs and outputs of every entry point are listed in
+[`api-surface.json`](api-surface.json).
 
 ## Install and import styles
 

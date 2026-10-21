@@ -6,7 +6,7 @@ import {
   computed,
   input,
 } from '@angular/core';
-import { areaPath, extent, linePath, type VdPoint } from './core/chart-math';
+import { vdAreaPath, vdExtent, vdLinePath, type VdPoint } from './core/chart-math';
 import { VdChartBase } from './chart-base';
 import { VdChartFrame } from './chart-frame';
 
@@ -149,7 +149,7 @@ export class VdLineChart extends VdChartBase {
 
   protected readonly stackedValues = () => false;
   protected extentOf() {
-    return extent(this.series(), this.count(), false);
+    return vdExtent(this.series(), this.count(), false);
   }
 
   protected readonly showArea = computed(() => this.area() && this.series().length === 1);
@@ -186,8 +186,8 @@ export class VdLineChart extends VdChartBase {
     ),
   );
 
-  protected readonly lines = computed(() => this.points().map((p) => linePath(p)));
-  protected readonly areaD = computed(() => areaPath(this.points()[0] ?? [], this.scale()(0)));
+  protected readonly lines = computed(() => this.points().map((p) => vdLinePath(p)));
+  protected readonly areaD = computed(() => vdAreaPath(this.points()[0] ?? [], this.scale()(0)));
 
   protected readonly tickMarks = computed(() =>
     this.ticks().map((value) => ({ value, y: this.scale()(value) })),

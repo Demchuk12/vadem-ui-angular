@@ -9,7 +9,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { VD_LOCALE } from '@vadem/ui/locale';
-import { linearScale, niceTicks, nearestIndex, type VdChartSeries } from './core/chart-math';
+import { vdLinearScale, vdNiceTicks, vdNearestIndex, type VdChartSeries } from './core/chart-math';
 import { VdChartFrame, type VdChartFormat, seriesSlot } from './chart-frame';
 
 /** Average glyph width of 12px UI text, used to reserve room for axis labels. */
@@ -54,7 +54,7 @@ export abstract class VdChartBase {
 
   protected readonly ticks = computed(() => {
     const [min, max] = this.extentOf();
-    return niceTicks(min, max, Math.max(2, Math.round(this.height() / 60)));
+    return vdNiceTicks(min, max, Math.max(2, Math.round(this.height() / 60)));
   });
 
   private readonly compact = computed(
@@ -81,7 +81,7 @@ export abstract class VdChartBase {
 
   protected valueScale(range: readonly [number, number]) {
     const ticks = this.ticks();
-    return linearScale([ticks[0], ticks[ticks.length - 1]], range);
+    return vdLinearScale([ticks[0], ticks[ticks.length - 1]], range);
   }
 
   protected slot(index: number): string {
@@ -104,7 +104,7 @@ export abstract class VdChartBase {
   }
 
   protected pointerAt(position: number, range: readonly [number, number]): void {
-    this.active.set(nearestIndex(position, this.count(), range));
+    this.active.set(vdNearestIndex(position, this.count(), range));
   }
 
   protected onKeydown(event: KeyboardEvent, index: number): void {
