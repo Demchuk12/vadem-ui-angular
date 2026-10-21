@@ -1,5 +1,7 @@
 /** All page copy. `uk` must satisfy the same shape as `en`, so no key can be left untranslated. */
 
+import { VD_VERSION } from '@vadem/ui';
+
 export type Lang = 'en' | 'uk';
 
 const en = {
@@ -14,7 +16,7 @@ const en = {
     theme: { dark: 'Theme: dark', light: 'Theme: light' },
   },
   hero: {
-    status: 'Pre-release 0.0.1',
+    status: `Pre-release ${VD_VERSION}`,
     title: 'Components that stay native.',
     lead: 'Vadem is an Angular component library built on real buttons, inputs and dialogs, plain layered CSS, and one accent hue that themes everything.',
     primary: 'Browse components',
@@ -116,7 +118,7 @@ const uk: Copy = {
     theme: { dark: 'Тема: темна', light: 'Тема: світла' },
   },
   hero: {
-    status: 'Попередній випуск 0.0.1',
+    status: `Попередній випуск ${VD_VERSION}`,
     title: 'Компоненти, що лишаються нативними.',
     lead: 'Vadem — бібліотека компонентів для Angular на справжніх кнопках, полях і діалогах, зі звичайним CSS у шарах і одним відтінком акценту, що задає всю тему.',
     primary: 'Переглянути компоненти',

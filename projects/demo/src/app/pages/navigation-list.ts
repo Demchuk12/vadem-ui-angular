@@ -66,7 +66,7 @@ import { VD_NAVIGATION_LIST } from '@vadem/ui/navigation-list';
                 <li>
                   <a
                     vdNavigationLink
-                    href="/navigation-list?section=help"
+                    href="navigation-list?section=help"
                     target="_blank"
                     rel="noopener"
                     ><vd-icon name="external-link" slot="start" /><span
@@ -131,7 +131,7 @@ import { VD_NAVIGATION_LIST } from '@vadem/ui/navigation-list';
               <h3 vdNavigationLabel id="navigation-arabic">مساحة العمل</h3>
               <ul role="list">
                 <li>
-                  <a vdNavigationLink href="/navigation-list" aria-current="page"
+                  <a vdNavigationLink href="navigation-list" aria-current="page"
                     ><vd-icon name="layout-dashboard" slot="start" /><span>نظرة عامة</span></a
                   >
                 </li>

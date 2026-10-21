@@ -1,4 +1,4 @@
-<a class="site-skip" href="#main">{{ t().skip }}</a>
+<a class="site-skip" [routerLink]="[]" fragment="main">{{ t().skip }}</a>
 
 <header class="site-header">
   <a class="site-brand" [routerLink]="lang() === 'en' ? '/' : '/uk'">
@@ -19,9 +19,9 @@
     <span>Vadem</span>
   </a>
   <nav class="site-nav" [attr.aria-label]="t().nav.label">
-    <a href="#components">{{ t().nav.components }}</a>
-    <a href="#usage">{{ t().nav.usage }}</a>
-    <a href="#roadmap">{{ t().nav.roadmap }}</a>
+    <a [routerLink]="[]" fragment="components">{{ t().nav.components }}</a>
+    <a [routerLink]="[]" fragment="usage">{{ t().nav.usage }}</a>
+    <a [routerLink]="[]" fragment="roadmap">{{ t().nav.roadmap }}</a>
   </nav>
   <div class="site-header__actions">
     <a
@@ -53,8 +53,12 @@
       <h1 id="hero-title">{{ t().hero.title }}</h1>
       <p class="site-hero__lead">{{ t().hero.lead }}</p>
       <div class="site-hero__actions">
-        <a vdButton variant="primary" size="lg" href="#components">{{ t().hero.primary }}</a>
-        <a vdButton variant="secondary" size="lg" href="#usage">{{ t().hero.secondary }}</a>
+        <a vdButton variant="primary" size="lg" [routerLink]="[]" fragment="components">{{
+          t().hero.primary
+        }}</a>
+        <a vdButton variant="secondary" size="lg" [routerLink]="[]" fragment="usage">{{
+          t().hero.secondary
+        }}</a>
       </div>
     </div>
 

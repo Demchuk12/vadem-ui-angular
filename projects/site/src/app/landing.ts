@@ -6,6 +6,7 @@ import {
   effect,
   inject,
   input,
+  isDevMode,
   signal,
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -21,8 +22,6 @@ import { VdSwitch } from '@vadem/ui/switch';
 import { CATALOG, COPY, type Lang } from './copy';
 import { highlight } from './highlight';
 
-/** Where the component gallery (projects/demo) is served. */
-const GALLERY_URL = 'http://localhost:4200';
 const DEFAULT_HUE = 285;
 
 const TEMPLATE_SAMPLE = `<button vdButton variant="primary"
@@ -83,7 +82,9 @@ export default class Landing {
     })),
   );
   protected readonly componentCount = Object.values(CATALOG).flat().length;
-  protected readonly galleryUrl = GALLERY_URL;
+  protected readonly galleryUrl = isDevMode()
+    ? 'http://localhost:4200/'
+    : new URL('gallery/', inject(DOCUMENT).baseURI).href;
   protected readonly templateLines = highlight(TEMPLATE_SAMPLE);
   protected readonly domLines = highlight(DOM_SAMPLE);
 
@@ -113,6 +114,6 @@ export default class Landing {
   }
 
   protected galleryLink(route: string): string {
-    return `${GALLERY_URL}/${route}`;
+    return new URL(route, this.galleryUrl).href;
   }
 }

@@ -1676,3 +1676,13 @@ The owner explicitly selected MIT. Add the standard license with Vasyl Demchuk's
 record MIT in workspace/library metadata, and copy LICENSE into dist/ui. Artifact checks
 verify the copied license. Font OFL notices, Lucide ISC, and vendored skill notices remain
 unchanged. Published versions are immutable; distribution changes require a new release.
+
+### D125 — Publish the site and gallery together on GitHub Pages (2026-10-21)
+
+The user requested public web previews of both existing applications. Build the presentation
+site at the repository base path and the gallery under gallery/. Keep path routing and emit
+an HTML shell at each known route so direct visits and reloads work on a static server with
+real 200 responses. Avoid hash routing because the landing page already uses section anchors.
+This is not SSR/prerendering. Resolve production catalog links against the document base;
+retain the separate localhost gallery in development. Verify the production artifact before
+Pages deployment. The separate npm publishing workflow and registry remain unchanged.

@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { VD_VERSION } from '@vadem/ui';
 import { VdIcon } from '@vadem/ui/icon';
 import { VdToasterOutlet } from '@vadem/ui/toast';
 import { filter, map } from 'rxjs';
@@ -23,6 +24,7 @@ import { DemoDensity, DemoPreferences, DemoTheme } from './shell/preferences';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
+  protected readonly version = VD_VERSION;
   protected readonly prefs = inject(DemoPreferences);
   protected readonly nav = NAV;
 

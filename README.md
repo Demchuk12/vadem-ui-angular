@@ -7,6 +7,10 @@ Personal Angular UI component library (`@vadem/ui`) with framework-agnostic CSS,
 layered design tokens, self-hosted fonts, and English/Ukrainian locale packs.
 The workspace includes a component gallery and a separate presentation site.
 
+[Website](https://demchuk12.github.io/vadem-ui-angular/) ·
+[Component gallery](https://demchuk12.github.io/vadem-ui-angular/gallery/) ·
+[Ukrainian](https://demchuk12.github.io/vadem-ui-angular/uk/)
+
 ## Getting started
 
 Use Node.js 24 and npm 11.13.0 (the version pinned in `package.json`).
@@ -27,6 +31,8 @@ npm run check:package # manifest/version, entry points, copied assets and notice
 npm run check:consumer # independent tarball install, build and Chromium checks
 npx ng build demo
 npm run build:site
+npm run build:pages   # combined static website + gallery
+npm run check:pages   # direct routes and production browser smoke checks
 npx playwright install chromium  # first-time browser setup
 npm run e2e          # keyboard, layout, and axe checks
 npm run screenshots  # dark/light gallery captures
@@ -93,3 +99,5 @@ Release history: [CHANGELOG.md](CHANGELOG.md).
 Vadem's own code is licensed under the MIT License; see [LICENSE](LICENSE).
 Third-party fonts, icon geometry, and vendored design skills retain their respective licenses
 and notices; they are not relicensed by the Vadem license.
+
+Public hosting and route handling: [Deployment](docs/DEPLOYMENT.md).
