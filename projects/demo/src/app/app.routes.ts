@@ -87,6 +87,7 @@ export const NAV: DemoNavGroup[] = [
       { path: 'expandable-text', label: 'Expandable text' },
       { path: 'reorder-list', label: 'Reorder list' },
       { path: 'kanban', label: 'Kanban' },
+      { path: 'schedule', label: 'Schedule' },
       { path: 'file-size', label: 'File size' },
       { path: 'relative-time', label: 'Relative time' },
       { path: 'active-filters', label: 'Active filters' },
@@ -357,6 +358,11 @@ export const routes: Routes = [
     path: 'expandable-text',
     title: 'Expandable text · Vadem',
     loadComponent: () => import('./pages/expandable-text'),
+  },
+  {
+    path: 'schedule',
+    title: 'Schedule · Vadem',
+    loadComponent: () => import('./pages/schedule'),
   },
   {
     path: 'kanban',

@@ -1454,6 +1454,63 @@
       }
     }
   },
+  "@vadem/ui/schedule": {
+    "exports": [
+      "VdIsoDate (type)",
+      "VdSchedule",
+      "vdScheduleApplyChange",
+      "VdScheduleColor (type)",
+      "VdScheduleEvent (type)",
+      "VdScheduleEventChange (type)",
+      "VdScheduleSlot (type)",
+      "VdScheduleView (type)"
+    ],
+    "classes": {
+      "VdSchedule": {
+        "kind": "component",
+        "selector": "vd-schedule",
+        "inputs": [
+          "agendaDays",
+          "agendaText",
+          "allDayText",
+          "canceledText",
+          "changedText",
+          "date",
+          "dayEndHour",
+          "dayStartHour",
+          "dayText",
+          "editable",
+          "emptyText",
+          "events",
+          "eventsText",
+          "firstDayOfWeek",
+          "invalidText",
+          "label",
+          "locale",
+          "maxEventsPerDay",
+          "monthText",
+          "moreText",
+          "nextLabel",
+          "now",
+          "previousLabel",
+          "scrollToHour",
+          "slotMinutes",
+          "todayText",
+          "view",
+          "viewLabel",
+          "views",
+          "weekText"
+        ],
+        "outputs": [
+          "dateChange",
+          "eventActivate",
+          "eventChange",
+          "slotActivate",
+          "viewChange"
+        ]
+      }
+    }
+  },
   "@vadem/ui/scroll-area": {
     "exports": [
       "VdScrollArea"

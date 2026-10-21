@@ -1763,3 +1763,16 @@ pickup a non-passive `touchmove` listener on the board stops page scrolling; the
 context menu and callout are suppressed. Long press may start on a link (most of a phone card is
 its title); the click that follows a drag is swallowed. Horizontal edge auto-scroll runs on
 animation frames only while a drag rests near an edge. The Move menu stays the keyboard path.
+
+### D133 — Schedule: wall-clock strings, app-owned changes, tables over role=grid (2026-10-21)
+
+The owner asked to close the calendar question fully, so a scheduler is added before 1.0 although
+the roadmap listed it as optional. Events use zone-less wall-clock strings and the core counts
+1440-minute days: the application owns time zones, and DST never shifts a block. Changes are
+requests (`eventChange`), as with Kanban. Month cells hold several buttons, so they are a plain
+table with a roving day button and date-grid keys, not `role=grid`. Keyboard users change times
+through the application's edit form (activation), which is the single-pointer alternative to
+dragging; touch never drags. The core duplicates four small date helpers instead of importing
+`@vadem/ui/calendar`, whose entry point contains Angular components. Found by tests: the release
+after Escape-canceling a drag created an event (click now suppressed), and long titles spilled out
+of month cells. Narrow containers swap month chips for dots.

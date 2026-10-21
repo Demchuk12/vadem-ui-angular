@@ -131,6 +131,24 @@ export interface VdLocale {
     movedText: (label: string, position: number, total: number) => string;
     canceledText: (label: string) => string;
   };
+  schedule: {
+    label: string;
+    todayText: string;
+    previousLabel: string;
+    nextLabel: string;
+    viewLabel: string;
+    monthText: string;
+    weekText: string;
+    dayText: string;
+    agendaText: string;
+    allDayText: string;
+    emptyText: string;
+    invalidText: string;
+    moreText: (count: number) => string;
+    eventsText: (count: number) => string;
+    changedText: (title: string, when: string) => string;
+    canceledText: (title: string) => string;
+  };
   searchInput: { clearLabel: string; loadingLabel: string };
   select: { emptyText: string };
   multiSelect: {
@@ -326,6 +344,24 @@ export const vdLocaleEn: VdLocale = {
     invalidText: 'This list cannot be reordered.',
     movedText: (label, position, total) => `${label}. Position ${position} of ${total}.`,
     canceledText: (label) => `Reordering canceled: ${label}.`,
+  },
+  schedule: {
+    label: 'Schedule',
+    todayText: 'Today',
+    previousLabel: 'Previous period',
+    nextLabel: 'Next period',
+    viewLabel: 'View',
+    monthText: 'Month',
+    weekText: 'Week',
+    dayText: 'Day',
+    agendaText: 'Agenda',
+    allDayText: 'All day',
+    emptyText: 'No events in this period',
+    invalidText: 'These events cannot be shown.',
+    moreText: (count) => `+${count} more`,
+    eventsText: (count) => vdPlural('en', count, { one: '# event', other: '# events' }),
+    changedText: (title, when) => `${title} moved to ${when}.`,
+    canceledText: (title) => `Change canceled: ${title}.`,
   },
   searchInput: { clearLabel: 'Clear search', loadingLabel: 'Searching' },
   select: { emptyText: 'No options' },
@@ -528,6 +564,25 @@ export const vdLocaleUk: VdLocale = {
     invalidText: 'Не вдалося впорядкувати цей список.',
     movedText: (label, position, total) => `${label}. Позиція ${position} з ${total}.`,
     canceledText: (label) => `Переміщення скасовано: ${label}.`,
+  },
+  schedule: {
+    label: 'Розклад',
+    todayText: 'Сьогодні',
+    previousLabel: 'Попередній період',
+    nextLabel: 'Наступний період',
+    viewLabel: 'Вигляд',
+    monthText: 'Місяць',
+    weekText: 'Тиждень',
+    dayText: 'День',
+    agendaText: 'Список',
+    allDayText: 'Весь день',
+    emptyText: 'Немає подій у цьому періоді',
+    invalidText: 'Не вдалося показати ці події.',
+    moreText: (count) => `ще ${count}`,
+    eventsText: (count) =>
+      vdPlural('uk', count, { one: '# подія', few: '# події', many: '# подій', other: '# події' }),
+    changedText: (title, when) => `${title}: перенесено на ${when}.`,
+    canceledText: (title) => `Зміну скасовано: ${title}.`,
   },
   searchInput: { clearLabel: 'Очистити пошук', loadingLabel: 'Пошук' },
   select: { emptyText: 'Немає варіантів' },

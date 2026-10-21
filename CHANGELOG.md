@@ -4,6 +4,10 @@
 
 ### Added
 
+- Schedule (`@vadem/ui/schedule`): month, week, day and agenda views of application-owned events
+  with overlap layout, all-day and multi-day events, a now line, keyboard day navigation, event and
+  empty-slot activation, mouse dragging and resizing that emit change requests
+  (`vdScheduleApplyChange`), and a compact month on narrow screens.
 - Kanban board (`@vadem/ui/kanban`): columns of application-owned cards with a per-card Move
   menu (keyboard and touch), dragging between columns with a lifted card that follows the
   pointer (mouse/pen, and long press on touch), edge auto-scroll, a drop marker, Escape/Tab cancel, focus restored after a move, spoken announcements, custom card and column header
