@@ -981,6 +981,57 @@
       }
     }
   },
+  "@vadem/ui/kanban": {
+    "exports": [
+      "VD_KANBAN",
+      "VdKanban",
+      "vdKanbanApplyMove",
+      "VdKanbanCard",
+      "VdKanbanCardContext (type)",
+      "VdKanbanCardData (type)",
+      "VdKanbanColumn (type)",
+      "VdKanbanColumnContext (type)",
+      "VdKanbanColumnHeader",
+      "VdKanbanMove (type)",
+      "VdKanbanPosition (type)"
+    ],
+    "classes": {
+      "VdKanban": {
+        "kind": "component",
+        "selector": "vd-kanban",
+        "inputs": [
+          "canceledText",
+          "columns",
+          "countText",
+          "disabled",
+          "downText",
+          "emptyText",
+          "instructions",
+          "invalidText",
+          "label",
+          "movedText",
+          "moveLabel",
+          "moveToText",
+          "upText"
+        ],
+        "outputs": [
+          "cardMove"
+        ]
+      },
+      "VdKanbanCard": {
+        "kind": "directive",
+        "selector": "ng-template[vdKanbanCard]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdKanbanColumnHeader": {
+        "kind": "directive",
+        "selector": "ng-template[vdKanbanColumnHeader]",
+        "inputs": [],
+        "outputs": []
+      }
+    }
+  },
   "@vadem/ui/kbd": {
     "exports": [
       "vdDetectPlatform",

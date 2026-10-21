@@ -94,6 +94,19 @@ export interface VdLocale {
   };
   expandableText: { expandLabel: string; collapseLabel: string };
   formErrorSummary: { title: string; description: string };
+  kanban: {
+    label: string;
+    instructions: string;
+    emptyText: string;
+    invalidText: string;
+    countText: (count: number) => string;
+    moveLabel: (card: string) => string;
+    upText: string;
+    downText: string;
+    moveToText: string;
+    movedText: (card: string, column: string, position: number, total: number) => string;
+    canceledText: (card: string) => string;
+  };
   kbd: { thenLabel: string };
   navigationList: { label: string };
   numberInput: { decreaseLabel: string; increaseLabel: string };
@@ -271,6 +284,21 @@ export const vdLocaleEn: VdLocale = {
     title: 'Check the form',
     description: 'Correct the following fields before continuing.',
   },
+  kanban: {
+    label: 'Board',
+    instructions:
+      'Each card has a Move menu to change its position or column. With a mouse, drag a card; Escape cancels dragging.',
+    emptyText: 'No cards',
+    invalidText: 'This board cannot be shown.',
+    countText: (count) => vdPlural('en', count, { one: '# card', other: '# cards' }),
+    moveLabel: (card) => `Move ${card}`,
+    upText: 'Move up',
+    downText: 'Move down',
+    moveToText: 'Move to',
+    movedText: (card, column, position, total) =>
+      `${card} moved to ${column}. Position ${position} of ${total}.`,
+    canceledText: (card) => `Move canceled: ${card}.`,
+  },
   kbd: { thenLabel: 'then' },
   navigationList: { label: 'Navigation' },
   numberInput: { decreaseLabel: 'Decrease value', increaseLabel: 'Increase value' },
@@ -447,6 +475,27 @@ export const vdLocaleUk: VdLocale = {
   formErrorSummary: {
     title: 'Перевірте форму',
     description: 'Виправте ці поля, перш ніж продовжити.',
+  },
+  kanban: {
+    label: 'Дошка',
+    instructions:
+      'Кожна картка має меню «Перемістити» для зміни позиції або колонки. Мишею перетягніть картку; Escape скасовує перетягування.',
+    emptyText: 'Немає карток',
+    invalidText: 'Не вдалося показати дошку.',
+    countText: (count) =>
+      vdPlural('uk', count, {
+        one: '# картка',
+        few: '# картки',
+        many: '# карток',
+        other: '# картки',
+      }),
+    moveLabel: (card) => `Перемістити ${card}`,
+    upText: 'Вище',
+    downText: 'Нижче',
+    moveToText: 'Перемістити в',
+    movedText: (card, column, position, total) =>
+      `${card} переміщено в «${column}». Позиція ${position} з ${total}.`,
+    canceledText: (card) => `Переміщення скасовано: ${card}.`,
   },
   kbd: { thenLabel: 'потім' },
   navigationList: { label: 'Навігація' },

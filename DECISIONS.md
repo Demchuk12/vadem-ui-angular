@@ -1740,3 +1740,15 @@ The review found unprefixed exports in `@vadem/ui/chart` (generic names such as 
 API snapshot with a CI check (`tools/check-api.mjs`, no new dependency; it uses the `typescript`
 package already present) now guards selectors, inputs, outputs and exports. `VdFieldControlBase`
 stays exported: `specs/field.md` documents it for authors of custom controls.
+
+### D131 — Kanban: app-owned data, Move menu as the keyboard path (2026-10-21)
+
+The board emits `cardMove` requests and never edits `columns`, so a CRM can save first and
+reject a move on failure (Reorder list's two-way model would make rollback the consumer's
+problem). The keyboard and touch path is a Menu Button per card (Move up/down, Move to each other
+column) rather than a custom "grab mode": it reuses the tested `@vadem/ui/menu` contract and is
+discoverable without instructions. Mouse/pen drag the whole card except its interactive content;
+touch never drags so scrolling stays native. The card takes focus when a drag starts, otherwise
+Escape never reaches the board (found by e2e). The columns container is the containing block for
+visually hidden text; without it the hidden count text escaped the scroller and widened the page
+at 320px. Every card renders a small menu; acceptable for hundreds of cards, no virtualization.
