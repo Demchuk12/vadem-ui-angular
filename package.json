@@ -16,7 +16,9 @@
     "start:site": "ng serve site",
     "build:site": "ng build site",
     "visual": "sh tools/visual.sh",
-    "check:examples": "ngc -p docs/examples/tsconfig.json"
+    "check:examples": "ngc -p docs/examples/tsconfig.json",
+    "check:package": "node tools/check-package.mjs",
+    "check:consumer": "node tools/check-consumer.mjs"
   },
   "private": true,
   "packageManager": "npm@11.13.0",
@@ -45,5 +47,6 @@
     "typescript": "~6.0.2",
     "typescript-eslint": "8.69.0",
     "vitest": "^5.0.0"
-  }
+  },
+  "license": "MIT"
 }

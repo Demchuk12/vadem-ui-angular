@@ -1657,3 +1657,22 @@ links to the GitHub source, docs and issues. A successful OIDC publish is follow
 a separate minimally permissioned job creating v<version> and its GitHub Release at
 the exact workflow commit. Dry runs never create a tag or release. GitHub Packages
 is a different registry and is not required to make an npm package repository-linked.
+
+### D123 — Validate the npm artifact outside the workspace (2026-10-21)
+
+The gallery resolves library imports to source, so a green gallery build cannot validate
+npm export paths or asset copying. Check the built VD_VERSION against the manifest and
+verify secondary targets, CSS/fonts, README and third-party notices. Pack and independently
+install the tarball into a temporary Angular application with no source aliases or symlinks;
+use the workspace-installed top-level tool versions without adding project dependencies.
+Compile every typed entry point and exercise the documentation form, themes, fonts and axe
+in Chromium. Run this consumer as a CI job and check package consistency again on publish.
+The manifest and public version constant must be updated together; the release guard fails
+on drift rather than introducing version generation. Existing published artifacts are immutable.
+
+### D124 — MIT licensing for Vadem-owned code (2026-10-21)
+
+The owner explicitly selected MIT. Add the standard license with Vasyl Demchuk's copyright,
+record MIT in workspace/library metadata, and copy LICENSE into dist/ui. Artifact checks
+verify the copied license. Font OFL notices, Lucide ISC, and vendored skill notices remain
+unchanged. Published versions are immutable; distribution changes require a new release.

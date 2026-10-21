@@ -125,7 +125,7 @@ are recalculated there. Check contrast in both themes after changing colors.
 | Enter free text with suggestions     | `@vadem/ui/autocomplete`                      | [Autocomplete](../specs/autocomplete.md)                                 |
 | Modal content and sheets             | `@vadem/ui/dialog`                            | [Dialog](../specs/dialog.md)                                             |
 | Confirm an important action          | `@vadem/ui/alert-dialog`                      | [Alert dialog](../specs/alert-dialog.md)                                 |
-| Table markup and row/column controls | `@vadem/ui/table`, `@vadem/ui/data-table`     | [Table](../specs/table.md), [Data table](../specs/data-table.md)         |
+| Table markup and row/column controls | `@vadem/ui/table`                             | [Table](../specs/table.md), [Data table](../specs/data-table.md)         |
 | File selection and upload state      | `@vadem/ui/dropzone`, `@vadem/ui/upload-list` | [Dropzone](../specs/dropzone.md), [Upload list](../specs/upload-list.md) |
 | Component strings                    | `@vadem/ui/locale`                            | [Locale](../specs/locale.md)                                             |
 

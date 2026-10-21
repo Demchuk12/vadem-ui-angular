@@ -27,6 +27,7 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run build:ui
+      - run: npm run check:package
       - run: npm run check:examples
       - run: npx ng build demo
       - run: npm run build:site
@@ -79,4 +80,25 @@ jobs:
           path: |
             playwright-report/
             test-results/
+          retention-days: 7
+
+  consumer:
+    name: Packed package consumer
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    container: mcr.microsoft.com/playwright:v1.63.0-noble
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build:ui
+      - run: npm run check:consumer
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: package-consumer-screenshots
+          path: screenshots/package-consumer/
           retention-days: 7

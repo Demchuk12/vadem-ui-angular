@@ -92,3 +92,9 @@ Manrope and JetBrains Mono are distributed under SIL OFL 1.1; their notices are 
 in `fonts/`. Lucide icon geometry is distributed under ISC; see `LICENSE-lucide.txt`.
 
 Getting started and copyable application examples: [usage guide](https://github.com/Demchuk12/vadem-ui-angular/blob/main/docs/GETTING_STARTED.md).
+
+## License
+
+Vadem's own code is licensed under the MIT License; see `LICENSE` in the package.
+Third-party fonts, icon geometry, and vendored design skills retain their respective licenses
+and notices; they are not relicensed by the Vadem license.

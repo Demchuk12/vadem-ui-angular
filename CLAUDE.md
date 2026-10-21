@@ -38,6 +38,9 @@ Commands: `npm start` (demo, :4200) · `npm run lint` · `npm test` · `npm run 
 `npm run screenshots` (Playwright, dark + light) · `npm run e2e` (axe + keyboard) ·
 `npm run visual` (baseline diff in the Playwright Docker image; `-- --update-snapshots` to accept) ·
 `npm run brand:export` (logo rasters).
+Package checks after `build:ui`: `npm run check:package` (version/exports/assets) and
+`npm run check:consumer` (isolated tarball app + Chromium). See `docs/PUBLISHING.md`.
+Support and public API policy: `docs/COMPATIBILITY.md`.
 Gallery routes are listed once in `tools/gallery-routes.json`.
 
 ## Naming

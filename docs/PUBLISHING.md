@@ -23,7 +23,8 @@ Do not configure an environment name: the workflow does not use a GitHub environ
 
 ## Release
 
-1. Update `version` in `projects/ui/package.json` to an unpublished stable version.
+1. Update `version` in `projects/ui/package.json` to an unpublished stable version, and
+   synchronize `VD_VERSION` in `projects/ui/src/public-api.ts`.
    The workspace root version does not control the library release. If `0.0.1` already
    exists on npm, the next patch is `0.0.2`.
 2. Commit the version and desired package changes to `main`. Wait for the **CI** workflow
@@ -42,8 +43,8 @@ CI gate and never publish. Both modes run only from `main`. Runs are serialized.
 
 Publishing an existing name/version fails; a successful npm version cannot be overwritten.
 Do not change files inside `dist/ui` manually: builds regenerate its README and metadata
-from `projects/ui/`. A public npm package does not imply a project license grant; choose
-and add a project license separately before representing it as open source.
+from `projects/ui/`. Vadem's own code is MIT-licensed; the root `LICENSE` is copied into the package.
+Third-party asset notices retain their original terms.
 
 ## Troubleshooting
 
@@ -76,3 +77,25 @@ If npm publication succeeds but GitHub release creation fails, rerun only the fa
 release job in Actions. Do not attempt to overwrite the already-published npm version.
 
 References: [GitHub's npm registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry).
+
+## Package validation before a release
+
+After `npm run build:ui`, run `npm run check:package` to verify the built version against
+`VD_VERSION`, all secondary exports, copied CSS/fonts, README, and third-party notices.
+The publishing workflow runs this check and refuses a stale build or version mismatch.
+
+`npm run check:consumer` packs the library and installs that tarball into a temporary Angular
+workspace. It uses the same top-level Angular/build package versions installed in this repo,
+but installs them independently with npm. It has no source aliases or library symlinks.
+The check needs registry access and the matching Playwright Chromium browser. For a local
+setup, use the existing `npx playwright install chromium` procedure, or run the command in
+the pinned Playwright image used by CI. No project dependency is added by the check.
+
+The consumer compiles all typed entry points, builds a production app, and exercises the
+documented Reactive Forms example, bundled CSS/fonts, dark/light themes, and axe checks.
+Screenshots are written to ignored `screenshots/package-consumer/`. A successful temporary
+workspace is removed; failures retain it for inspection until the runner/container is cleaned up.
+The new CI consumer job is part of the overall CI gate required by publication.
+
+This validates the candidate built from the checkout. It does not change already-published
+versions: fixes to `0.0.2` source need a new version before npm consumers receive them.

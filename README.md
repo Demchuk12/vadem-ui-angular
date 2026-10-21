@@ -23,6 +23,8 @@ npm run start:site    # presentation site: http://localhost:4300
 npm run lint
 npm test
 npm run build:ui      # library package, styles, fonts, and notices in dist/ui
+npm run check:package # manifest/version, entry points, copied assets and notices
+npm run check:consumer # independent tarball install, build and Chromium checks
 npx ng build demo
 npm run build:site
 npx playwright install chromium  # first-time browser setup
@@ -80,3 +82,14 @@ Vendored design skills retain their own licenses and notices.
 Publishing releases: [npm publishing workflow](docs/PUBLISHING.md).
 
 Getting started and copyable application examples: [usage guide](docs/GETTING_STARTED.md).
+
+Roadmap to the first stable release (proposal): [1.0 plan](docs/ROADMAP_1_0.md).
+
+Supported versions and public API policy: [compatibility](docs/COMPATIBILITY.md).
+Release history: [CHANGELOG.md](CHANGELOG.md).
+
+## License
+
+Vadem's own code is licensed under the MIT License; see [LICENSE](LICENSE).
+Third-party fonts, icon geometry, and vendored design skills retain their respective licenses
+and notices; they are not relicensed by the Vadem license.

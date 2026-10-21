@@ -18,4 +18,5 @@ cpSync(resolve(root, 'src/fonts'), resolve(dist, 'fonts'), {
   filter: (src) => !src.endsWith('README.md'),
 });
 cpSync(resolve(root, 'projects/ui/icon/LICENSE-lucide.txt'), resolve(dist, 'LICENSE-lucide.txt'));
-console.log('Copied styles/, fonts/ and third-party licenses into dist/ui');
+cpSync(resolve(root, 'LICENSE'), resolve(dist, 'LICENSE'));
+console.log('Copied styles/, fonts/ and project/third-party licenses into dist/ui');
