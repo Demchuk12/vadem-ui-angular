@@ -25,6 +25,8 @@ jobs:
       contents: read
       actions: read
       id-token: write
+    outputs:
+      version: ${{ steps.package.outputs.version }}
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -48,10 +50,22 @@ jobs:
             throw new Error('CI must pass for this main commit before publishing. Run again after CI succeeds.');
           }
           NODE
+      - name: Read package version
+        id: package
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync, appendFileSync } from 'node:fs';
+          const { name, version } = JSON.parse(readFileSync('projects/ui/package.json', 'utf8'));
+          if (name !== '@vadem/ui' || !/^\d+\.\d+\.\d+$/.test(version)) {
+            throw new Error('Expected @vadem/ui with a stable semver version.');
+          }
+          appendFileSync(process.env.GITHUB_OUTPUT, `version=${version}\n`);
+          NODE
       - run: npm ci
       - run: npm run lint
       - run: npm test
       - run: npm run build:ui
+      - run: npm run check:examples
       - name: Inspect package contents
         working-directory: dist/ui
         run: npm pack --dry-run
@@ -59,3 +73,31 @@ jobs:
         if: ${{ !inputs.dry_run }}
         working-directory: dist/ui
         run: npm publish --access public
+
+  release:
+    name: Create GitHub release
+    needs: publish
+    if: ${{ !inputs.dry_run }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - name: Link the published npm version to its source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_SHA: ${{ github.sha }}
+          VERSION: ${{ needs.publish.outputs.version }}
+        run: |
+          cat > "$RUNNER_TEMP/release-notes.md" <<EOF
+          Published to npm: [@vadem/ui@$VERSION](https://www.npmjs.com/package/@vadem/ui/v/$VERSION).
+
+          Install with: \`npm install @vadem/ui@$VERSION\`.
+
+          [Usage guide](https://github.com/$GH_REPO/blob/v$VERSION/docs/GETTING_STARTED.md) · [Source commit](https://github.com/$GH_REPO/commit/$RELEASE_SHA) · [Publishing run](https://github.com/$GH_REPO/actions/runs/$GITHUB_RUN_ID).
+
+          Release validation includes the successful CI run for this commit, a library rebuild,
+          strict compilation of the usage examples, and publication through npm OIDC.
+          EOF
+          gh release create "v$VERSION" --target "$RELEASE_SHA" --title "@vadem/ui $VERSION" --notes-file "$RUNNER_TEMP/release-notes.md"

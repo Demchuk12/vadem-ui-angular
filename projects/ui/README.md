@@ -1,5 +1,8 @@
 # Vadem UI
 
+[![npm](https://img.shields.io/npm/v/@vadem/ui)](https://www.npmjs.com/package/@vadem/ui)
+[![CI](https://github.com/Demchuk12/vadem-ui-angular/actions/workflows/ci.yml/badge.svg)](https://github.com/Demchuk12/vadem-ui-angular/actions/workflows/ci.yml)
+
 A modern Angular component library for forms, dashboards, and data-rich applications.
 Vadem combines a consistent visual language with native HTML semantics, reusable CSS
 design tokens, and components built with standalone APIs, signals, and OnPush change detection.

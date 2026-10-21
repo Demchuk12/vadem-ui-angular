@@ -1649,3 +1649,11 @@ opener. Cancel the pending listener on pointer cancellation/destruction. Keyboar
 after-release contextmenu events remain immediate. Keep native popover light dismiss.
 Focus tests wait for the specific rendered trigger or enabled/roving action before the
 next key, rather than relying on scheduling between Angular renders and Playwright input.
+
+### D122 — Link npm publication to GitHub Releases (2026-10-21)
+
+Keep registry.npmjs.org as the distribution registry for @vadem/ui. Publish metadata
+links to the GitHub source, docs and issues. A successful OIDC publish is followed by
+a separate minimally permissioned job creating v<version> and its GitHub Release at
+the exact workflow commit. Dry runs never create a tag or release. GitHub Packages
+is a different registry and is not required to make an npm package repository-linked.

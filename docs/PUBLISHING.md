@@ -31,7 +31,10 @@ Do not configure an environment name: the workflow does not use a GitHub environ
 3. Open https://github.com/Demchuk12/vadem-ui-angular/actions/workflows/publish.yml.
    Choose **Run workflow**, select `main`, and leave **dry_run** checked for validation.
 4. After reviewing the run, start it again with **dry_run** unchecked to publish.
-5. Verify with `npm view @vadem/ui version` and check the README on npm.
+5. The workflow creates a matching GitHub Release and `v<version>` tag at the exact
+   published commit after npm publication succeeds. Verify the npm page and GitHub Release.
+   A dry run creates neither an npm version nor a GitHub Release.
+6. Verify with `npm view @vadem/ui version repository.url` and check the README on npm.
 
 The publish run checks the latest push-triggered CI run for the exact commit before
 installing dependencies, linting, testing, building, and publishing. Dry runs skip that
@@ -53,3 +56,23 @@ and add a project license separately before representing it as open source.
 
 References: [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/) and
 [package README updates](https://docs.npmjs.com/about-package-readme-files/).
+
+## How the repository and npm package are linked
+
+- `projects/ui/package.json` declares the GitHub repository, source subdirectory, issue tracker,
+  homepage, public npm registry, and package visibility. These fields reach npm with a new version.
+- npm Trusted Publishing connects the exact GitHub workflow identity to `@vadem/ui`.
+  npm automatically generates provenance for OIDC publication from this public repository.
+- After successful publication, a separate job creates the matching GitHub tag and Release,
+  linking the package version, source commit, usage guide, and publishing run.
+- The repository homepage and README link to the package on npm.
+
+The **Packages** sidebar on GitHub lists GitHub Packages, a separate registry at
+`npm.pkg.github.com`. A package published to `registry.npmjs.org` is not listed there.
+Publishing another package to GitHub Packages would be a separate distribution decision;
+it is not needed for `npm install @vadem/ui`.
+
+If npm publication succeeds but GitHub release creation fails, rerun only the failed
+release job in Actions. Do not attempt to overwrite the already-published npm version.
+
+References: [GitHub's npm registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry).
