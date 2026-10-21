@@ -5,8 +5,8 @@
 ### Added
 
 - Kanban board (`@vadem/ui/kanban`): columns of application-owned cards with a per-card Move
-  menu (keyboard and touch), mouse/pen dragging between columns with a drop marker, Escape/Tab
-  cancel, focus restored after a move, spoken announcements, custom card and column header
+  menu (keyboard and touch), dragging between columns with a lifted card that follows the
+  pointer (mouse/pen, and long press on touch), edge auto-scroll, a drop marker, Escape/Tab cancel, focus restored after a move, spoken announcements, custom card and column header
   templates, and `vdKanbanApplyMove` to apply move requests immutably.
 
 ## 0.1.0 - 2026-10-21

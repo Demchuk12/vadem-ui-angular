@@ -1752,3 +1752,14 @@ touch never drags so scrolling stays native. The card takes focus when a drag st
 Escape never reaches the board (found by e2e). The columns container is the containing block for
 visually hidden text; without it the hidden count text escaped the scroller and widened the page
 at 320px. Every card renders a small menu; acceptable for hundreds of cards, no virtualization.
+
+### D132 — Kanban: lifted card and long-press touch dragging (2026-10-21)
+
+Owner request: the card should be "picked up" and touch should drag. The card becomes a dashed
+slot (geometry unchanged, so hit testing stays stable) and an inert clone follows the pointer.
+The clone is a manual popover, so the top layer keeps it above dialogs and sticky headers without
+inventing a z-index token. Touch uses a 400 ms long press: earlier movement is a scroll, after
+pickup a non-passive `touchmove` listener on the board stops page scrolling; the long-press
+context menu and callout are suppressed. Long press may start on a link (most of a phone card is
+its title); the click that follows a drag is swallowed. Horizontal edge auto-scroll runs on
+animation frames only while a drag rests near an edge. The Move menu stays the keyboard path.

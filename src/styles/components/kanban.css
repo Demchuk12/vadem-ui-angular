@@ -19,6 +19,8 @@
     --vd-kanban-muted: var(--vd-color-text-muted);
     --vd-kanban-active-bg: var(--vd-color-action-subtle);
     --vd-kanban-marker: var(--vd-color-focus);
+    --vd-kanban-ghost-shadow: var(--vd-shadow-lg);
+    --vd-kanban-ghost-tilt: 2deg;
 
     display: block;
     min-inline-size: 0;
@@ -108,6 +110,7 @@
     box-shadow: var(--vd-kanban-card-shadow);
     cursor: grab;
     user-select: none;
+    -webkit-touch-callout: none;
   }
 
   .vd-kanban__card:focus-visible {
@@ -126,9 +129,40 @@
     margin-inline-end: calc(-1 * var(--vd-space-1));
   }
 
+  /* The lifted card leaves a slot of the same size; its floating copy follows the pointer. */
   .vd-kanban__card[data-dragging] {
+    border-style: dashed;
     background: var(--vd-kanban-active-bg);
+    box-shadow: none;
+  }
+
+  .vd-kanban__card[data-dragging] > * {
+    visibility: hidden;
+  }
+
+  /* The slot holds focus only so Escape reaches the board; the lifted copy is the focus cue. */
+  .vd-kanban__card[data-dragging]:focus-visible {
+    outline: none;
+  }
+
+  /* Shown as a manual popover: the top layer keeps it above everything without z-index. */
+  .vd-kanban__ghost {
+    position: fixed;
+    inset-block: 0 auto;
+    inset-inline: 0 auto;
+    margin: 0;
+    overflow: visible;
+    color: inherit;
+    translate: var(--vd-kanban-ghost-x, 0) var(--vd-kanban-ghost-y, 0);
+    rotate: var(--vd-kanban-ghost-tilt);
+    box-shadow: var(--vd-kanban-ghost-shadow), var(--vd-kanban-card-shadow);
     cursor: grabbing;
+    pointer-events: none;
+  }
+
+  [dir='rtl'] .vd-kanban__ghost,
+  .vd-kanban:dir(rtl) .vd-kanban__ghost {
+    rotate: calc(-1 * var(--vd-kanban-ghost-tilt));
   }
 
   /* Drop marker: a line in the gap; never changes card geometry. */
@@ -178,6 +212,9 @@
     }
     .vd-kanban__card[data-drop]::after {
       background: Highlight;
+    }
+    .vd-kanban__ghost {
+      border-color: Highlight;
     }
   }
 }

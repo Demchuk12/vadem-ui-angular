@@ -27,8 +27,8 @@ the default card content (the label). `ng-template[vdKanbanColumnHeader]` (conte
 column) adds content under the title, such as a total. Interactive content inside a card (links,
 buttons, fields) keeps its own pointer behavior and never starts a drag.
 
-Out of scope: column reordering, WIP limits, per-card locks, swimlanes, virtualization, edge
-auto-scroll while dragging, cross-board dragging. Hundreds of cards per board are fine; every
+Out of scope: column reordering, WIP limits, per-card locks, swimlanes, virtualization,
+vertical page auto-scroll while dragging, cross-board dragging. Hundreds of cards per board are fine; every
 card renders a small menu.
 
 ## Anatomy
@@ -46,7 +46,7 @@ end). A persistent `role=status` outside the columns announces moves.
 | State | Reflected as |
 | --- | --- |
 | idle / disabled / dragging / invalid | host `data-state` |
-| dragged card | card `data-dragging` (subtle action background) |
+| dragged card | card `data-dragging` (dashed slot); `.vd-kanban__ghost` copy follows the pointer |
 | drop position | `data-drop="before|after"` on the neighbouring card (a line in the gap, no geometry change) or `data-drop-target` on an empty column |
 | boundary moves | Move up/down items `aria-disabled` at the column edges |
 | empty column | `li.vd-kanban__empty` with `emptyText` |
@@ -58,12 +58,16 @@ end). A persistent `role=status` outside the columns announces moves.
   menu (Menu Button pattern); activation moves the card and closes the menu.
 - After a move, once the application renders the card in its new place, focus returns to that
   card's Move button (only if focus was lost or inside the board).
-- Mouse/pen: press on the card (not on interactive content), move 4px to start. The drop target is
-  the column under the pointer; the position is computed from the other cards' middles. Release
-  inside a column requests the move; release outside, Escape, Tab, pointercancel, lost capture,
-  disabling or replacing `columns` cancel. The card receives focus when a drag starts so Escape
-  reaches the board.
-- Touch: no dragging (native scrolling wins); use the Move menu.
+- Mouse/pen: press on the card (not on interactive content), move 4px to lift it. Touch: hold
+  still for 400 ms to lift (moving earlier scrolls the board as usual); a long press may start on
+  a link, and the click after a drag is suppressed so the link is not followed.
+- Lifted card: a floating, inert copy (manual popover in the top layer, slightly tilted, large
+  shadow) follows the pointer; the card itself stays as a dashed slot of the same size. The drop
+  target is the column under the pointer; the position is computed from the other cards' middles.
+  Near the board's inline edges the columns scroll horizontally.
+- Release inside a column requests the move; release outside, Escape, Tab, pointercancel, lost
+  capture, disabling or replacing `columns` cancel. The card receives focus when it is lifted so
+  Escape reaches the board.
 - RTL: columns flow from the inline start; vertical meaning of up/down is unchanged.
 
 ## ARIA contract
@@ -82,7 +86,8 @@ end). A persistent `role=status` outside the columns announces moves.
 `--vd-kanban-column-border`, `--vd-kanban-card-gap`, `--vd-kanban-card-padding`,
 `--vd-kanban-card-radius` (concentric), `--vd-kanban-card-bg` (surface-raised),
 `--vd-kanban-card-border`, `--vd-kanban-card-shadow` (highlight-top), `--vd-kanban-muted`,
-`--vd-kanban-active-bg`, `--vd-kanban-marker` (color-focus). Forced colors: system borders,
+`--vd-kanban-active-bg`, `--vd-kanban-marker` (color-focus), `--vd-kanban-ghost-shadow`
+(shadow-lg), `--vd-kanban-ghost-tilt` (2deg, mirrored in RTL). Forced colors: system borders,
 Highlight for the drop marker and dragged card.
 
 ## Adapter notes
