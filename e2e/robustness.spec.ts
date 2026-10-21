@@ -51,11 +51,6 @@ test.describe('every component page', () => {
     }) => {
       await page.emulateMedia({ forcedColors: 'active' });
       await openGallery(page, route);
-      await page
-        .locator('main')
-        .first()
-        .click({ position: { x: 1, y: 1 }, force: true })
-        .catch(() => {});
       const bad: string[] = [];
       for (let i = 0; i < 12; i++) {
         await page.keyboard.press('Tab');
