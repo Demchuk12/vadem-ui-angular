@@ -1,6 +1,6 @@
 {
   "name": "@vadem/ui",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "peerDependencies": {
     "@angular/common": "^22.2.0",
     "@angular/core": "^22.2.0",
@@ -39,7 +39,7 @@
     "url": "git+https://github.com/Demchuk12/vadem-ui-angular.git",
     "directory": "projects/ui"
   },
-  "homepage": "https://github.com/Demchuk12/vadem-ui-angular#readme",
+  "homepage": "https://demchuk12.github.io/vadem-ui-angular/",
   "bugs": {
     "url": "https://github.com/Demchuk12/vadem-ui-angular/issues"
   },

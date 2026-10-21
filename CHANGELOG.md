@@ -1,9 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.0.3 - 2026-10-21
 
 ### Fixed
 
+- Point the package `homepage` to the published component gallery site.
 - Inset the file-preview surface and separate it from the dialog heading and actions.
 
 - Close Select/Combobox lists when disabled and repair active option IDs after dynamic
@@ -13,7 +14,7 @@
 - Clarify Field/Input, Select/Combobox, Dialog, and Menu contracts, including locale defaults
   and the distinct Tab selection behavior.
 
-- Match the exported `VD_VERSION` to the library manifest (`0.0.2` in this checkout).
+- Match the exported `VD_VERSION` to the library manifest (`0.0.3`).
 - Correct the Data table import in the usage guide to `@vadem/ui/table`.
 
 ### Added
@@ -27,7 +28,7 @@
   form, dark/light themes, font loading, and axe in Chromium.
 - A CI consumer job, release-time package verification, and compatibility/public API policy.
 
-These changes are not included in the existing npm `0.0.2` artifact and require a new release.
+These changes are not included in the earlier npm `0.0.2` artifact.
 
 ## 0.0.2 — 2026-10-21
 
