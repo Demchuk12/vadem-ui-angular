@@ -4,6 +4,8 @@
 
 ### Fixed
 
+- Inset the file-preview surface and separate it from the dialog heading and actions.
+
 - Close Select/Combobox lists when disabled and repair active option IDs after dynamic
   removal/disable without mutating the selected value; retain shared Multi-select behavior.
 - Clear a pending Combobox query when Reactive/Template Forms writes a new value or resets.

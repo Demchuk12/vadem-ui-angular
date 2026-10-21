@@ -10,6 +10,7 @@
     align-items: start;
     justify-content: space-between;
     gap: var(--vd-file-preview-gap);
+    padding-block-end: var(--vd-dialog-gap);
   }
   .vd-file-preview__heading {
     min-inline-size: 0;
@@ -32,6 +33,10 @@
     display: grid;
     gap: var(--vd-file-preview-gap);
     min-inline-size: 0;
+    margin-inline: var(--vd-dialog-padding);
+    margin-block-end: var(--vd-dialog-gap);
+    padding: var(--vd-space-5);
+    border-radius: var(--vd-radius-md);
     background: var(--vd-file-preview-bg);
   }
   .vd-file-preview__body:focus-visible {

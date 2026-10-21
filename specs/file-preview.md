@@ -62,3 +62,7 @@ limited to an internally created PDF Blob URL, never a supplied string. No CDK/A
 The scrollable body shows the current Blob.size through shared [File size](file-size.md) decimal
 formatting in `.vd-file-preview__size`, with native bdi isolation. No file means no size metadata.
 This is actual byte count, independent of MIME support, loading status or download availability.
+
+The preview body is inset from the dialog edges and separated from the heading and footer
+with existing dialog spacing tokens. Internal padding keeps file metadata and preview/error
+content away from the preview surface edges in every state.
