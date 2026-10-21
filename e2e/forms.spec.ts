@@ -75,8 +75,8 @@ test.describe('dropzone', () => {
     await openGallery(page, 'dropzone');
     const zone = page.locator('label.vd-dropzone').first();
     const input = zone.locator('input[type=file]');
-    await page.getByRole('link', { name: 'File upload', exact: true }).focus();
-    // Tab from the nav into the page until the file input has focus.
+    // Start at the main landmark so the gallery nav length doesn't matter.
+    await page.locator('#main').focus();
     for (let i = 0; i < 20 && !(await input.evaluate((el) => el === document.activeElement)); i++) {
       await page.keyboard.press('Tab');
     }
