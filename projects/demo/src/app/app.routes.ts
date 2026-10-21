@@ -95,6 +95,7 @@ export const NAV: DemoNavGroup[] = [
     label: 'Screens',
     items: [
       { path: 'screens/dashboard', label: 'Dashboard' },
+      { path: 'screens/members', label: 'Members' },
       { path: 'screens/settings', label: 'Settings' },
       { path: 'screens/login', label: 'Login' },
     ],
@@ -284,6 +285,11 @@ export const routes: Routes = [
         path: 'dashboard',
         title: 'Огляд · Vadem Cloud',
         loadComponent: () => import('./screens/dashboard'),
+      },
+      {
+        path: 'members',
+        title: 'Учасники · Vadem Cloud',
+        loadComponent: () => import('./screens/members'),
       },
       {
         path: 'settings',

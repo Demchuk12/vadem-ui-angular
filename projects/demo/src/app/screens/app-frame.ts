@@ -238,6 +238,7 @@ export class AppFrame {
     },
     { label: 'Розгортання', icon: 'rocket', link: '/screens/dashboard', fragment: 'deploys' },
     { label: 'Активність', icon: 'activity', link: '/screens/dashboard', fragment: 'activity' },
+    { label: 'Учасники', icon: 'users', link: '/screens/members' },
     { label: 'Налаштування', icon: 'settings', link: '/screens/settings' },
   ];
 

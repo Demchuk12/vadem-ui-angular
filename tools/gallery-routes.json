@@ -70,6 +70,7 @@
   "relative-time",
   "active-filters",
   "screens/dashboard",
+  "screens/members",
   "screens/settings",
   "screens/login"
 ]

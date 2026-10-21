@@ -1717,3 +1717,13 @@ motion, forced-colors focus on every tab stop). The latter found one real defect
 its focus indicator in forced colors); other failures were test gaps (tree/chart draw the ring
 on a child or SVG stroke). Avatar, Badge, Empty state, Chart and Locale remain `draft` for lack
 of such tests. Still Chromium-only; Firefox/WebKit and screen-reader passes stay deferred.
+
+### D129 — Real-app proof: Members screen (2026-10-21)
+
+The 1.0 plan asks for a CRUD flow built without private-API workarounds. `screens/members`
+composes Table + sort/pagination, Search input, Dialog + Reactive form + Field + Select, Alert
+dialog with an async action, Toast, Skeleton, Alert and Empty state against a simulated async
+backend that can fail once. It needed no library changes. Observed limits for later: Escape can
+still dismiss the edit dialog while a save is pending (consumer's concern; set `dismissible`
+false while saving if needed), and the server error is shown as an inline Alert, not tied to a
+single Field. Not a substitute for use in a real project (plan Step 6).

@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Added
+
+- Members demo screen (`screens/members`): a complete admin workflow made only of library
+  components. List with search, sort and pages; create/edit in a modal form with validation and a
+  server conflict; confirmed delete that survives a failure; loading, error and empty feedback;
+  toasts. Browser tests cover the whole flow.
+
 ### Fixed
 
 - Announce validator-derived required state: Reactive/Template `Validators.required` and
