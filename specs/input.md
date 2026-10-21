@@ -1,6 +1,6 @@
 # Input
 
-Status: draft · Pattern: native `<input>` / `<textarea>`
+Status: stable · Pattern: native `<input>` / `<textarea>`
 
 Enhances native text-entry elements. Value binding, keyboard, IME, autofill and validation
 attributes stay native; the library adds styling, sizes, and displayed validity.
@@ -79,6 +79,9 @@ Native. Buttons inside a group are separate tab stops after the input.
 
 - Name: a `<label>` (via `vd-field` or consumer). Placeholder is never the label.
 - `aria-invalid="true"` while displayed invalid (component).
+- Required: the `required` input or a Reactive/Template validator is announced by the control itself
+  (native `required` attribute, or `aria-required="true"` when it comes from a validator). The `*`
+  marker is `aria-hidden`; it is visual only.
 - `aria-describedby` contains the field's active hint/error and any additional
   `descriptionIds`, deduplicated (component).
 - Icon buttons inside a group need `aria-label` (consumer); a reveal toggle uses `aria-pressed`.

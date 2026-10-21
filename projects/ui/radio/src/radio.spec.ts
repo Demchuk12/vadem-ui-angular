@@ -42,6 +42,13 @@ describe('VdRadio + VdFieldset', () => {
     expect(radios.every((r) => r.classList.contains('vd-radio'))).toBe(true);
   });
 
+  it('announces a validator-derived required group with the native attribute, not aria-required', () => {
+    const { radios } = setup();
+    // aria-required is not supported on role=radio; the native attribute is.
+    expect(radios.every((r) => r.hasAttribute('required'))).toBe(true);
+    expect(radios.every((r) => !r.hasAttribute('aria-required'))).toBe(true);
+  });
+
   it('shows the group error after touch and clears it on choice', () => {
     const { fixture, host, fieldset, radios } = setup();
     expect(fieldset.hasAttribute('data-invalid')).toBe(false);

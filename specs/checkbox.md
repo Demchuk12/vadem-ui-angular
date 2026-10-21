@@ -1,6 +1,6 @@
 # Checkbox
 
-Status: draft · Pattern: native `<input type="checkbox">` ([APG Checkbox](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/))
+Status: stable · Pattern: native `<input type="checkbox">` ([APG Checkbox](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/))
 
 ## Anatomy
 
@@ -47,6 +47,8 @@ Native: `Space` toggles. Clicking anywhere on the wrapping label toggles.
 ## ARIA contract
 
 - Name: text inside the wrapping `label[vdChoice]`.
+- Required: native `required` from the input, or `aria-required="true"` from a validator such as
+  `requiredTrue` (no native constraint validation side effects).
 - Mixed state is native (`indeterminate` property -> announced as "mixed").
 - Inside `vd-field`: hint/error via `aria-describedby`; omit the field `label` (the choice label names it).
 - Groups: wrap in `<fieldset>` + `<legend>`.

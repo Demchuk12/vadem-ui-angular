@@ -62,6 +62,38 @@ describe('VdInput + VdField (reactive forms)', () => {
     expect(label.querySelector('.vd-field__required')).not.toBeNull();
   });
 
+  it('announces a validator-derived required state to assistive technology', () => {
+    const { input } = setup();
+    // The visual `*` marker is aria-hidden; the control itself must carry the state.
+    expect(input.getAttribute('aria-required')).toBe('true');
+  });
+
+  it('clears a stale error and keeps the field usable after reset and disable', async () => {
+    const { fixture, host, input, root } = setup();
+    input.dispatchEvent(new Event('blur'));
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(input.getAttribute('aria-invalid')).toBe('true');
+
+    host.email.reset();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(input.getAttribute('aria-invalid')).toBeNull();
+    expect(root.querySelector('.vd-field__error')).toBeNull();
+
+    host.email.disable();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(input.disabled).toBe(true);
+    expect(root.querySelector('.vd-field')?.hasAttribute('data-disabled')).toBe(true);
+
+    host.email.enable();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(input.disabled).toBe(false);
+    expect(root.querySelector('.vd-field')?.hasAttribute('data-disabled')).toBe(false);
+  });
+
   it('stays valid until touched, then shows the error', async () => {
     const { fixture, input, root } = setup();
     expect(input.getAttribute('aria-invalid')).toBeNull();

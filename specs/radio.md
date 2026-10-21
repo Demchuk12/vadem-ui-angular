@@ -1,6 +1,6 @@
 # Radio
 
-Status: draft · Pattern: native radio group (`<input type="radio">` sharing a `name`)
+Status: stable · Pattern: native radio group (`<input type="radio">` sharing a `name`)
 
 One choice from a short visible list (2-6 options). For a compact view/filter switch use
 Segmented; for long lists use Select.
@@ -46,6 +46,8 @@ RTL); Space selects the focused one.
 ## ARIA contract
 
 - Group name: the fieldset legend. Option name: the label text.
+- Required: native `required` on each radio (from the input or a validator). `aria-required` is not
+  supported on `role=radio`, so it is never emitted here.
 - Hint/error describe the fieldset (see `specs/field.md`).
 
 ## Component tokens

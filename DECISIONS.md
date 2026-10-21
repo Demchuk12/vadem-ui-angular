@@ -1696,3 +1696,15 @@ Clear the active ID when none remains. This is navigation repair, not an implici
 keep consumer-owned values even when option data temporarily disappears. Do not mark controls
 touched while disabled. Combobox CVA writes also discard the pending query, so reset/writeValue
 reflects the form model rather than stale search text. No dependencies or public inputs added.
+
+### D127 — Announce validator-derived required with aria-required, radios with `required` (2026-10-21)
+
+The Field contract says the control announces `required` while the `*` marker is `aria-hidden`,
+but a Reactive/Template `Validators.required` never set any attribute on the control. The shared
+control base now sets `aria-required="true"` when the state comes only from a validator. Not the
+native `required` attribute: on checkboxes and text inputs it would add native constraint
+validation beside Angular's own. Radios get the native attribute instead, because `aria-required`
+is not supported on `role=radio`. Explicit `required` input and Signal Forms keep the native
+attribute. Field, Input, Checkbox, Radio and Switch specs move to `stable`; evidence is Chromium,
+unit tests and axe. Firefox/WebKit and screen-reader passes remain deferred for 1.0 per the
+lightweight personal-use plan.

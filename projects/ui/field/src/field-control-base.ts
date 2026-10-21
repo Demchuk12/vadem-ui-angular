@@ -1,6 +1,7 @@
 import {
   DestroyRef,
   Directive,
+  ElementRef,
   OnInit,
   Signal,
   booleanAttribute,
@@ -25,7 +26,10 @@ import { VdNgControlState, vdNgControlState } from './ng-control-state';
     '[attr.data-invalid]': 'showInvalid() ? "" : null',
     '[attr.aria-invalid]': 'showInvalid() ? "true" : null',
     '[attr.aria-describedby]': 'field?.describedBy() ?? null',
-    '[attr.required]': 'required() ? "" : null',
+    '[attr.required]': 'required() || (requiredByValidator() && isRadio) ? "" : null',
+    // Reactive/Template validators don't add the native attribute. Announce them with
+    // aria-required (not supported on role=radio, which gets the native attribute instead).
+    '[attr.aria-required]': 'requiredByValidator() && !isRadio ? "true" : null',
   },
 })
 export abstract class VdFieldControlBase implements OnInit {
@@ -49,6 +53,13 @@ export abstract class VdFieldControlBase implements OnInit {
   private readonly ngState = computed(
     () =>
       this.ngSource()?.() ?? { invalid: false, touched: false, disabled: false, required: false },
+  );
+
+  protected readonly isRadio =
+    inject<ElementRef<HTMLElement>>(ElementRef).nativeElement.getAttribute('type') === 'radio';
+  /** Required by a Reactive/Template validator while the `required` input is unset. */
+  protected readonly requiredByValidator = computed(
+    () => !this.required() && this.ngState().required,
   );
 
   /** Invalid as displayed: forced, or form-invalid after the user has touched the control. */

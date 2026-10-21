@@ -1,6 +1,6 @@
 # Field
 
-Status: draft · Pattern: labelled form control with description and error message
+Status: stable · Pattern: labelled form control with description and error message
 
 Wraps exactly one registered form control, including Input/Textarea and Select/Combobox,
 and connects its label, hint and error to it. Use Fieldset for a group of choices.
@@ -41,6 +41,7 @@ and connects its label, hint and error to it. Use Fieldset for a group of choice
 - `label[for]` = control id (component).
 - Control `aria-describedby` = hint id, or error id while invalid, plus optional descriptionIds
   (deduplicated). Additional descriptions remain attached when errors replace hints.
+- The `*` marker is `aria-hidden`; the control announces required state itself (see the control specs).
 - Error text is not a live region: it is announced on focus via `aria-describedby`, which avoids
   noisy announcements while tabbing. Form-level summaries are the consumer's job.
 

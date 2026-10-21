@@ -1,6 +1,6 @@
 # Switch
 
-Status: draft · Pattern: [APG Switch](https://www.w3.org/WAI/ARIA/apg/patterns/switch/) on a native checkbox
+Status: stable · Pattern: [APG Switch](https://www.w3.org/WAI/ARIA/apg/patterns/switch/) on a native checkbox
 
 Use for settings that take effect immediately. In forms that are submitted, prefer a checkbox.
 
@@ -44,6 +44,7 @@ platform behavior for switches built on checkboxes).
 
 - `role="switch"` (component) on the native checkbox: announced as "switch, on/off".
 - Name from the wrapping `label[vdChoice]`. Don't change the label text with the state.
+- Required (validator-derived): `aria-required="true"`; see `specs/checkbox.md`.
 
 ## Component tokens
 

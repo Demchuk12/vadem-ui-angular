@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- Announce validator-derived required state: Reactive/Template `Validators.required` and
+  `requiredTrue` now set `aria-required="true"` on inputs, checkboxes and switches, and the
+  native `required` attribute on radios. Previously only the `aria-hidden` `*` marker showed it.
+
+### Changed
+
+- Field, Input, Checkbox, Radio and Switch specs are now `stable`, backed by unit tests (Reactive
+  and Signal Forms), browser checks at 320px, with long Ukrainian labels, forced colors, reduced
+  motion and disabled states.
+
 ## 0.0.3 - 2026-10-21
 
 ### Fixed
