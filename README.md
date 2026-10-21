@@ -73,3 +73,5 @@ Manrope and JetBrains Mono use SIL OFL 1.1; see [font documentation](src/fonts/R
 and the bundled license files. Icon geometry comes from [Lucide](https://lucide.dev)
 under ISC; see [its license](projects/ui/icon/LICENSE-lucide.txt).
 Vendored design skills retain their own licenses and notices.
+
+Publishing releases: [npm publishing workflow](docs/PUBLISHING.md).

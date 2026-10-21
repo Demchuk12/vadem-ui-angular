@@ -1,0 +1,61 @@
+name: Publish npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Validate the package without publishing
+        type: boolean
+        default: true
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      actions: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Use the workspace npm version
+        run: npm install --global npm@11.13.0
+      - name: Require successful CI for this commit
+        if: ${{ !inputs.dry_run }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ github.sha }}
+        run: |
+          gh run list --repo "$GITHUB_REPOSITORY" --workflow ci.yml --commit "$RELEASE_SHA" --event push --limit 1 --json status,conclusion > "$RUNNER_TEMP/ci.json"
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          const [run] = JSON.parse(readFileSync(`${process.env.RUNNER_TEMP}/ci.json`, 'utf8'));
+          if (run?.status !== 'completed' || run.conclusion !== 'success') {
+            throw new Error('CI must pass for this main commit before publishing. Run again after CI succeeds.');
+          }
+          NODE
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build:ui
+      - name: Inspect package contents
+        working-directory: dist/ui
+        run: npm pack --dry-run
+      - name: Publish with npm Trusted Publishing
+        if: ${{ !inputs.dry_run }}
+        working-directory: dist/ui
+        run: npm publish --access public

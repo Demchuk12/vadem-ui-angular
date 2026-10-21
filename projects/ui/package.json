@@ -23,5 +23,24 @@
     "./fonts/*": {
       "default": "./fonts/*"
     }
+  },
+  "description": "Modern Angular UI components with dark and light themes, CSS design tokens, keyboard interactions, and English/Ukrainian localization.",
+  "keywords": [
+    "angular",
+    "ui",
+    "components",
+    "design-system",
+    "signals",
+    "theming",
+    "accessibility"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Demchuk12/vadem-ui-angular.git",
+    "directory": "projects/ui"
+  },
+  "homepage": "https://github.com/Demchuk12/vadem-ui-angular#readme",
+  "bugs": {
+    "url": "https://github.com/Demchuk12/vadem-ui-angular/issues"
   }
 }

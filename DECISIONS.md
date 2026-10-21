@@ -1631,3 +1631,11 @@ project instructions, design routing/provenance, and asset licenses. Historical 
 statements above describe their original runs; they are not current validation claims.
 Replace the generated library README with package-specific setup and usage guidance.
 The local development Git history is preserved separately from the new import history.
+
+### D120 — npm publishing through GitHub OIDC (2026-10-21)
+
+Use a manually dispatched `publish.yml` workflow on main, with dry-run enabled by default.
+Direct publication requires a successful push-triggered CI run for the exact commit.
+Build and publish only `dist/ui`; authenticate with npm Trusted Publishing rather than
+a stored npm token. Keep the library version consumer-controlled in its package manifest.
+One-time npm trust configuration is documented in `docs/PUBLISHING.md`.
