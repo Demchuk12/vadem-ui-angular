@@ -1776,3 +1776,16 @@ dragging; touch never drags. The core duplicates four small date helpers instead
 `@vadem/ui/calendar`, whose entry point contains Angular components. Found by tests: the release
 after Escape-canceling a drag created an event (click now suppressed), and long titles spilled out
 of month cells. Narrow containers swap month chips for dots.
+
+### D134 — Buzzer, Board, Leaderboard for live games (2026-11-07)
+
+Requested for a quiz app, added to the library rather than the app. Buzzer fires on pointer down,
+not on click: in a first-press-wins game the release delay is a disadvantage. The click that ends
+that press is de-duplicated with a flag that clears itself shortly after release, because a release
+outside the button produces no click. Not-ready states use `aria-disabled`, not `disabled`, so focus
+survives a state change between questions. Board columns stay in DOM order with subgrid (a named
+group per column, plain tab order) instead of `role=grid`: a player only picks a tile, and arrow-key
+grid navigation would add a contract without helping that task. The narrow layout follows the
+board's own width through a container query, since the same board appears in a phone and in a stream
+view. Leaderboard takes `rank` from the application because ties share a rank. Found by tests: a row
+overflowed at 320px with enlarged text, so rows wrap.

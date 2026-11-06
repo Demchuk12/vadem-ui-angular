@@ -156,6 +156,7 @@ export interface VdLocale {
     selectionLabel: (count: number) => string;
   };
   sidebar: { label: string; closeLabel: string };
+  board: { playedLabel: string };
   stat: { increaseLabel: string; decreaseLabel: string; unchangedLabel: string };
   stepper: { label: string; completedLabel: string; errorLabel: string };
   tagInput: {
@@ -370,6 +371,7 @@ export const vdLocaleEn: VdLocale = {
     selectionLabel: (count) => `${count} selected`,
   },
   sidebar: { label: 'Navigation', closeLabel: 'Close' },
+  board: { playedLabel: 'Played' },
   stat: { increaseLabel: 'Increase', decreaseLabel: 'Decrease', unchangedLabel: 'No change' },
   stepper: { label: 'Steps', completedLabel: 'Completed', errorLabel: 'Needs attention' },
   tagInput: {
@@ -591,6 +593,7 @@ export const vdLocaleUk: VdLocale = {
     selectionLabel: (count) => `Обрано: ${count}`,
   },
   sidebar: { label: 'Навігація', closeLabel: 'Закрити' },
+  board: { playedLabel: 'Зіграно' },
   stat: { increaseLabel: 'Зростання', decreaseLabel: 'Падіння', unchangedLabel: 'Без змін' },
   stepper: { label: 'Кроки', completedLabel: 'Завершено', errorLabel: 'Потребує уваги' },
   tagInput: {

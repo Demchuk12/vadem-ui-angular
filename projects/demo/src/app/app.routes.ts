@@ -63,6 +63,9 @@ export const NAV: DemoNavGroup[] = [
       { path: 'table', label: 'Table' },
       { path: 'description-list', label: 'Description list' },
       { path: 'stat', label: 'Stat' },
+      { path: 'buzzer', label: 'Buzzer' },
+      { path: 'board', label: 'Board' },
+      { path: 'leaderboard', label: 'Leaderboard' },
       { path: 'chart', label: 'Charts' },
       { path: 'progress', label: 'Progress & Meter' },
       { path: 'skeleton', label: 'Skeleton' },
@@ -129,6 +132,21 @@ export const routes: Routes = [
     path: 'chart',
     title: 'Charts · Vadem',
     loadComponent: () => import('./pages/chart'),
+  },
+  {
+    path: 'buzzer',
+    title: 'Buzzer · Vadem',
+    loadComponent: () => import('./pages/buzzer'),
+  },
+  {
+    path: 'board',
+    title: 'Board · Vadem',
+    loadComponent: () => import('./pages/board'),
+  },
+  {
+    path: 'leaderboard',
+    title: 'Leaderboard · Vadem',
+    loadComponent: () => import('./pages/leaderboard'),
   },
   {
     path: 'stat',

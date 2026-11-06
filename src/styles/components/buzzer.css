@@ -1,0 +1,96 @@
+/* Buzzer - spec: specs/buzzer.md */
+@layer vd.components {
+  .vd-buzzer {
+    --vd-buzzer-size: 18rem;
+    --vd-buzzer-font-size: var(--vd-text-2xl);
+    --vd-buzzer-bg: var(--vd-color-fill);
+    --vd-buzzer-fg: var(--vd-color-text-muted);
+    --vd-buzzer-border: var(--vd-color-border-strong);
+    --vd-buzzer-shadow: none;
+    --vd-buzzer-sheen: none;
+
+    display: grid;
+    place-items: center;
+    inline-size: min(100%, var(--vd-buzzer-size));
+    aspect-ratio: 1;
+    padding: var(--vd-space-6);
+    border: var(--vd-border-width) solid var(--vd-buzzer-border);
+    border-radius: var(--vd-radius-full);
+    background-color: var(--vd-buzzer-bg);
+    background-image: var(--vd-buzzer-sheen);
+    box-shadow: var(--vd-buzzer-shadow);
+    color: var(--vd-buzzer-fg);
+    font-family: inherit;
+    font-size: var(--vd-buzzer-font-size);
+    font-weight: var(--vd-weight-extrabold);
+    letter-spacing: var(--vd-tracking-tighter);
+    line-height: var(--vd-leading-tight);
+    text-align: center;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+    cursor: not-allowed;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    /* No panning or double-tap zoom: a press must never become a gesture. */
+    touch-action: none;
+    transition:
+      var(--vd-transition-colors),
+      scale var(--vd-duration-fast) var(--vd-ease-out);
+  }
+
+  .vd-buzzer:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+
+  .vd-buzzer[data-state='ready'] {
+    --vd-buzzer-bg: var(--vd-color-action);
+    --vd-buzzer-fg: var(--vd-color-on-action);
+    --vd-buzzer-border: transparent;
+    --vd-buzzer-sheen: linear-gradient(to bottom, var(--vd-color-sheen), transparent);
+    --vd-buzzer-shadow: var(--vd-highlight-top), var(--vd-shadow-glow-action);
+
+    cursor: pointer;
+  }
+
+  @media (hover: hover) {
+    .vd-buzzer[data-state='ready']:hover {
+      --vd-buzzer-bg: var(--vd-color-action-hover);
+    }
+  }
+
+  .vd-buzzer[data-state='ready']:active {
+    --vd-buzzer-bg: var(--vd-color-action-active);
+
+    scale: var(--vd-press-scale);
+  }
+
+  .vd-buzzer[data-state='won'] {
+    --vd-buzzer-bg: var(--vd-color-success);
+    --vd-buzzer-fg: var(--vd-color-on-status);
+    --vd-buzzer-border: transparent;
+    --vd-buzzer-shadow: var(--vd-highlight-top);
+  }
+
+  .vd-buzzer[data-state='spent'] {
+    --vd-buzzer-bg: transparent;
+    --vd-buzzer-border: var(--vd-color-border-control);
+
+    border-style: dashed;
+  }
+
+  @media (forced-colors: active) {
+    .vd-buzzer {
+      border-color: GrayText;
+      color: GrayText;
+    }
+
+    .vd-buzzer[data-state='ready'],
+    .vd-buzzer[data-state='won'] {
+      border-color: ButtonText;
+      color: ButtonText;
+    }
+  }
+}

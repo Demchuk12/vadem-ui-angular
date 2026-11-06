@@ -1,0 +1,91 @@
+/* Leaderboard - spec: specs/leaderboard.md */
+@layer vd.components {
+  .vd-leaderboard {
+    --vd-leaderboard-gap: var(--vd-space-1);
+    --vd-leaderboard-row-padding: var(--vd-space-3);
+    --vd-leaderboard-score-size: var(--vd-text-lg);
+
+    display: grid;
+    gap: var(--vd-leaderboard-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Wraps instead of overflowing: enlarged text moves the score to its own line. */
+  .vd-leaderboard__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--vd-space-3);
+    min-block-size: var(--vd-control-height-lg);
+    padding-block: var(--vd-space-2);
+    padding-inline: var(--vd-leaderboard-row-padding);
+    border: var(--vd-border-width) solid var(--vd-color-border);
+    border-radius: var(--vd-radius-md);
+    background-color: var(--vd-color-surface-raised);
+    transition: var(--vd-transition-colors);
+  }
+
+  .vd-leaderboard__row[aria-current='true'] {
+    border-color: var(--vd-color-action);
+    background-color: var(--vd-color-action-subtle);
+  }
+
+  .vd-leaderboard__rank {
+    flex: none;
+    min-inline-size: 2ch;
+    color: var(--vd-color-text-muted);
+    font-family: var(--vd-font-mono);
+    font-size: var(--vd-text-sm);
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+  }
+
+  .vd-leaderboard__row[data-leader] .vd-leaderboard__rank {
+    color: var(--vd-color-text-accent);
+    font-weight: var(--vd-weight-bold);
+  }
+
+  .vd-leaderboard__main {
+    display: flex;
+    flex: 1 1 8rem;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--vd-space-1) var(--vd-space-2);
+    min-inline-size: 0;
+  }
+
+  .vd-leaderboard__name {
+    min-inline-size: 0;
+    font-weight: var(--vd-weight-semibold);
+    overflow-wrap: anywhere;
+  }
+
+  .vd-leaderboard__row[data-inactive] .vd-leaderboard__name {
+    color: var(--vd-color-text-muted);
+  }
+
+  .vd-leaderboard__score {
+    flex: none;
+    margin-inline-start: auto;
+    font-size: var(--vd-leaderboard-score-size);
+    font-weight: var(--vd-weight-extrabold);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--vd-tracking-tight);
+  }
+
+  .vd-leaderboard__row[data-negative] .vd-leaderboard__score {
+    color: var(--vd-color-danger-text);
+  }
+
+  .vd-leaderboard__row > [slot='actions'] {
+    flex: none;
+  }
+
+  @media (forced-colors: active) {
+    .vd-leaderboard__row[aria-current='true'] {
+      border-color: Highlight;
+    }
+  }
+}

@@ -130,6 +130,7 @@ are recalculated there. Check contrast in both themes after changing colors.
 | Confirm an important action          | `@vadem/ui/alert-dialog`                      | [Alert dialog](../specs/alert-dialog.md)                                 |
 | Table markup and row/column controls | `@vadem/ui/table`                             | [Table](../specs/table.md), [Data table](../specs/data-table.md)         |
 | File selection and upload state      | `@vadem/ui/dropzone`, `@vadem/ui/upload-list` | [Dropzone](../specs/dropzone.md), [Upload list](../specs/upload-list.md) |
+| Live quiz and game screens           | `@vadem/ui/buzzer`, `@vadem/ui/board`, `@vadem/ui/leaderboard` | [Buzzer](../specs/buzzer.md), [Board](../specs/board.md), [Leaderboard](../specs/leaderboard.md) |
 | Component strings                    | `@vadem/ui/locale`                            | [Locale](../specs/locale.md)                                             |
 
 Upload state components do not send files to a server. Applications own network requests,

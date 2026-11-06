@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.3.0 - 2026-11-07
+
+### Added
+
+- Buzzer (`@vadem/ui/buzzer`): a large press-to-answer button that reacts on pointer down, with
+  locked, ready, won and spent states, blocked touch gestures, and focus kept in every state.
+- Board (`@vadem/ui/board`): titled columns of value tiles on subgrid, as buttons or read-only
+  elements, with open, active and played states; each column becomes a row below 40rem of the
+  board's own width. Locale key `board.playedLabel` (en, uk).
+- Leaderboard (`@vadem/ui/leaderboard`): ordered standings with shared ranks, the viewer's row,
+  negative scores, inactive players, status content and per-row actions.
+
 ## 0.2.0 - 2026-10-22
 
 ### Added

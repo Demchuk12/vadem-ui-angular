@@ -1,0 +1,149 @@
+/* Board - spec: specs/board.md */
+@layer vd.components {
+  .vd-board {
+    --vd-board-gap: var(--vd-space-2);
+    --vd-board-cell-height: var(--vd-space-16);
+    --vd-board-cell-font-size: var(--vd-text-xl);
+    --vd-board-heading-fg: var(--vd-color-text-muted);
+
+    display: block;
+    container-type: inline-size;
+  }
+
+  .vd-board__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--vd-board-columns), minmax(0, 1fr));
+    grid-template-rows: auto repeat(var(--vd-board-rows), minmax(var(--vd-board-cell-height), 1fr));
+    gap: var(--vd-board-gap);
+  }
+
+  /* Titles of different lengths share one row; tiles line up across columns. */
+  .vd-board-column {
+    display: grid;
+    grid-row: span var(--vd-board-column-span);
+    grid-template-rows: subgrid;
+    min-inline-size: 0;
+  }
+
+  .vd-board-column__heading {
+    align-self: end;
+    padding-block-end: var(--vd-space-1);
+    color: var(--vd-board-heading-fg);
+    font-size: var(--vd-text-sm);
+    font-weight: var(--vd-weight-semibold);
+    line-height: var(--vd-leading-snug);
+    text-align: center;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+
+  .vd-board-cell {
+    --vd-board-cell-bg: var(--vd-color-surface-raised);
+    --vd-board-cell-bg-hover: var(--vd-color-fill-hover);
+    --vd-board-cell-fg: var(--vd-color-text);
+    --vd-board-cell-border: var(--vd-color-border-strong);
+
+    display: grid;
+    place-items: center;
+    min-block-size: var(--vd-board-cell-height);
+    min-inline-size: 0;
+    padding: var(--vd-space-1);
+    border: var(--vd-border-width) solid var(--vd-board-cell-border);
+    border-radius: var(--vd-radius-md);
+    background-color: var(--vd-board-cell-bg);
+    box-shadow: var(--vd-highlight-top);
+    color: var(--vd-board-cell-fg);
+    font-family: inherit;
+    font-size: var(--vd-board-cell-font-size);
+    font-weight: var(--vd-weight-extrabold);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--vd-tracking-tighter);
+    line-height: var(--vd-leading-tight);
+    user-select: none;
+    transition:
+      var(--vd-transition-colors),
+      scale var(--vd-duration-fast) var(--vd-ease-out);
+  }
+
+  button.vd-board-cell {
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button.vd-board-cell:focus-visible {
+    outline: var(--vd-focus-ring-width) solid var(--vd-color-focus);
+    outline-offset: var(--vd-focus-ring-offset);
+  }
+
+  @media (hover: hover) {
+    button.vd-board-cell:not(:disabled):hover {
+      background-color: var(--vd-board-cell-bg-hover);
+    }
+  }
+
+  button.vd-board-cell:not(:disabled):active {
+    scale: var(--vd-press-scale);
+  }
+
+  .vd-board-cell[data-state='active'] {
+    --vd-board-cell-bg: var(--vd-color-action);
+    --vd-board-cell-bg-hover: var(--vd-color-action-hover);
+    --vd-board-cell-fg: var(--vd-color-on-action);
+    --vd-board-cell-border: transparent;
+  }
+
+  /* The value goes, the tile keeps its place: played tiles recede without shifting the board. */
+  .vd-board-cell[data-state='played'] {
+    --vd-board-cell-bg: var(--vd-color-surface-sunken);
+    --vd-board-cell-border: var(--vd-color-border);
+
+    box-shadow: none;
+    cursor: default;
+  }
+
+  .vd-board-cell[data-state='played'] .vd-board-cell__value {
+    visibility: hidden;
+  }
+
+  /* A phone cannot fit six titled columns: each column becomes a titled row. */
+  @container (width < 40rem) {
+    .vd-board__grid {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: none;
+      gap: var(--vd-space-3);
+    }
+
+    .vd-board-column {
+      grid-row: auto;
+      grid-template-columns: repeat(var(--vd-board-rows), minmax(0, 1fr));
+      grid-template-rows: auto;
+      gap: var(--vd-space-1);
+    }
+
+    .vd-board-column__heading {
+      grid-column: 1 / -1;
+      text-align: start;
+    }
+
+    .vd-board-cell {
+      --vd-board-cell-height: var(--vd-space-12);
+      --vd-board-cell-font-size: var(--vd-text-sm);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .vd-board-cell {
+      border-color: ButtonText;
+    }
+
+    .vd-board-cell[data-state='active'] {
+      border-color: Highlight;
+      outline: var(--vd-focus-ring-width) solid Highlight;
+    }
+
+    .vd-board-cell[data-state='played'] {
+      border-color: GrayText;
+    }
+  }
+}

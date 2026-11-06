@@ -193,6 +193,43 @@
       }
     }
   },
+  "@vadem/ui/board": {
+    "exports": [
+      "VD_BOARD",
+      "VdBoard",
+      "VdBoardCell",
+      "VdBoardCellState (type)",
+      "VdBoardColumn"
+    ],
+    "classes": {
+      "VdBoard": {
+        "kind": "component",
+        "selector": "vd-board",
+        "inputs": [
+          "label",
+          "rows"
+        ],
+        "outputs": []
+      },
+      "VdBoardCell": {
+        "kind": "component",
+        "selector": "button[vdBoardCell], div[vdBoardCell]",
+        "inputs": [
+          "playedLabel",
+          "state"
+        ],
+        "outputs": []
+      },
+      "VdBoardColumn": {
+        "kind": "component",
+        "selector": "vd-board-column",
+        "inputs": [
+          "heading"
+        ],
+        "outputs": []
+      }
+    }
+  },
   "@vadem/ui/breadcrumbs": {
     "exports": [
       "VdBreadcrumbs"
@@ -227,6 +264,24 @@
           "variant"
         ],
         "outputs": []
+      }
+    }
+  },
+  "@vadem/ui/buzzer": {
+    "exports": [
+      "VdBuzzer",
+      "VdBuzzerState (type)"
+    ],
+    "classes": {
+      "VdBuzzer": {
+        "kind": "component",
+        "selector": "button[vdBuzzer]",
+        "inputs": [
+          "state"
+        ],
+        "outputs": [
+          "buzz"
+        ]
       }
     }
   },
@@ -1068,6 +1123,34 @@
       "VdTypeahead"
     ],
     "classes": {}
+  },
+  "@vadem/ui/leaderboard": {
+    "exports": [
+      "VD_LEADERBOARD",
+      "VdLeaderboard",
+      "VdLeaderboardRow"
+    ],
+    "classes": {
+      "VdLeaderboard": {
+        "kind": "directive",
+        "selector": "ol[vdLeaderboard]",
+        "inputs": [],
+        "outputs": []
+      },
+      "VdLeaderboardRow": {
+        "kind": "component",
+        "selector": "li[vdLeaderboardRow]",
+        "inputs": [
+          "current",
+          "inactive",
+          "name",
+          "negative",
+          "rank",
+          "score"
+        ],
+        "outputs": []
+      }
+    }
   },
   "@vadem/ui/locale": {
     "exports": [
