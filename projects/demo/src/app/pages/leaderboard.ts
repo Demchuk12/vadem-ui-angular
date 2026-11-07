@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { VdBadge } from '@vadem/ui/badge';
 import { VdButton } from '@vadem/ui/button';
 import { VdIcon } from '@vadem/ui/icon';
-import { VD_LEADERBOARD } from '@vadem/ui/leaderboard';
+import { VD_LEADERBOARD, type VdLeaderboardChange } from '@vadem/ui/leaderboard';
 
 @Component({
   selector: 'demo-leaderboard',
@@ -41,17 +41,36 @@ import { VD_LEADERBOARD } from '@vadem/ui/leaderboard';
     <section class="demo-section" aria-labelledby="board-host">
       <div class="demo-section__head">
         <h2 id="board-host">With actions</h2>
-        <p>Controls go in the actions slot, for example correcting a score by hand.</p>
+        <p>
+          Controls go in the actions slot. A change rises from the score and the row flashes once.
+        </p>
       </div>
       <ol vdLeaderboard class="demo-leaderboard">
-        <li vdLeaderboardRow [rank]="1" name="Оксана" [score]="score().toString()">
+        <li
+          vdLeaderboardRow
+          [rank]="1"
+          name="Оксана"
+          [score]="score().toString()"
+          [negative]="score() < 0"
+          [change]="change()"
+        >
           <button
             slot="actions"
             vdButton
             size="sm"
             iconOnly
-            aria-label="Додати 100 очок: Оксана"
-            (click)="score.set(score() + 100)"
+            aria-label="Відняти 400 очок: Оксана"
+            (click)="add(-400)"
+          >
+            <vd-icon name="minus" />
+          </button>
+          <button
+            slot="actions"
+            vdButton
+            size="sm"
+            iconOnly
+            aria-label="Додати 600 очок: Оксана"
+            (click)="add(600)"
           >
             <vd-icon name="plus" />
           </button>
@@ -72,4 +91,13 @@ import { VD_LEADERBOARD } from '@vadem/ui/leaderboard';
 })
 export default class LeaderboardPage {
   protected readonly score = signal(1200);
+  protected readonly change = signal<VdLeaderboardChange | null>(null);
+
+  protected add(points: number): void {
+    this.score.update((score) => score + points);
+    this.change.set({
+      label: points > 0 ? `+${points}` : `−${-points}`,
+      tone: points > 0 ? 'gain' : 'loss',
+    });
+  }
 }

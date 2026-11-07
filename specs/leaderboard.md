@@ -15,7 +15,10 @@ overlay alike.
       <bdi class="vd-leaderboard__name">Name</bdi>
       <!-- default content: badges, status -->
     </span>
-    <bdi class="vd-leaderboard__score" dir="ltr">1 200</bdi>
+    <span class="vd-leaderboard__scorebox">
+      <bdi class="vd-leaderboard__score" dir="ltr">1 200</bdi>
+      <bdi class="vd-leaderboard__change" data-tone="gain" aria-hidden="true">+600</bdi>
+    </span>
     <!-- [slot=actions] -->
   </li>
 </ol>
@@ -25,25 +28,27 @@ overlay alike.
 
 `li[vdLeaderboardRow]` (inside `ol[vdLeaderboard]`)
 
-| Name       | Type      | Default  | Notes |
-| ---------- | --------- | -------- | ----- |
-| `rank`     | `number`  | required | Passed in, not derived: equal scores may share a rank. Rank 1 is marked as leader. |
-| `name`     | `string`  | required | Isolated with `<bdi>`. |
-| `score`    | `string`  | required | Formatted by the application (Intl). Stays left-to-right in RTL. |
-| `negative` | `boolean` | `false`  | Danger color, in addition to the minus sign in `score`. |
-| `current`  | `boolean` | `false`  | The viewer's own row: `aria-current="true"` and an accent border. |
-| `inactive` | `boolean` | `false`  | Muted name. Say why in projected content. |
+| Name       | Type                                        | Default  | Notes                                                                                                                                                                                                      |
+| ---------- | ------------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `rank`     | `number`                                    | required | Passed in, not derived: equal scores may share a rank. Rank 1 is marked as leader.                                                                                                                         |
+| `name`     | `string`                                    | required | Isolated with `<bdi>`.                                                                                                                                                                                     |
+| `score`    | `string`                                    | required | Formatted by the application (Intl). Stays left-to-right in RTL.                                                                                                                                           |
+| `negative` | `boolean`                                   | `false`  | Danger color, in addition to the minus sign in `score`.                                                                                                                                                    |
+| `current`  | `boolean`                                   | `false`  | The viewer's own row: `aria-current="true"` and an accent border.                                                                                                                                          |
+| `inactive` | `boolean`                                   | `false`  | Muted name. Say why in projected content.                                                                                                                                                                  |
+| `change`   | `{ label, tone: 'gain' \| 'loss' } \| null` | `null`   | Shows once per new object: the label rises from the score and the row flashes in its tone for 1.6 s. Decorative (`aria-hidden`); the application announces the change. Under reduced motion it only fades. |
 
 ## Slots / content
 
-| Slot              | Accepts                                  |
-| ----------------- | ---------------------------------------- |
-| default           | Status next to the name (badge, "offline") |
+| Slot               | Accepts                                                   |
+| ------------------ | --------------------------------------------------------- |
+| default            | Status next to the name (badge, "offline")                |
 | `[slot="actions"]` | Controls at the row's end, e.g. a score correction button |
 
 ## States
 
-`data-leader`, `data-negative`, `data-inactive`, `aria-current="true"`.
+`data-leader`, `data-negative`, `data-inactive`, `aria-current="true"`, `data-change="gain|loss"`
+while a change shows.
 
 ## Keyboard
 
@@ -60,11 +65,11 @@ Sorting, ties, formatting numbers, and announcing changes.
 
 ## Component tokens
 
-| Token                          | Default         |
-| ------------------------------ | --------------- |
-| `--vd-leaderboard-gap`         | `--vd-space-1`  |
-| `--vd-leaderboard-row-padding` | `--vd-space-3`  |
-| `--vd-leaderboard-score-size`  | `--vd-text-lg`  |
+| Token                          | Default        |
+| ------------------------------ | -------------- |
+| `--vd-leaderboard-gap`         | `--vd-space-1` |
+| `--vd-leaderboard-row-padding` | `--vd-space-3` |
+| `--vd-leaderboard-score-size`  | `--vd-text-lg` |
 
 ## Adapter notes
 

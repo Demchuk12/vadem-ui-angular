@@ -1,1 +1,6 @@
-export { VdLeaderboard, VdLeaderboardRow, VD_LEADERBOARD } from './leaderboard';
+export {
+  VdLeaderboard,
+  VdLeaderboardRow,
+  VD_LEADERBOARD,
+  type VdLeaderboardChange,
+} from './leaderboard';

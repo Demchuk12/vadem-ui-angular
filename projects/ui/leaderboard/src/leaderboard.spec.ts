@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { VD_LEADERBOARD } from './leaderboard';
+import { VD_LEADERBOARD, type VdLeaderboardChange } from './leaderboard';
 
 @Component({
   imports: [VD_LEADERBOARD],
@@ -57,4 +57,49 @@ describe('Leaderboard', () => {
     await fixture.whenStable();
     expect(first.getAttribute('aria-current')).toBe('true');
   });
+
+  it('shows each change once, in its tone, and clears it', async () => {
+    vi.useFakeTimers();
+    try {
+      const fixture = TestBed.createComponent(ChangeHost);
+      fixture.detectChanges();
+      const row = (fixture.nativeElement as HTMLElement).querySelector('li')!;
+      expect(row.querySelector('.vd-leaderboard__change')).toBeNull();
+
+      fixture.componentInstance.change.set({ label: '+600', tone: 'gain' });
+      fixture.detectChanges();
+      const label = row.querySelector('.vd-leaderboard__change')!;
+      expect(label.textContent?.trim()).toBe('+600');
+      expect(label.getAttribute('aria-hidden')).toBe('true');
+      expect(row.getAttribute('data-change')).toBe('gain');
+
+      // An equal change is still a new one.
+      fixture.componentInstance.change.set({ label: '+600', tone: 'gain' });
+      fixture.detectChanges();
+      expect(row.querySelector('.vd-leaderboard__change')).not.toBe(label);
+
+      vi.advanceTimersByTime(1600);
+      fixture.detectChanges();
+      expect(row.querySelector('.vd-leaderboard__change')).toBeNull();
+      expect(row.hasAttribute('data-change')).toBe(false);
+
+      fixture.componentInstance.change.set({ label: '−400', tone: 'loss' });
+      fixture.detectChanges();
+      expect(row.getAttribute('data-change')).toBe('loss');
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 });
+
+@Component({
+  imports: [VD_LEADERBOARD],
+  template: `
+    <ol vdLeaderboard>
+      <li vdLeaderboardRow [rank]="1" name="Оксана" score="1 200" [change]="change()"></li>
+    </ol>
+  `,
+})
+class ChangeHost {
+  readonly change = signal<VdLeaderboardChange | null>(null);
+}

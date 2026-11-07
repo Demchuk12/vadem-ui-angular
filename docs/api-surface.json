@@ -1128,6 +1128,7 @@
     "exports": [
       "VD_LEADERBOARD",
       "VdLeaderboard",
+      "VdLeaderboardChange (type)",
       "VdLeaderboardRow"
     ],
     "classes": {
@@ -1141,6 +1142,7 @@
         "kind": "component",
         "selector": "li[vdLeaderboardRow]",
         "inputs": [
+          "change",
           "current",
           "inactive",
           "name",

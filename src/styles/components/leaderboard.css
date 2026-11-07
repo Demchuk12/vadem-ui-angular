@@ -66,9 +66,16 @@
     color: var(--vd-color-text-muted);
   }
 
-  .vd-leaderboard__score {
+  /* Holds the score and the change that rises from it. */
+  .vd-leaderboard__scorebox {
+    position: relative;
+    display: inline-flex;
     flex: none;
     margin-inline-start: auto;
+  }
+
+  .vd-leaderboard__score {
+    flex: none;
     font-size: var(--vd-leaderboard-score-size);
     font-weight: var(--vd-weight-extrabold);
     font-variant-numeric: tabular-nums;
@@ -81,6 +88,91 @@
 
   .vd-leaderboard__row > [slot='actions'] {
     flex: none;
+  }
+
+  /* A score change: the label rises from the score and fades, the row flashes once. */
+  .vd-leaderboard__change {
+    position: absolute;
+    inset-block-end: 100%;
+    inset-inline-end: 0;
+    padding-block: var(--vd-space-0-5);
+    padding-inline: var(--vd-space-2);
+    border-radius: var(--vd-radius-full);
+    background-color: var(--vd-color-success-subtle);
+    color: var(--vd-color-success-text);
+    font-size: var(--vd-text-sm);
+    font-weight: var(--vd-weight-bold);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    pointer-events: none;
+    animation: vd-leaderboard-change 1600ms var(--vd-ease-out) forwards;
+  }
+
+  .vd-leaderboard__change[data-tone='loss'] {
+    background-color: var(--vd-color-danger-subtle);
+    color: var(--vd-color-danger-text);
+  }
+
+  .vd-leaderboard__row[data-change] {
+    animation: vd-leaderboard-flash 1200ms var(--vd-ease-out);
+  }
+
+  .vd-leaderboard__row[data-change='gain'] {
+    --vd-leaderboard-flash: var(--vd-color-success);
+  }
+
+  .vd-leaderboard__row[data-change='loss'] {
+    --vd-leaderboard-flash: var(--vd-color-danger);
+  }
+
+  @keyframes vd-leaderboard-flash {
+    from {
+      border-color: var(--vd-leaderboard-flash);
+      box-shadow: 0 0 0 var(--vd-focus-ring-width) var(--vd-leaderboard-flash);
+    }
+  }
+
+  @keyframes vd-leaderboard-change {
+    0% {
+      opacity: 0;
+    }
+    15%,
+    70% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .vd-leaderboard__change {
+      animation-name: vd-leaderboard-change-rise;
+    }
+
+    @keyframes vd-leaderboard-change-rise {
+      0% {
+        opacity: 0;
+        translate: 0 var(--vd-space-2);
+        scale: 0.8;
+      }
+      15% {
+        opacity: 1;
+        translate: 0 0;
+        scale: 1.1;
+      }
+      25%,
+      70% {
+        opacity: 1;
+        translate: 0 0;
+        scale: 1;
+      }
+      100% {
+        opacity: 0;
+        translate: 0 calc(var(--vd-space-4) * -1);
+        scale: 1;
+      }
+    }
   }
 
   @media (forced-colors: active) {

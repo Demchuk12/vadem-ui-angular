@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.0 - 2026-11-07
+
+### Added
+
+- Leaderboard: `change` on a row shows a score change once, such as "+600" rising from the score,
+  and flashes the row in its tone (gain or loss). Under reduced motion it only fades.
+
 ## 0.4.0 - 2026-11-07
 
 ### Added
