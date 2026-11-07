@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0 - 2026-11-07
+
+### Added
+
+- Select: content with `slot="start"` is shown in the trigger before the value, for example the
+  selected option's icon.
+
 ## 0.3.0 - 2026-11-07
 
 ### Added

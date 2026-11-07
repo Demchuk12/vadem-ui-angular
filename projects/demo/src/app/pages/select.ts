@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { VdButton } from '@vadem/ui/button';
 import { VdField } from '@vadem/ui/field';
@@ -37,6 +37,7 @@ import { VdCombobox, VdOption, VdSelect } from '@vadem/ui/select';
         </vd-field>
         <vd-field label="Роль">
           <vd-select [(value)]="role">
+            <vd-icon slot="start" [name]="roleIcon()" />
             <vd-option value="owner"><vd-icon name="check-circle" />Власник</vd-option>
             <vd-option value="admin"><vd-icon name="info" />Адміністратор</vd-option>
             <vd-option value="member">Учасник</vd-option>
@@ -183,6 +184,9 @@ export default class SelectPage {
   protected readonly city = new FormControl<string | null>(null, Validators.required);
   protected readonly cityValue = signal<string | null>(null);
   protected readonly role = signal<string | null>('member');
+  protected readonly roleIcon = computed(() =>
+    this.role() === 'owner' ? 'check-circle' : this.role() === 'admin' ? 'info' : 'user',
+  );
   protected readonly town = signal<string | null>(null);
 
   constructor() {

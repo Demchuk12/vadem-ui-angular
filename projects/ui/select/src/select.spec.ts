@@ -11,6 +11,7 @@ import { installFakePopover } from '../../test-utils/fake-popover';
   template: `
     <vd-field label="Місто" error="Оберіть місто">
       <vd-select [formControl]="city" placeholder="Оберіть">
+        <span slot="start" class="lead" aria-hidden="true">★</span>
         <vd-option value="kyiv">Київ</vd-option>
         <vd-option value="lviv" disabled>Львів</vd-option>
         <vd-option value="lutsk">Луцьк</vd-option>
@@ -65,6 +66,13 @@ describe('VdSelect / VdCombobox', () => {
     expect(listOf(trigger).getAttribute('role')).toBe('listbox');
     expect(root.querySelector('label')!.getAttribute('for')).toBe(trigger.id);
     expect(trigger.textContent).toContain('Оберіть');
+  });
+
+  it('projects start content into the trigger, not the listbox', () => {
+    const { root, trigger, listOf } = setup();
+    expect(trigger.querySelector('.lead')).not.toBeNull();
+    expect(listOf(trigger).querySelector('.lead')).toBeNull();
+    expect(root.querySelectorAll('.lead')).toHaveLength(1);
   });
 
   it('opens with ArrowDown, skips disabled, selects with Enter', () => {

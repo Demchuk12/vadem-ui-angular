@@ -42,6 +42,7 @@ import type { VdOption } from './option';
       (keydown)="onKeydown($event)"
       (blur)="onBlur()"
     >
+      <ng-content select="[slot=start]" />
       <span class="vd-select__value" [attr.data-placeholder]="selectedLabel() ? null : ''">
         {{ selectedLabel() || placeholder() }}
       </span>

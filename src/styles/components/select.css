@@ -63,6 +63,11 @@
     cursor: pointer;
   }
 
+  /* Leading content of the trigger, such as the selected option's icon. */
+  .vd-select__trigger > [slot='start'] {
+    flex: none;
+  }
+
   .vd-combobox__field {
     cursor: text;
   }

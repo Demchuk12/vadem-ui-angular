@@ -19,6 +19,7 @@ platform), anchored under the field with CSS anchor positioning (flips up when n
     aria-controls="lb"
     aria-activedescendant="opt-2"
   >
+    <!-- optional [slot=start] content, e.g. the selected option's icon -->
     <span class="vd-select__value" [data-placeholder]>Київ</span>
     <svg class="vd-select__chevron" />
   </button>
@@ -55,6 +56,10 @@ platform), anchored under the field with CSS anchor positioning (flips up when n
 
 Option: `value` (required), `disabled`, `label` (text for trigger/typeahead/filter; defaults to
 text content). Content may include icons.
+
+Select content with `slot="start"` is projected into the trigger before the value, not into the
+listbox. The application binds it to the current value, for example to keep the selected option's
+icon visible when the list is closed. It is decorative: the trigger's name comes from the label.
 
 ## Keyboard - select
 
