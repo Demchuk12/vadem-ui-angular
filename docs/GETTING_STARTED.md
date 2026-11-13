@@ -112,6 +112,27 @@ Override accent hue in global CSS, after the library import:
 }
 ```
 
+### Product colors on the Vadem curve
+
+Every Vadem ramp uses one lightness curve (`--vd-l-50` … `--vd-l-950`) and one relative chroma
+curve (`--vd-c-50` … `--vd-c-950`); a ramp is only a hue and a peak chroma on top of them. An
+application that needs its own colors (states, categories, a second brand hue) builds them the
+same way, so they match Vadem's contrast at every step and follow future curve changes:
+
+```css
+:root {
+  --app-hue-effort: 65;
+  --app-chroma-effort: 0.16;
+  --app-effort-400: oklch(var(--vd-l-400) calc(var(--app-chroma-effort) * var(--vd-c-400)) var(--app-hue-effort));
+  --app-effort-700: oklch(var(--vd-l-700) calc(var(--app-chroma-effort) * var(--vd-c-700)) var(--app-hue-effort));
+  /* Text-safe pair: step 700 on light surfaces, step 400 on dark ones. */
+  --app-effort: light-dark(var(--app-effort-700), var(--app-effort-400));
+}
+```
+
+Keep product hues away from Vadem's status hues (danger 25, warning 75, success 150, info 240)
+when both appear side by side, and check both themes for contrast.
+
 Vadem styles use the `vd` CSS cascade layer; unlayered application rules take precedence.
 Prefer semantic/component custom properties over copying internal selectors. Accent overrides
 on a subtree should share an element with `data-theme` or `data-density` so derived tokens

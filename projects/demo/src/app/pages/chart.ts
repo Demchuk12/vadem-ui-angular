@@ -87,6 +87,17 @@ const WEEKS = Array.from({ length: 12 }, (_, i) => `Т${i + 1}`);
             [format]="ms"
           />
         </article>
+        <article vdCard>
+          <vd-line-chart
+            title="Пульс за тренування"
+            description="Вісь за даними (zero=false) і проміжки: підходи в accent, відпочинок нейтральний"
+            [zero]="false"
+            [ranges]="workoutRanges"
+            [categories]="workoutMinutes"
+            [series]="[{ name: 'Пульс', values: heartRate }]"
+            [format]="bpm"
+          />
+        </article>
       </div>
     </section>
 
@@ -180,4 +191,16 @@ export default class ChartPage {
     0.42, 0.39, 0.4, 0.35, 0.33, 0.36, 0.3, 0.28, 0.27, 0.25, 0.26, 0.21,
   ];
   protected readonly ms = (v: number) => `${new Intl.NumberFormat('uk').format(v)} мс`;
+  protected readonly workoutMinutes = Array.from({ length: 13 }, (_, i) => `${i * 2} хв`);
+  protected readonly heartRate = [94, 138, 112, 99, 141, 117, 101, 144, 119, 103, 146, 121, 98];
+  protected readonly workoutRanges = [
+    { from: 0, to: 1, label: 'Підхід 1', tone: 'accent' },
+    { from: 1, to: 3, label: 'Відпочинок' },
+    { from: 3, to: 4, label: 'Підхід 2', tone: 'accent' },
+    { from: 4, to: 6, label: 'Відпочинок' },
+    { from: 6, to: 7, label: 'Підхід 3', tone: 'accent' },
+    { from: 7, to: 9, label: 'Відпочинок' },
+    { from: 9, to: 10, label: 'Підхід 4', tone: 'accent' },
+  ];
+  protected readonly bpm = (v: number) => `${new Intl.NumberFormat('uk').format(v)} уд/хв`;
 }

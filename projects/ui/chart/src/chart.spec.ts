@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { vdLocaleProvider, vdLocaleUk } from '@vadem/ui/locale';
 import { VdBarChart } from './bar-chart';
+import { VdLineChart } from './line-chart';
 import { VdSparkline } from './sparkline';
 import type { VdChartSeries } from './core/chart-math';
 
@@ -17,6 +18,21 @@ class Host {
   readonly categories = ['Пн', 'Вт', 'Ср'];
   readonly series = signal<VdChartSeries[]>([{ name: 'Запити', values: [4, 9, null] }]);
 }
+
+@Component({
+  imports: [VdLineChart],
+  providers: [vdLocaleProvider(vdLocaleUk)],
+  template: `
+    <vd-line-chart
+      title="Пульс"
+      [zero]="false"
+      [categories]="['0:00', '0:30', '1:00', '1:30']"
+      [series]="[{ name: 'Пульс', values: [96, 140, 118, 101] }]"
+      [ranges]="[{ from: 1, to: 2, label: 'Підхід 1', tone: 'effort' }]"
+    />
+  `,
+})
+class RangesHost {}
 
 describe('Charts', () => {
   it('names the figure, hides the legend for one series and offers a data table', async () => {
@@ -64,5 +80,20 @@ describe('Charts', () => {
     const svg = (fixture.nativeElement as HTMLElement).querySelector('vd-sparkline svg')!;
     expect(svg.getAttribute('role')).toBe('img');
     expect(svg.getAttribute('aria-label')).toBe('Дохід: від 10 до 18, мінімум 10, максимум 18');
+  });
+
+  it('lists highlighted ranges in the data table', async () => {
+    const fixture = TestBed.createComponent(RangesHost);
+    await fixture.whenStable();
+    const chart = (fixture.nativeElement as HTMLElement).querySelector('vd-line-chart')!;
+    chart.querySelector<HTMLButtonElement>('.vd-chart__table-toggle')!.click();
+    await fixture.whenStable();
+
+    const head = [...chart.querySelectorAll('thead th')].map((c) => c.textContent?.trim());
+    const rows = [...chart.querySelectorAll('tbody tr')].map((r) =>
+      [...r.children].map((c) => c.textContent?.trim()),
+    );
+    expect(head).toEqual(['Категорія', 'Проміжок', 'Пульс']);
+    expect(rows.map((r) => r[1])).toEqual(['—', 'Підхід 1', 'Підхід 1', '—']);
   });
 });

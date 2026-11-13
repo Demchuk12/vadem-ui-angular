@@ -8,6 +8,7 @@
     --vd-chart-band: var(--vd-color-fill);
     --vd-chart-crosshair: var(--vd-color-border-strong);
     --vd-chart-area-opacity: 0.12;
+    --vd-chart-range-fill: var(--vd-color-fill);
 
     display: block;
     min-inline-size: 0;
@@ -164,6 +165,21 @@
     stroke-width: 2;
     paint-order: stroke;
   }
+  /* Ranges sit behind grid and marks; tones other than the built-in two come from the app. */
+  .vd-chart__range {
+    fill: var(--vd-chart-range-fill);
+  }
+  .vd-chart__range[data-tone='accent'] {
+    --vd-chart-range-fill: var(--vd-color-action-subtle);
+  }
+  @media (forced-colors: active) {
+    .vd-chart__range {
+      fill: none;
+      stroke: CanvasText;
+      stroke-dasharray: 2 4;
+    }
+  }
+
   .vd-chart__crosshair {
     stroke: var(--vd-chart-crosshair);
     stroke-width: 1;
@@ -203,6 +219,10 @@
   }
   .vd-chart__tooltip-category {
     color: var(--vd-color-text-muted);
+  }
+  .vd-chart__tooltip-note {
+    color: var(--vd-color-text);
+    font-weight: var(--vd-weight-medium);
   }
   .vd-chart__tooltip-row {
     display: grid;

@@ -1789,3 +1789,33 @@ grid navigation would add a contract without helping that task. The narrow layou
 board's own width through a container query, since the same board appears in a phone and in a stream
 view. Leaderboard takes `rank` from the application because ties share a rank. Found by tests: a row
 overflowed at 320px with enlarged text, so rows wrap.
+
+### D135 — Line charts may leave zero out of the value axis (2026-11-13)
+
+Requested by SetBeat: heart rate stays between about 60 and 190 bpm, and a zero baseline pressed
+the trace into the top half of the plot. Lines may opt out with `zero=false` because position along
+the axis carries the value; bars never do, since their length is the value and a truncated bar
+misstates it. The default stays `true`, so existing charts do not change. With zero out of range the
+area wash rests on the plot floor instead of on a baseline that is not drawn. Ticks keep the 1, 2,
+2.5, 5 steps; a flat series gets a one-unit margin on each side instead of a zero-width domain.
+
+### D136 — Chart ranges: category spans with open tones (2026-11-13)
+
+Requested by SetBeat to show sets and rest periods under a heart rate line. A range is a span of
+category indexes, not of values: the x axis is categorical, and value-axis bands would read as a
+second scale. Two tones are built in (neutral fill, subtle accent); any other `tone` is passed to
+`data-tone` and coloured by the application through `--vd-chart-range-fill`, because product
+meanings (effort, recovery) do not belong in the library palette. Ranges carry labels, so meaning
+never rests on colour: the label joins the tooltip, the point's accessible name and a data-table
+column. Adjacent ranges meet on the shared category, which then lists both labels. Under forced
+colours fills disappear, so ranges become dashed outlines.
+
+### D137 — The ramp curve is public for application colors (2026-11-13)
+
+Also from SetBeat: an application with its own state colours should match Vadem's contrast rather
+than pick hex values. Instead of a ramp generator or extra hue slots, the existing lightness and
+chroma curves (`--vd-l-*`, `--vd-c-*`) and the hue/chroma knobs are declared public tokens and the
+usage guide shows the formula. No new tokens or tooling; an application's ramp follows curve
+changes automatically because it references the same custom properties. Step values may be retuned
+in minors; step names are stable until a major.
+

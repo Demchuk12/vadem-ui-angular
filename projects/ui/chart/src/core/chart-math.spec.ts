@@ -7,6 +7,7 @@ import {
   vdLinearScale,
   vdNearestIndex,
   vdNiceTicks,
+  vdRangeNotes,
   vdStack,
 } from './chart-math';
 
@@ -24,6 +25,30 @@ describe('chart math', () => {
     expect(vdNiceTicks(-30, 45)).toEqual([-40, -20, 0, 20, 40, 60]);
     expect(vdNiceTicks(0, 0)).toEqual([0, 1]);
     expect(vdNiceTicks(12, 980, 4)).toEqual([0, 250, 500, 750, 1000]);
+  });
+
+  it('fits ticks to the data when zero is not required', () => {
+    expect(vdNiceTicks(92, 147, 4, false)).toEqual([80, 100, 120, 140, 160]);
+    expect(vdNiceTicks(-30, 45, 5, false)).toEqual([-40, -20, 0, 20, 40, 60]);
+    expect(vdNiceTicks(120, 120, 5, false)).toEqual([119, 119.5, 120, 120.5, 121]);
+  });
+
+  it('extends the extent to zero only by default', () => {
+    const series = [{ name: 'bpm', values: [96, null, 147, 120] }];
+    expect(vdExtent(series, 4, false)).toEqual([0, 147]);
+    expect(vdExtent(series, 4, false, false)).toEqual([96, 147]);
+    expect(vdExtent([{ name: 'empty', values: [null] }], 1, false, false)).toEqual([0, 0]);
+  });
+
+  it('labels every category a range covers, joining overlaps', () => {
+    const notes = vdRangeNotes(
+      [
+        { from: 1, to: 2, label: 'Set 1' },
+        { from: 4, to: 2, label: 'Rest' },
+      ],
+      6,
+    );
+    expect(notes).toEqual([null, 'Set 1', 'Set 1, Rest', 'Rest', 'Rest', null]);
   });
 
   it('splits a range into bands and finds the nearest one', () => {

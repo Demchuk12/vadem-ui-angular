@@ -37,6 +37,8 @@ export interface VdLocale {
   chart: {
     tableLabel: string;
     categoryLabel: string;
+    /** Table header for highlighted ranges (line chart `ranges`). */
+    rangeLabel: string;
     /** Spoken summary of a sparkline: values arrive already formatted. */
     trendSummary: (first: string, last: string, min: string, max: string) => string;
   };
@@ -233,6 +235,7 @@ export const vdLocaleEn: VdLocale = {
   chart: {
     tableLabel: 'Data table',
     categoryLabel: 'Category',
+    rangeLabel: 'Range',
     trendSummary: (first, last, min, max) => `from ${first} to ${last}, low ${min}, high ${max}`,
   },
   datePicker: {
@@ -443,6 +446,7 @@ export const vdLocaleUk: VdLocale = {
   chart: {
     tableLabel: 'Таблиця даних',
     categoryLabel: 'Категорія',
+    rangeLabel: 'Проміжок',
     trendSummary: (first, last, min, max) =>
       `від ${first} до ${last}, мінімум ${min}, максимум ${max}`,
   },

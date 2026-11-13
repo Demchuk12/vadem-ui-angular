@@ -23,6 +23,11 @@ For example, `VdDataTable` comes from `@vadem/ui/table`; `@vadem/ui/data-table` 
 Documented selectors, inputs/outputs/models, CSS customization hooks and state attributes,
 locale keys, and keyboard/accessibility contracts are also part of the intended stable API.
 
+Among tokens, the semantic and component custom properties are public, and so are the ramp
+curves `--vd-l-*` and `--vd-c-*` and the hue/chroma knobs (`--vd-hue-*`, `--vd-chroma-*`), so
+applications can build their own ramps on the same curve. Step values may be retuned in minor
+releases; the step names do not change without a major release. Other primitives are internal.
+
 Unexported implementation files are private. Exported helpers need the same contract review
 as components; placing their source in a `core/` directory does not make an exported symbol
 private. Do not import source files or generated `fesm2022`/`types` paths directly.

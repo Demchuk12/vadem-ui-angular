@@ -92,6 +92,9 @@ export function seriesSlot(index: number, count: number): string {
             [style.--vd-chart-tip-y.px]="tooltipY()"
           >
             <span class="vd-chart__tooltip-category" dir="auto">{{ categories()[active()] }}</span>
+            @if (notes()[active()]; as note) {
+              <span class="vd-chart__tooltip-note" dir="auto">{{ note }}</span>
+            }
             @for (s of series(); track $index) {
               <span class="vd-chart__tooltip-row">
                 <span
@@ -120,6 +123,9 @@ export function seriesSlot(index: number, count: number): string {
             <thead>
               <tr>
                 <th scope="col">{{ t().categoryLabel }}</th>
+                @if (hasNotes()) {
+                  <th scope="col">{{ t().rangeLabel }}</th>
+                }
                 @for (s of series(); track $index) {
                   <th scope="col">{{ s.name }}</th>
                 }
@@ -129,6 +135,9 @@ export function seriesSlot(index: number, count: number): string {
               @for (c of categories(); track $index; let i = $index) {
                 <tr>
                   <th scope="row">{{ c }}</th>
+                  @if (hasNotes()) {
+                    <td>{{ notes()[i] ?? '—' }}</td>
+                  }
                   @for (s of series(); track $index) {
                     <td>{{ valueText(s.values[i]) }}</td>
                   }
@@ -156,11 +165,16 @@ export class VdChartFrame {
   readonly tooltipY = input(0);
   readonly tableLabel = input<string>();
   readonly loading = input(false);
+  /** Per-category note (labels of highlighted ranges); shown in the tooltip and the table. */
+  readonly notes = input<readonly (string | null)[]>([]);
+  readonly rangeLabel = input<string>();
 
   protected readonly t = vdTexts('chart', {
     tableLabel: this.tableLabel,
     categoryLabel: this.categoryLabel,
+    rangeLabel: this.rangeLabel,
   });
+  protected readonly hasNotes = computed(() => this.notes().some((n) => n !== null));
   private readonly locale = inject(VD_LOCALE);
   readonly titleId = vdUniqueId('vd-chart-title');
   readonly tableId = vdUniqueId('vd-chart-table');

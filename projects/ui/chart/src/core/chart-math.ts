@@ -9,6 +9,29 @@ export interface VdChartSeries {
   values: readonly (number | null)[];
 }
 
+/**
+ * A highlighted stretch of categories, drawn behind the marks (a set, a sale, an outage).
+ * `from` and `to` are category indexes, inclusive. `tone` becomes `data-tone`: `neutral`
+ * (default) and `accent` are styled by the library; any other name is styled by the
+ * application through `--vd-chart-range-fill`.
+ */
+export interface VdChartRange {
+  from: number;
+  to: number;
+  label: string;
+  tone?: string;
+}
+
+/** Label of every range covering each category, joined; `null` where none applies. */
+export function vdRangeNotes(ranges: readonly VdChartRange[], count: number): (string | null)[] {
+  return Array.from({ length: count }, (_, i) => {
+    const labels = ranges
+      .filter((r) => i >= Math.min(r.from, r.to) && i <= Math.max(r.from, r.to))
+      .map((r) => r.label);
+    return labels.length ? labels.join(', ') : null;
+  });
+}
+
 export interface VdLinearScale {
   domain: readonly [number, number];
   range: readonly [number, number];
@@ -27,10 +50,14 @@ export function vdLinearScale(
 }
 
 /** Round numbers for an axis: 1, 2, 2.5 or 5 times a power of ten. Always includes zero. */
-export function vdNiceTicks(min: number, max: number, target = 5): number[] {
-  const lo = Math.min(0, min);
-  const hi = Math.max(0, max);
-  if (lo === hi) return [0, 1];
+export function vdNiceTicks(min: number, max: number, target = 5, includeZero = true): number[] {
+  let lo = includeZero ? Math.min(0, min) : min;
+  let hi = includeZero ? Math.max(0, max) : max;
+  if (lo === hi) {
+    if (includeZero) return [0, 1];
+    lo -= 1;
+    hi += 1;
+  }
   const raw = (hi - lo) / Math.max(1, target);
   const power = 10 ** Math.floor(Math.log10(raw));
   const step = [1, 2, 2.5, 5, 10].map((m) => m * power).find((s) => s >= raw) ?? 10 * power;
@@ -93,10 +120,15 @@ export function vdStack(series: readonly VdChartSeries[], count: number): VdStac
   );
 }
 
-/** [min, max] over all values (stacked totals when `stacked`). */
-export function vdExtent(series: readonly VdChartSeries[], count: number, stacked: boolean) {
-  let min = 0;
-  let max = 0;
+/** [min, max] over all values (stacked totals when `stacked`); zero is included by default. */
+export function vdExtent(
+  series: readonly VdChartSeries[],
+  count: number,
+  stacked: boolean,
+  includeZero = true,
+) {
+  let min = includeZero ? 0 : Infinity;
+  let max = includeZero ? 0 : -Infinity;
   if (stacked) {
     for (const segments of vdStack(series, count))
       for (const seg of segments) {
@@ -111,6 +143,7 @@ export function vdExtent(series: readonly VdChartSeries[], count: number, stacke
         max = Math.max(max, v);
       }
   }
+  if (min > max) return [0, 0] as const;
   return [min, max] as const;
 }
 

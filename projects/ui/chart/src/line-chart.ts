@@ -6,7 +6,14 @@ import {
   computed,
   input,
 } from '@angular/core';
-import { vdAreaPath, vdExtent, vdLinePath, type VdPoint } from './core/chart-math';
+import {
+  vdAreaPath,
+  vdExtent,
+  vdLinePath,
+  vdRangeNotes,
+  type VdChartRange,
+  type VdPoint,
+} from './core/chart-math';
 import { VdChartBase } from './chart-base';
 import { VdChartFrame } from './chart-frame';
 
@@ -40,6 +47,8 @@ const END_LABEL_GAP = 14;
       [format]="format()"
       [categoryLabel]="categoryLabel()"
       [loading]="loading()"
+      [notes]="notes()"
+      [rangeLabel]="rangeLabel()"
       [active]="active()"
       [tooltipX]="tooltip()?.x ?? null"
       [tooltipY]="tooltip()?.y ?? 0"
@@ -55,6 +64,20 @@ const END_LABEL_GAP = 14;
           [attr.aria-labelledby]="frame().titleId"
           (pointermove)="onPointer($event)"
         >
+          @if (rangeRects().length) {
+            <g class="vd-chart__ranges" aria-hidden="true">
+              @for (r of rangeRects(); track $index) {
+                <rect
+                  class="vd-chart__range"
+                  [attr.data-tone]="r.tone"
+                  [attr.x]="r.x"
+                  [attr.y]="box().y0"
+                  [attr.width]="r.width"
+                  [attr.height]="box().y1 - box().y0"
+                />
+              }
+            </g>
+          }
           <g class="vd-chart__grid" aria-hidden="true">
             @for (t of tickMarks(); track t.value) {
               <line
@@ -146,10 +169,22 @@ const END_LABEL_GAP = 14;
 export class VdLineChart extends VdChartBase {
   /** Soft area under a single series; ignored with several series. */
   readonly area = input(true, { transform: booleanAttribute });
+  /**
+   * Start the value axis at zero (default). `false` fits the axis to the data, for values that
+   * never approach zero, such as heart rate or body weight.
+   */
+  readonly zero = input(true, { transform: booleanAttribute });
+  /** Highlighted stretches of categories behind the line, e.g. sets in a workout. */
+  readonly ranges = input<readonly VdChartRange[]>([]);
+  /** Header of the ranges column in the data table. */
+  readonly rangeLabel = input<string>();
 
   protected readonly stackedValues = () => false;
   protected extentOf() {
-    return vdExtent(this.series(), this.count(), false);
+    return vdExtent(this.series(), this.count(), false, this.zero());
+  }
+  protected override includesZero(): boolean {
+    return this.zero();
   }
 
   protected readonly showArea = computed(() => this.area() && this.series().length === 1);
@@ -187,7 +222,34 @@ export class VdLineChart extends VdChartBase {
   );
 
   protected readonly lines = computed(() => this.points().map((p) => vdLinePath(p)));
-  protected readonly areaD = computed(() => vdAreaPath(this.points()[0] ?? [], this.scale()(0)));
+
+  protected readonly notes = computed(() => vdRangeNotes(this.ranges(), this.count()));
+  protected override noteAt(index: number): string | null {
+    return this.notes()[index] ?? null;
+  }
+
+  /** Ranges span the positions of their first and last category; a single category gets one step. */
+  protected readonly rangeRects = computed(() => {
+    const xs = this.xs();
+    const last = xs.length - 1;
+    if (last < 0) return [];
+    const { x0, x1 } = this.box();
+    const clamp = (i: number) => Math.min(last, Math.max(0, Math.round(i)));
+    return this.ranges().map((r) => {
+      const from = clamp(Math.min(r.from, r.to));
+      const to = clamp(Math.max(r.from, r.to));
+      const half = from === to ? this.step() / 2 : 0;
+      const start = Math.max(x0, xs[from] - half);
+      const end = Math.min(x1, xs[to] + half);
+      return { x: start, width: Math.max(0, end - start), tone: r.tone ?? 'neutral' };
+    });
+  });
+  /** The area rests on zero when the axis shows it, otherwise on the bottom of the plot. */
+  protected readonly areaD = computed(() => {
+    const ticks = this.ticks();
+    const base = Math.min(Math.max(0, ticks[0]), ticks[ticks.length - 1]);
+    return vdAreaPath(this.points()[0] ?? [], this.scale()(base));
+  });
 
   protected readonly tickMarks = computed(() =>
     this.ticks().map((value) => ({ value, y: this.scale()(value) })),

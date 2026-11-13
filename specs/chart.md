@@ -70,6 +70,9 @@ Never two value axes. Two measures of different scale are two charts.
 | stacked (bar) | boolean | false | Positives stack up, negatives down |
 | highlight (bar) | `number \| 'max' \| null` | null | Emphasis, one series only: the rest is muted |
 | area (line) | boolean | true | Area wash under a single series |
+| ranges (line) | `{ from, to, label, tone? }[]` | `[]` | Highlighted stretches of categories (indexes, inclusive) behind the marks; see Ranges |
+| rangeLabel (line) | string | locale: `chart.rangeLabel` | Header of the ranges column in the data table |
+| zero (line) | boolean | true | `false` fits the value axis to the data (heart rate, weight); the area rests on the plot floor. Bars always start at zero |
 | values, label (sparkline) | `number[]`, string | required label | `role="img"`, spoken summary (locale `chart.trendSummary`) |
 
 ## Color
@@ -88,6 +91,25 @@ surface ring. Grid lines are 1px solid in the border color; zero is a step stron
 labels are thinned so they never overlap; horizontal bars reserve up to 40% for names.
 Lines get direct end labels for 2–4 series; labels that would collide are dropped (the legend
 still names every series).
+
+## Ranges
+
+A range marks a stretch of the category axis: a set in a workout, a sale, an outage. It is a
+flat fill from its first to its last category position, behind grid and marks, never a second
+value axis. `tone` becomes `data-tone`: `neutral` (default, fill token) and `accent` (subtle
+action fill) are built in; any other name is the application's, styled through
+`--vd-chart-range-fill`:
+
+```css
+.vd-chart__range[data-tone='effort'] {
+  --vd-chart-range-fill: oklch(var(--vd-l-100) calc(0.16 * var(--vd-c-100)) 65);
+}
+```
+
+The label of every range covering a category is part of that category everywhere: a line in
+the tooltip, a suffix of the point's accessible name ("1:30: Пульс 140; Підхід 2") and a column
+in the data table ("—" outside ranges). Colour never carries the meaning alone. Forced colors draw
+ranges as a dashed outline.
 
 ## Interaction
 
@@ -113,6 +135,7 @@ hues are kept (`forced-color-adjust: none`) while legend and table carry identit
 
 ## Component tokens
 
+`--vd-chart-range-fill` → color-fill (`accent` tone: color-action-subtle);
 `--vd-chart-surface` (gaps, rings) → color-surface; `--vd-chart-grid` → color-border;
 `--vd-chart-axis` → color-text-muted; `--vd-chart-band` → color-fill; `--vd-chart-crosshair` →
 color-border-strong; `--vd-chart-area-opacity` 0.12; `--vd-sparkline-ink` → color-text-subtle;

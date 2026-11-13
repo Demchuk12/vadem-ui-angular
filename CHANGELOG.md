@@ -1,5 +1,20 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Icons: `heart-pulse`, `refresh-cw`, `watch`.
+- Line chart: `zero` input. `[zero]="false"` fits the value axis to the data for values that never
+  approach zero, such as heart rate; the area under a single series then rests on the plot floor.
+  `vdNiceTicks` and `vdExtent` take an optional `includeZero` argument (default `true`).
+- Line chart: `ranges` highlight stretches of categories (`{ from, to, label, tone? }`) behind the
+  line. Labels appear in the tooltip, the point's accessible name and a data-table column
+  (`rangeLabel`, locale key `chart.rangeLabel`, en and uk). Tones `neutral` and `accent` are built
+  in; others are styled with `--vd-chart-range-fill`. Helper `vdRangeNotes`.
+- Docs: the ramp curves `--vd-l-*` / `--vd-c-*` and hue/chroma knobs are public tokens; the usage
+  guide shows how an application builds its own colors on them.
+
 ## 0.5.0 - 2026-11-07
 
 ### Added

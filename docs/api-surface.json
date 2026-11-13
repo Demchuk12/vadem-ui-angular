@@ -440,6 +440,7 @@
       "VdChartFormat (type)",
       "VdChartFrame",
       "VdChartKind (type)",
+      "VdChartRange (type)",
       "VdChartSeries (type)",
       "vdExtent",
       "vdLinearScale",
@@ -449,6 +450,7 @@
       "vdNearestIndex",
       "vdNiceTicks",
       "VdPoint (type)",
+      "vdRangeNotes",
       "VdSparkline",
       "vdStack",
       "VdStackSegment (type)"
@@ -475,6 +477,8 @@
           "format",
           "kind",
           "loading",
+          "notes",
+          "rangeLabel",
           "series",
           "tableLabel",
           "title",
@@ -489,7 +493,10 @@
         "kind": "component",
         "selector": "vd-line-chart",
         "inputs": [
-          "area"
+          "area",
+          "rangeLabel",
+          "ranges",
+          "zero"
         ],
         "outputs": []
       },

@@ -51,10 +51,14 @@ export abstract class VdChartBase {
 
   protected abstract readonly stackedValues: () => boolean;
   protected abstract extentOf(): readonly [number, number];
+  /** Whether the value axis must reach zero. Bars always do; lines may opt out. */
+  protected includesZero(): boolean {
+    return true;
+  }
 
   protected readonly ticks = computed(() => {
     const [min, max] = this.extentOf();
-    return vdNiceTicks(min, max, Math.max(2, Math.round(this.height() / 60)));
+    return vdNiceTicks(min, max, Math.max(2, Math.round(this.height() / 60)), this.includesZero());
   });
 
   private readonly compact = computed(
@@ -88,12 +92,18 @@ export abstract class VdChartBase {
     return seriesSlot(index, this.series().length);
   }
 
+  /** Range labels at a category; charts without ranges have none. */
+  protected noteAt(_index: number): string | null {
+    return null;
+  }
+
   /** "Пн: Запити 4 200, Помилки 12" - the accessible name of one category. */
   protected pointLabel(index: number): string {
     const values = this.series()
       .map((s) => `${s.name} ${this.frame().valueText(s.values[index])}`)
       .join(', ');
-    return `${this.categories()[index]}: ${values}`;
+    const note = this.noteAt(index);
+    return `${this.categories()[index]}: ${values}${note ? `; ${note}` : ''}`;
   }
 
   /** Every `k`-th category label so labels never overlap. */
