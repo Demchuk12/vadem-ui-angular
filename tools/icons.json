@@ -35,6 +35,7 @@
     "folder": "folder",
     "git-branch": "git-branch",
     "globe": "globe",
+    "heart-pulse": "heart-pulse",
     "info": "info",
     "key": "key-round",
     "layout-dashboard": "layout-dashboard",
@@ -50,6 +51,7 @@
     "panel-left": "panel-left",
     "pencil": "pencil",
     "plus": "plus",
+    "refresh-cw": "refresh-cw",
     "rocket": "rocket",
     "search": "search",
     "settings": "settings",
@@ -62,6 +64,7 @@
     "upload": "upload",
     "user": "user",
     "users": "users",
+    "watch": "watch",
     "x": "x",
     "x-circle": "circle-x"
   }
