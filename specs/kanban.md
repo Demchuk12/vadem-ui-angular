@@ -70,6 +70,10 @@ end). A persistent `role=status` outside the columns announces moves.
   Escape reaches the board.
 - RTL: columns flow from the inline start; vertical meaning of up/down is unchanged.
 
+- Motion: when `columns` change, cards that stay on the board slide from their old place to the new
+  one (`duration-slow`, `ease-out`, transforms only); a dropped card starts where it was let go.
+  New cards just appear. Nothing moves when the duration token is zero (reduced motion).
+
 ## ARIA contract
 
 - Board: role=group with `label` and `aria-describedby` instructions.

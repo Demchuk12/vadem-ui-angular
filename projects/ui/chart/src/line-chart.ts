@@ -102,7 +102,12 @@ const END_LABEL_GAP = 14;
               <path class="vd-chart__area" [attr.d]="areaD()" [attr.data-series]="slot(0)" />
             }
             @for (l of lines(); track $index) {
-              <path class="vd-chart__line" [attr.d]="l" [attr.data-series]="slot($index)" />
+              <path
+                class="vd-chart__line"
+                pathLength="1"
+                [attr.d]="l"
+                [attr.data-series]="slot($index)"
+              />
             }
             @if (active() >= 0) {
               <line

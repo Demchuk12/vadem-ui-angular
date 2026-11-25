@@ -165,6 +165,52 @@
     stroke-width: 2;
     paint-order: stroke;
   }
+  /* The first appearance only: the elements stay when data or size changes. Nothing but paint and
+     transforms is animated. */
+  @media (prefers-reduced-motion: no-preference) {
+    /* The whole group grows from the zero line, so negative and stacked bars stay together. */
+    .vd-bar-chart .vd-chart__marks {
+      transform-box: view-box;
+      transform-origin: 0 var(--vd-chart-zero, 0);
+      animation: vd-chart-grow-block var(--vd-duration-slow) var(--vd-ease-out);
+    }
+    .vd-bar-chart[data-orientation='horizontal'] .vd-chart__marks {
+      transform-origin: var(--vd-chart-zero, 0) 0;
+      animation-name: vd-chart-grow-inline;
+    }
+    .vd-line-chart .vd-chart__line {
+      animation: vd-chart-draw var(--vd-duration-slow) var(--vd-ease-out);
+    }
+    .vd-line-chart .vd-chart__area {
+      animation: vd-chart-fade var(--vd-duration-slow) var(--vd-ease-out);
+    }
+  }
+  @keyframes vd-chart-grow-block {
+    from {
+      scale: 1 0;
+    }
+  }
+  @keyframes vd-chart-grow-inline {
+    from {
+      scale: 0 1;
+    }
+  }
+  /* `pathLength` is 1; the dash exists only while the line draws itself. */
+  @keyframes vd-chart-draw {
+    from {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+    }
+    to {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes vd-chart-fade {
+    from {
+      opacity: 0;
+    }
+  }
   /* Ranges sit behind grid and marks; tones other than the built-in two come from the app. */
   .vd-chart__range {
     fill: var(--vd-chart-range-fill);

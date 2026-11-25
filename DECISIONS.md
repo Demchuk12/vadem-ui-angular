@@ -1819,3 +1819,15 @@ usage guide shows the formula. No new tokens or tooling; an application's ramp f
 changes automatically because it references the same custom properties. Step values may be retuned
 in minors; step names are stable until a major.
 
+
+### D138 — Motion in charts and on the board (2026-11-26)
+
+Requested by Vadem CRM, where these two components were the only still ones on animated pages. Both
+answer "what changed": a chart shows its magnitude from zero, a board shows where a card went.
+Chart motion is CSS only and runs once, because the mark elements outlive data changes: the bar
+group is scaled about the zero line (so negative and stacked bars need no per-bar origin), a line
+uses `pathLength="1"` with a dash that exists only during the animation. The board measures cards in
+a component effect, before the template updates, and plays the difference with the Web Animations
+API after render. The measurement uses the early-read phase so the focus effect's scrolling does not
+enter the difference. Duration and easing are read from the tokens, so reduced motion (D15) switches
+it off without a separate query. No input was added: the motion is part of the component.

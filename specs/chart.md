@@ -130,7 +130,9 @@ the same values, and the table carries all of them.
 Figure named by its title; plot `role="group"`; each category a focusable `role="img"` with its
 values. The data table is the full equivalent and keeps its state across refetches. Missing
 values read as "—", never as zero. Plot geometry stays LTR in RTL pages (like numbers); text,
-legend and toolbar follow the page. Reduced motion: no animation is used. Forced colors: series
+legend and toolbar follow the page. Motion: when a chart first appears, bars grow
+from the zero line and lines draw themselves (`duration-slow`); later data, size and theme changes
+do not animate, and reduced motion turns it off. Forced colors: series
 hues are kept (`forced-color-adjust: none`) while legend and table carry identity as text.
 
 ## Component tokens

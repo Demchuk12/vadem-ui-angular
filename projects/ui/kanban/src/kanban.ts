@@ -84,6 +84,21 @@ interface Drop {
   edge: 'before' | 'after' | null;
 }
 
+/** Where a card was before the columns changed (viewport coordinates). */
+interface Place {
+  x: number;
+  y: number;
+  column: string;
+}
+interface Shift {
+  card: HTMLElement;
+  id: string;
+  x: number;
+  y: number;
+  /** Moved to another column: flies above the cards it passes. */
+  above: boolean;
+}
+
 /** Elements inside a card that keep their own pointer behavior (no drag starts there). */
 const INTERACTIVE = 'a, button, input, select, textarea, label, [contenteditable], [tabindex]';
 const INTERACTIVE_TOUCH = 'button, input, select, textarea, label, [contenteditable]';
@@ -276,12 +291,36 @@ export class VdKanban<T extends VdKanbanCardData = VdKanbanCardData> {
   /** The click that follows a finished drag must not follow a link or activate content. */
   private suppressClick = false;
   private serial = 0;
+  /** Card places taken before the columns change; null when there is nothing to animate. */
+  private places: Map<string, Place> | null = null;
+  /** Where the floating copy was let go: the dropped card starts there instead of its slot. */
+  private released: { cardId: string; x: number; y: number } | null = null;
+  private readonly settling = new Map<string, Animation>();
 
   constructor() {
     effect(() => {
       const columns = this.columns(),
         disabled = this.disabled();
       if (this.drag && (disabled || columns !== this.drag.columns)) this.finish(true);
+    });
+    // Component effects run before the template updates, so this still sees the old places.
+    effect(() => {
+      this.columns();
+      this.places = this.takePlaces();
+    });
+    // Cards settle into their new places. Measured before the focus effect below can scroll the
+    // board, started after it.
+    afterRenderEffect({
+      earlyRead: () => {
+        this.columns();
+        // Read so that a drop the application ignored also clears `released`.
+        this.draggingId();
+        const shifts = this.takeShifts();
+        this.places = null;
+        this.released = null;
+        return shifts;
+      },
+      read: (shifts) => this.settle(shifts()),
     });
     afterRenderEffect(() => {
       this.columns();
@@ -424,6 +463,13 @@ export class VdKanban<T extends VdKanbanCardData = VdKanbanCardData> {
     const drag = this.drag;
     if (!drag || drag.pointer !== event.pointerId) return;
     const drop = drag.active ? this.target(event.clientX, event.clientY) : null;
+    if (drop) {
+      this.released = {
+        cardId: drag.cardId,
+        x: drag.lastX - drag.offsetX,
+        y: drag.lastY - drag.offsetY,
+      };
+    }
     this.suppressClick = drag.active;
     this.finish(drag.active && !drop);
     if (drop) {
@@ -556,16 +602,83 @@ export class VdKanban<T extends VdKanbanCardData = VdKanbanCardData> {
     if (announce && drag.active) this.announce(this.t().canceledText(drag.label));
   }
 
+  private cardElements(): HTMLElement[] {
+    return Array.from(this.host.querySelectorAll<HTMLElement>('.vd-kanban__card[data-card-id]'));
+  }
+
+  private columnOf(card: HTMLElement): string {
+    return card.closest<HTMLElement>('.vd-kanban__column')?.dataset['columnId'] ?? '';
+  }
+
+  private takePlaces(): Map<string, Place> | null {
+    const cards = this.cardElements();
+    if (!cards.length || !this.settleTiming()) return null;
+    const places = new Map<string, Place>();
+    for (const card of cards) {
+      const id = card.dataset['cardId']!;
+      const { left, top } = card.getBoundingClientRect();
+      const from = this.released?.cardId === id ? this.released : { x: left, y: top };
+      places.set(id, { x: from.x, y: from.y, column: this.columnOf(card) });
+    }
+    return places;
+  }
+
+  private takeShifts(): Shift[] {
+    const places = this.places;
+    if (!places) return [];
+    // A card caught mid-way starts from where it was; its resting place is measured without it.
+    this.settling.forEach((animation) => animation.cancel());
+    this.settling.clear();
+    const shifts: Shift[] = [];
+    for (const card of this.cardElements()) {
+      const id = card.dataset['cardId']!;
+      const from = places.get(id);
+      if (!from) continue;
+      const { left, top } = card.getBoundingClientRect();
+      const x = from.x - left;
+      const y = from.y - top;
+      if (Math.abs(x) < 1 && Math.abs(y) < 1) continue;
+      shifts.push({ card, id, x, y, above: from.column !== this.columnOf(card) });
+    }
+    return shifts;
+  }
+
+  private settle(shifts: readonly Shift[]): void {
+    const timing = shifts.length ? this.settleTiming() : null;
+    if (!timing) return;
+    for (const { card, id, x, y, above } of shifts) {
+      const layer = above ? { zIndex: 1 } : {};
+      const animation = card.animate(
+        [
+          { translate: `${x}px ${y}px`, ...layer },
+          { translate: '0px 0px', ...layer },
+        ],
+        timing,
+      );
+      this.settling.set(id, animation);
+      animation.onfinish = () => {
+        if (this.settling.get(id) === animation) this.settling.delete(id);
+      };
+    }
+  }
+
+  /** Motion tokens as animation timing; null when motion is off (reduced motion zeroes them). */
+  private settleTiming(): KeyframeAnimationOptions | null {
+    const view = this.host.ownerDocument.defaultView;
+    if (!view || typeof this.host.animate !== 'function') return null;
+    const style = view.getComputedStyle(this.host);
+    const value = style.getPropertyValue('--vd-duration-slow').trim();
+    const duration = parseFloat(value) * (value.endsWith('ms') ? 1 : 1000);
+    if (!(duration > 0)) return null;
+    return { duration, easing: style.getPropertyValue('--vd-ease-out').trim() || 'ease-out' };
+  }
+
   private announce(text: string): void {
     this.messages.set([{ serial: ++this.serial, text }]);
   }
 
   private cardElement(id: string): HTMLElement | null {
-    return (
-      Array.from(this.host.querySelectorAll<HTMLElement>('.vd-kanban__card[data-card-id]')).find(
-        (el) => el.dataset['cardId'] === id,
-      ) ?? null
-    );
+    return this.cardElements().find((el) => el.dataset['cardId'] === id) ?? null;
   }
 }
 

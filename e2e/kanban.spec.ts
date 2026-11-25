@@ -113,6 +113,83 @@ test.describe('kanban', () => {
   });
 });
 
+test.describe('kanban motion', () => {
+  /** Records every animation the board starts: the card and its first keyframe. */
+  async function record(page: Page) {
+    await page.addInitScript(() => {
+      const log: { id: string; from: string }[] = [];
+      Object.assign(window, { vdMotion: log });
+      const animate = Element.prototype.animate;
+      Element.prototype.animate = function (keyframes, options) {
+        const id = (this as HTMLElement).dataset?.['cardId'];
+        if (id) log.push({ id, from: String((keyframes as Keyframe[])[0]['translate']) });
+        return animate.call(this, keyframes, options);
+      };
+    });
+  }
+  const started = (page: Page) =>
+    page.evaluate(
+      () => (window as unknown as { vdMotion: { id: string; from: string }[] }).vdMotion,
+    );
+
+  async function dropOnWon(page: Page) {
+    const source = cardIn(page, 'Новий лід', 'Впровадження CRM').locator('.demo-deal__company');
+    const target = column(page, 'Виграно').locator('li.vd-kanban__card').first();
+    const from = (await source.boundingBox())!;
+    const to = (await target.boundingBox())!;
+    await page.mouse.move(from.x + 5, from.y + 5);
+    await page.mouse.down();
+    await page.mouse.move(to.x + 10, to.y + to.height - 2, { steps: 8 });
+    await page.mouse.up();
+    await expect(cardIn(page, 'Виграно', 'Впровадження CRM')).toBeVisible();
+  }
+
+  test('a dropped card settles from where it was let go and its old neighbours close the gap', async ({
+    page,
+  }) => {
+    await record(page);
+    await openGallery(page, 'kanban');
+    const id = await cardIn(page, 'Новий лід', 'Впровадження CRM').getAttribute('data-card-id');
+    await dropOnWon(page);
+    const log = await started(page);
+    const moved = log.filter((entry) => entry.id === id);
+    expect(moved).toHaveLength(1);
+    // From the pointer, not from its old column several hundred pixels away.
+    expect(Math.abs(parseFloat(moved[0].from))).toBeLessThan(100);
+    expect(log.some((entry) => entry.id !== id)).toBe(true);
+    // Nothing is left behind.
+    await expect
+      .poll(() =>
+        board(page).evaluate(
+          (el) =>
+            el
+              .getAnimations({ subtree: true })
+              .filter((a) => (a.effect as KeyframeEffect).target?.matches('.vd-kanban__card'))
+              .length,
+        ),
+      )
+      .toBe(0);
+    await expect(cardIn(page, 'Виграно', 'Впровадження CRM')).toHaveCSS('translate', 'none');
+  });
+
+  test('a menu move slides from the old column and keeps focus', async ({ page }) => {
+    await record(page);
+    await openGallery(page, 'kanban');
+    await board(page).getByRole('button', { name: 'Move Аудит безпеки' }).click();
+    await page.getByRole('menu').getByRole('menuitem', { name: 'Переговори' }).click();
+    await expect(board(page).getByRole('button', { name: 'Move Аудит безпеки' })).toBeFocused();
+    expect((await started(page)).length).toBeGreaterThan(0);
+  });
+
+  test('reduced motion: cards just change places', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await record(page);
+    await openGallery(page, 'kanban');
+    await dropOnWon(page);
+    expect(await started(page)).toEqual([]);
+  });
+});
+
 test.describe('kanban on touch', () => {
   test.use({ hasTouch: true, viewport: { width: 390, height: 844 } });
 

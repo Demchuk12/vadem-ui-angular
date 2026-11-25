@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.0 - 2026-11-26
+
+### Added
+
+- Chart: bars grow from the zero line and lines draw themselves when a chart first appears. Later
+  data, size and theme changes stay instant; reduced motion turns it off.
+- Kanban: cards slide to their new places when `columns` change, and a dropped card settles from
+  where it was let go. Off when the duration token is zero (reduced motion).
+
 ## 0.6.0 - 2026-11-13
 
 ### Added

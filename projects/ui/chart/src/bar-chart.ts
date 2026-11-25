@@ -95,7 +95,7 @@ interface Mark {
               rx="4"
             />
           }
-          <g class="vd-chart__marks" aria-hidden="true">
+          <g class="vd-chart__marks" aria-hidden="true" [style.--vd-chart-zero]="zero() + 'px'">
             @for (m of marks(); track $index) {
               <path
                 class="vd-chart__bar"
@@ -199,7 +199,7 @@ export class VdBarChart extends VdChartBase {
     const n = series.length;
     if (!n || !this.count()) return [];
     const scale = this.scale();
-    const zero = scale(0);
+    const zero = this.zero();
     const orient = this.orientation();
     const marks: Mark[] = [];
     if (this.stacked()) {
@@ -250,6 +250,9 @@ export class VdBarChart extends VdChartBase {
     });
     return marks;
   });
+
+  /** The zero line on the value axis: bars grow from it when the chart appears. */
+  protected readonly zero = computed(() => this.scale()(0));
 
   protected readonly tickMarks = computed(() => {
     const b = this.box();
