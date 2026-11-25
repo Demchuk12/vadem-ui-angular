@@ -4,6 +4,7 @@
 
 ### Added
 
+- Icons: `archive`, `bar-chart`, `building`, `image`, `package`, `phone`, `tag`.
 - Chart: bars grow from the zero line and lines draw themselves when a chart first appears. Later
   data, size and theme changes stay instant; reduced motion turns it off.
 - Kanban: cards slide to their new places when `columns` change, and a dropped card settles from
